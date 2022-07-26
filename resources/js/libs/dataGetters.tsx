@@ -17,3 +17,13 @@ export async function getUserSpaceData() {
 
     return data
 }
+
+export async function getUserFiles() {
+    const response = await fetch('/profile/files', {
+        method: 'GET',
+    })
+
+    const data: IUserFilesRequest = await response.json()
+
+    return data
+}

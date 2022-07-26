@@ -27,6 +27,12 @@ interface IFile {
     user?: IdType | IUser
 }
 
+interface IFileToUpload {
+    file: string | File,
+    name: string,
+    shareLink?: string
+}
+
 // requests
 interface IRequest {
     status: 'success' | 'error' | 'idle',
@@ -40,3 +46,8 @@ interface IUserSpaceRequest extends IRequest {
     maxSpace: SpaceSizeType,
     usedSpace: SpaceSizeType
 }
+
+interface IUserFilesRequest extends IRequest {
+    files: IFile[] | [],
+}
+

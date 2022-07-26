@@ -8,8 +8,7 @@ import { Link } from '@inertiajs/inertia-react'
 import Logo from './Logo';
 import Search from './Search';
 import Profile from './Profile';
-import MoreSpaceBtn from './MoreSpace';
-import MoreSpace from './MoreSpace';
+import MoreSpace from '../Layouts/MoreSpace';
 
 
 export default function Header() {

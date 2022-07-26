@@ -5,7 +5,7 @@ import { getUserSpaceData } from '../libs/dataGetters';
 // store
 import { useAppSelector } from '../store/hooks';
 // components
-import MoreSpace from './MoreSpace';
+import MoreSpace from '../Layouts/MoreSpace';
 
 
 export default function SpaceLeftBlock() {
