@@ -1,11 +1,11 @@
 // global
-import React, { useState } from 'react'
+import React from 'react'
 // layout
-import PageLayout from '../../Layouts/Page/Page';
+import PageLayout from '../Layouts/Page';
 
 
 export default function HomePage() {
-    const [count, setCount] = useState(1)
+    const [count, setCount] = React.useState(1)
     return (
         <PageLayout>
             {count}

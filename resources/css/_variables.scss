@@ -1,0 +1,19 @@
+:root {
+    // transitions
+    --transitionDefault: 150ms;
+
+    // border-radiuses
+    --bdrsDefault: 10px;
+
+    // colors
+    --colorText: white;
+    --colorTextDark: #424242;
+    --colorGray: #EBEBEB;
+    --colorBg: white;
+    --colorMain: #00A9DE;
+    --colorAccent: #F2AE00;
+
+    // font-sizes
+    --fontSize3: clamp(1rem, 4vw, 2rem);
+    --fontSize4: clamp(.75rem, 4vw, 1.25rem);
+}

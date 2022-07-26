@@ -1,0 +1,25 @@
+// imports
+@import 'normalize.scss';
+@import 'variables';
+@import 'mixins';
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Saira:wght@100;200;300;400;500;600;700&display=swap');
+// components
+@import 'Components/Header.scss';
+// pages
+@import 'Pages/Home.scss';
+// layouts
+@import 'Layouts/Page.scss';
+
+
+// base
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    font-family: 'Saira', sans-serif;
+}
+
+.app-logo {
+    width: 15rem;
+}
