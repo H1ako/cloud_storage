@@ -1,5 +1,5 @@
 // global
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 // libs
 import { getUserData } from '../../libs/dataGetters'
 
@@ -25,6 +25,9 @@ const userSlice = createSlice({
             .then((data: IUserRequest) => {
                 state.user = data.user
             })
+        },
+        updateUser: (state: IUserState, action: PayloadAction<IUser>) => {
+            state.user = action.payload
         }
     }
 })
