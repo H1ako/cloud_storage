@@ -7,3 +7,13 @@ export async function getUserData() {
 
     return data
 }
+
+export async function getUserSpaceData() {
+    const response = await fetch('/profile/space', {
+        method: 'GET',
+    })
+
+    const data: IUserSpaceRequest = await response.json()
+
+    return data
+}

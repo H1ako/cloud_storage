@@ -1,3 +1,22 @@
-main {
-    transition: var(--transitionDefault);
+.page {
+    display: grid;
+    grid-template-areas: 'H H H H H H'
+                         'A A M M M M';
+    position: relative;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: auto auto 1fr;
+    
+    header {
+        grid-area: H;
+    }
+
+    aside {
+        grid-area: A;
+    }
+    
+    main {
+        grid-area: M;
+        transition: var(--transitionDefault);
+    }
 }

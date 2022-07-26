@@ -1,16 +1,16 @@
 // users
 interface IUser {
-    id: number | string,
+    id: IdType,
     email: string,
     picture?: string | null,
-    subscription: ISubscription,
+    subscription: ISubscription | IdType,
     files?: null | File[]
 }
 
 interface ISubscription {
-    id: number | string,
+    id: IdType,
     name: string,
-    space: number | string,
+    maxSpace: SpaceSizeType,
     price: number,
     currency: string
 }
@@ -18,20 +18,25 @@ interface ISubscription {
 
 // files
 interface IFile {
-    id: number | string,
+    id: IdType,
     file: string,
     name: string,
-    size: number,
+    size: SpaceSizeType,
     type: FileType,
     shareLink: string
-    user?: number | IUser
+    user?: IdType | IUser
 }
 
 // requests
 interface IRequest {
-    status: 'success' | 'error',
+    status: 'success' | 'error' | 'idle',
 }
 
 interface IUserRequest extends IRequest {
     user: IUser
+}
+
+interface IUserSpaceRequest extends IRequest {
+    maxSpace: SpaceSizeType,
+    usedSpace: SpaceSizeType
 }

@@ -21,6 +21,11 @@
     font-size: var(--fontSize4);
     outline: none;
     cursor: pointer;
+    transition: var(--transitionDefault);
+
+    &:hover {
+        transform: scale(1.05);
+    }
 }
 
 @mixin input {

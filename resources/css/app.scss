@@ -6,6 +6,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Saira:wght@100;200;300;400;500;600;700&display=swap');
 // components
 @import 'Components/Header.scss';
+@import 'Components/CreateBtn.scss';
+@import 'Components/UploadBtn.scss';
+@import 'Components/SpaceLeftBlock.scss';
+@import 'Components/Asidebar.scss';
 // pages
 @import 'Pages/Home.scss';
 // layouts
@@ -18,6 +22,14 @@
 *::before {
     box-sizing: border-box;
     font-family: 'Saira', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    margin: 0;
 }
 
 .app-logo {

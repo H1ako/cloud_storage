@@ -1,0 +1,5 @@
+.upload-btn {
+    @include btn;
+    background: var(--colorMain);
+    color: var(--colorText);
+}

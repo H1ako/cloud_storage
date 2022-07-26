@@ -33,4 +33,4 @@ const userSlice = createSlice({
 
 export const { fetchUser } = userSlice.actions
 
-export const userReducer = userSlice.reducer
+export default userSlice.reducer

@@ -16,11 +16,6 @@ header {
         z-index: 0;
         background: var(--colorBg);
 
-        &__more-space {
-            @include btn;
-            background: var(--colorAccent);
-        }
-
         &__btn-toggle {
             background: none;
             padding: 0;
@@ -29,6 +24,11 @@ header {
             font-size: 2rem;
             color: var(--colorTextDark);
             cursor: pointer;
+        }
+
+        .more-space-btn {
+            @include btn;
+            background: var(--colorAccent);
         }
     }
 
