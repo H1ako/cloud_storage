@@ -8,7 +8,7 @@ import { useAppDispatch } from '../store/hooks';
 import { updateFilesToUpload } from '../store/slices/filesSlice';
 
 
-export default function UploadFileBlock() {
+export default React.memo(function UploadFileBlock() {
     const dispatch = useAppDispatch()
     const [ isDragging, setIsDragging ] = React.useState<boolean>(false)
 
@@ -48,4 +48,4 @@ export default function UploadFileBlock() {
             <input type="file" multiple id='upload-file-block' onChange={uploadHandler} />
         </div>
     )
-}
+})

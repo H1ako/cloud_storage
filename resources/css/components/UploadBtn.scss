@@ -1,5 +1,11 @@
 .upload-btn {
     @include btn;
+    display: block;
+    text-align: center;
     background: var(--colorMain);
     color: var(--colorText);
+
+    input {
+        display: none;
+    }
 }

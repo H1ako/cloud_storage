@@ -6,7 +6,7 @@ import UploadBtn from './UploadBtn'
 import SpaceLeftBlock from './SpaceLeftBlock';
 
 
-export default function Asidebar() {
+export default React.memo(function Asidebar() {
     return (
         <aside>
             <UploadBtn />
@@ -14,4 +14,4 @@ export default function Asidebar() {
             <SpaceLeftBlock />
         </aside>
     )
-}
+})

@@ -9,7 +9,8 @@
     text-decoration: none;
     transition: var(--transitionDefault);
 
-    &:hover {
+    &:hover,
+    &:focus-within {
         text-decoration: underline;
     }
 }
@@ -23,7 +24,8 @@
     cursor: pointer;
     transition: var(--transitionDefault);
 
-    &:hover {
+    &:hover,
+    &:focus-within {
         transform: scale(1.05);
     }
 }
