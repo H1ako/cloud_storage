@@ -1,4 +1,10 @@
 .upload-container {
+
+    &.active .upload-file-block {
+        background: var(--colorTextDark);
+        color: var(--colorText);
+    }
+
     .upload-file-block {
         display: flex;
         align-items: center;
@@ -9,6 +15,11 @@
         border: 2px solid var(--colorMain);
         border-radius: var(--bdrsDefault);
         cursor: pointer;
+        transition: var(--transitionDefault);
+        
+        * {
+            pointer-events: none;
+        }
     
         h1 {
             text-align: center;
