@@ -1,7 +1,7 @@
 // global
 import React from 'react'
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { fetchFiles } from '../store/slices/FilesSlice';
+import { fetchFiles } from '../store/slices/filesSlice';
 
 
 export default function FilesList() {

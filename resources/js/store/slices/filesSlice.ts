@@ -6,16 +6,18 @@ import { getUserFiles } from '../../libs/dataGetters'
 
 interface IFilesState {
     files: IFile[] | [],
-    fileToUpload: IFileToUpload | null
+    filesToUpload: FileListType
     status: RequestStatusType,
-    error: string | null
+    error: string | null,
+    isUploadWindowOpened: boolean
 }
 
 const initialState: IFilesState = {
     files: [],
-    fileToUpload: null,
+    filesToUpload: [],
     status: 'idle',
-    error: null
+    error: null,
+    isUploadWindowOpened: false
 }
 
 const filesSlice = createSlice({
@@ -31,14 +33,19 @@ const filesSlice = createSlice({
         updateFiles: (state: IFilesState, action: PayloadAction<IFile[]>) => {
             state.files = action.payload ?? []
         },
-        updateFileToUpload: (state: IFilesState, action: PayloadAction<IFileToUpload>) => {
-            state.fileToUpload = action.payload ?? null
+        updateFilesToUpload: (state: IFilesState, action: PayloadAction<FileListType>) => {
+            console.log(action.payload)
+            state.filesToUpload = action.payload ?? []
+
+            if (state.filesToUpload.length > 0) {
+                state.isUploadWindowOpened = true
+            }
         }
     }
 })
 
 // export const getUser = createAsyncThunk('user/getUser', getUserData)
 
-export const { fetchFiles, updateFiles } = filesSlice.actions
+export const { fetchFiles, updateFiles, updateFilesToUpload } = filesSlice.actions
 
 export default filesSlice.reducer

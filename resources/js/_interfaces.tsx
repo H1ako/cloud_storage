@@ -27,12 +27,6 @@ interface IFile {
     user?: IdType | IUser
 }
 
-interface IFileToUpload {
-    file: string | File,
-    name: string,
-    shareLink?: string
-}
-
 // requests
 interface IRequest {
     status: 'success' | 'error' | 'idle',

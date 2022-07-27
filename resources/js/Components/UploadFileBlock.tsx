@@ -3,25 +3,28 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // icons
 import { faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+// store
+import { useAppDispatch } from '../store/hooks';
+import { updateFilesToUpload } from '../store/slices/filesSlice';
 
 
 export default function UploadFileBlock() {
-    const [ files, setFiles ] = React.useState<FileList | []>([])
+    const dispatch = useAppDispatch()
     const [ isDragging, setIsDragging ] = React.useState<boolean>(false)
 
     const uploadHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const uploadedFiles: any = e.target?.files
+        const uploadedFiles: FileListType = e.target.files ?? []
 
-        setFiles(uploadedFiles)
+        dispatch(updateFilesToUpload(uploadedFiles))
     }
 
     const dropFileHandler = (e: React.DragEvent): void => {
         e.stopPropagation();
         e.preventDefault()
 
-        const uploadedFiles: any = e.dataTransfer.files
+        const uploadedFiles: FileListType = e.dataTransfer.files ?? []
 
-        setFiles(uploadedFiles)
+        dispatch(updateFilesToUpload(uploadedFiles))
         setIsDragging(false)
     }
 
