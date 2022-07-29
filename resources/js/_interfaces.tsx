@@ -4,7 +4,8 @@ interface IUser {
     email: string,
     picture?: string | null,
     subscription: ISubscription | IdType,
-    files?: null | File[]
+    files?: null | File[],
+    spaceData: IUserSpaceData
 }
 
 interface ISubscription {
@@ -15,11 +16,16 @@ interface ISubscription {
     currency: string
 }
 
+interface IUserSpaceData {
+    maxSpace: number,
+    usedSpace: number
+}
+
 
 // files
 interface IFile {
     id: IdType,
-    file: string,
+    path: string,
     name: string,
     size: SpaceSizeType,
     type: FileType,

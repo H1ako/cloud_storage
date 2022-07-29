@@ -3,12 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // libs
 
 
-interface IFilesState {
-    files: IFile[] | [],
-    filesToUpload: FileListType
-    status: RequestStatusType,
-    error: string | null,
-    isUploadWindowOpened: boolean
+interface IWindowsState {
+    
 }
 
 const initialState: IFilesState = {
@@ -27,6 +23,7 @@ const filesSlice = createSlice({
             state.files = action.payload ?? []
         },
         updateFilesToUpload: (state: IFilesState, action: PayloadAction<FileListType>) => {
+            console.log(action.payload)
             state.filesToUpload = action.payload ?? []
 
             if (state.filesToUpload.length > 0) {

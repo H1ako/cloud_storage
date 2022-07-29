@@ -1,0 +1,7 @@
+.files-list {
+    @include clearedUl;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 12.5rem));
+    grid-template-rows: repeat(auto-fit, minmax(15rem, 17.5rem));
+}

@@ -3,8 +3,9 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile, faFileZipper } from '@fortawesome/free-solid-svg-icons';
 
+
 interface Props {
-    file: IFile
+    file: IFile,
 }
 
 function FileBg(props: Props) {
@@ -14,14 +15,14 @@ function FileBg(props: Props) {
         case 'video':
             return (
                 <div className="file-card__bg">
-                    <img src={file.file} alt="" />
+                    <img src={file.path} alt="" />
                 </div>
             )
             
         case 'image':
             return (
                 <div className="file-card__bg">
-                    <img src={file.file} alt="" />
+                    <img src={file.path} alt="" />
                 </div>
             )
         case 'archive':
@@ -51,8 +52,10 @@ export default function FileCard(props: Props) {
     return (
         <li className='file-card'>
             <FileBg file={file} />
-            <h3 className="file-card__name">{file.name}</h3>
-            <h4 className="file-card__size">{file.size}</h4>
+            <div className="file-card__info">
+                <h2 className="info__name">{file.name}</h2>
+                <h3 className="info__size">{file.size}</h3>
+            </div>
         </li>
     )
 }

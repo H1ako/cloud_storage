@@ -11,10 +11,12 @@
 @import 'Components/SpaceLeftBlock.scss';
 @import 'Components/Asidebar.scss';
 @import 'Components/UploadFileBlock.scss';
+@import 'Components/FilesList.scss';
+@import 'Components/FileCard.scss';
 // pages
-@import 'Pages/Home.scss';
+@import 'Pages/HomeLayout.scss';
 // layouts
-@import 'Layouts/Page.scss';
+@import 'Layouts/PageLayout.scss';
 
 
 // base

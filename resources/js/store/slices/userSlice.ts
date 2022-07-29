@@ -1,39 +1,40 @@
 // global
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // libs
-import { getUserData } from '../../libs/dataGetters'
 
 
 interface IUserState {
-    user: IUser | null,
+    user: RequestUserType,
     status: RequestStatusType,
-    error: string | null
+    error: string | null,
+    spaceData: IUserSpaceData
 }
 
 const initialState: IUserState = {
     user: null,
     status: 'idle',
-    error: null
+    error: null,
+    spaceData: {
+        maxSpace: 0,
+        usedSpace: 0
+    }
 }
 
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        fetchUser: (state: IUserState) => {
-            getUserData()
-            .then((data: IUserRequest) => {
-                state.user = data.user
-            })
-        },
-        updateUser: (state: IUserState, action: PayloadAction<IUser>) => {
+        updateUser: (state: IUserState, action: PayloadAction<RequestUserType>) => {
             state.user = action.payload
+        },
+        updateSpaceData: (state: IUserState, action: PayloadAction<IUserSpaceData>) => {
+            state.spaceData = action.payload
         }
     }
 })
 
 // export const getUser = createAsyncThunk('user/getUser', getUserData)
 
-export const { fetchUser, updateUser } = userSlice.actions
+export const { updateUser, updateSpaceData } = userSlice.actions
 
 export default userSlice.reducer

@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -33,6 +35,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $with = ['files', 'subscription'];
+
+    protected $appends = ['spaceData'];
+
     /**
      * The attributes that should be cast.
      *
@@ -41,4 +47,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setPassword($password): void {
+        $this->password = Hash::make($password);
+    }
+
+    public function files() {
+        return $this->hasMany(File::class, 'id');
+    }
+
+    public function subscription() {
+        return $this->belongsTo(Subscription::class, 'subscription', 'name');
+    }
+
+    public function getSpaceDataAttribute() {
+        $maxSpace = $this->subscription()->first()->maxSpace;
+        $usedSpaceArray = $this->files()->get('size')->toArray()[0];
+        $usedSpace = array_sum($usedSpaceArray);
+
+        return [
+            'maxSpace' => $maxSpace,
+            'usedSpace' => $usedSpace
+        ];
+    }
 }

@@ -8,11 +8,12 @@ import { Link } from '@inertiajs/inertia-react'
 import Logo from './Logo';
 import Search from './Search';
 import Profile from './Profile';
-import MoreSpace from '../Layouts/MoreSpace';
+import MoreSpaceLayout from '../Layouts/MoreSpaceLayout';
 
 
 export default function Header() {
     const [ isNavVisible, setIsNavVisible ] = React.useState(true)
+    
 
     return (
         <header>
@@ -21,11 +22,11 @@ export default function Header() {
                     <Logo />
                 </Link>
                 <Search />
-                <MoreSpace>
+                <MoreSpaceLayout>
                     <button className="more-space-btn">
                         More Space
                     </button>
-                </MoreSpace>
+                </MoreSpaceLayout>
                 <Profile />
                 <button onClick={() => setIsNavVisible(state => !state)} className="main-part__btn-toggle">
                     {isNavVisible ?
