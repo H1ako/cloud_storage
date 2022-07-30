@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,6 @@ class HomeController extends Controller
         // $newUser->save();
         $userA = User::where('email', 'nikita@yandex.ru')->first();
         Auth::login($userA);
-
 
         $user = Auth::user();
         $files = $user ? $user->files : [];

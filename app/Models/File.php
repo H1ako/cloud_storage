@@ -9,16 +9,19 @@ class File extends Model
 {
     use HasFactory;
 
-    protected $guarded = [
+    protected $fillable = [
+        'name',
         'path',
         'size',
         'type',
-        'user'
+        'user_id'
     ];
+
+    protected $guarded = [];
 
 
 
     public function user() {
-        return $this->belongsTo(User::class, 'id', 'user');
+        return $this->belongsTo(User::class, 'id', 'user_id');
     }
 }

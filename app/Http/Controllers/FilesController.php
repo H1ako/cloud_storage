@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class FilesController extends Controller
 {
@@ -34,7 +37,41 @@ class FilesController extends Controller
      */
     public function store(Request $request)
     {
-        $files = $request->post('files');
+        $user = $request->user();
+        $userId = $user->id;
+        $files = $request->file('files', []);
+        /** @var Illuminate\Filesystem\FilesystemAdapter */
+        $fileSystem = Storage::disk('public');
+        Log::info($fileSystem->url(''));
+
+        foreach($files as $file) {
+            $fileSize = $file->getSize();
+            if ($fileSize > 1000000) continue;
+            
+            $originalFileName = $file->getClientOriginalName();
+            $fileName = time().$originalFileName;
+            Log::info($file->getMimeType());
+            $fileType = explode('/', $file->getMimeType())[0];
+            $filePath = "userFiles/$userId/";
+
+            $fileSystem->putFileAs(
+                $filePath,
+                $file,
+                $fileName
+            );
+
+            $fullPath = $fileSystem->url($filePath.$fileName);
+
+            $newFile = new File([
+                'name' => $originalFileName,
+                'type' => $fileType,
+                'size' => $fileSize,
+                'path' => $fullPath,
+                'shareLink' => ''
+            ]);
+
+            $user->files()->save($newFile);
+        }
     }
 
     /**

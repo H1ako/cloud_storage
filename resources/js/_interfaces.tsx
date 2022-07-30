@@ -30,7 +30,8 @@ interface IFile {
     size: SpaceSizeType,
     type: FileType,
     shareLink: string
-    user?: IdType | IUser
+    user?: IUser,
+    user_id: IdType
 }
 
 // requests

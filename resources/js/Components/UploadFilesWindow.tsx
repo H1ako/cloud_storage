@@ -25,7 +25,7 @@ export default function UploadFilesWindow() {
             <div className="upload-files-window">
                 <FilesToUploadList />
                 <div className="upload-files-window__btns">
-                    <Link className='btns__upload' href='/files' type='button' data={{files: filesToUpload}} as='button' method='post'>Upload</Link>
+                    <Link className='btns__upload' href='/api/files' type='button' data={{files: filesToUpload}} as='button' method='post'>Upload</Link>
                     <UploadBtn textInside='Add More' action='add' />
                 </div>
             </div>

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -53,7 +54,7 @@ class User extends Authenticatable
     }
 
     public function files() {
-        return $this->hasMany(File::class, 'id');
+        return $this->hasMany(File::class);
     }
 
     public function subscription() {
@@ -62,8 +63,9 @@ class User extends Authenticatable
 
     public function getSpaceDataAttribute() {
         $maxSpace = $this->subscription()->first()->maxSpace;
-        $usedSpaceArray = $this->files()->get('size')->toArray()[0];
-        $usedSpace = array_sum($usedSpaceArray);
+        $rawUsedSpacesArray = $this->files()->get('size')->toArray();
+        $usedSpacesArray = count($rawUsedSpacesArray) ? $rawUsedSpacesArray[0] : [];
+        $usedSpace = array_sum($usedSpacesArray);
 
         return [
             'maxSpace' => $maxSpace,

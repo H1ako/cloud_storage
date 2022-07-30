@@ -15,13 +15,18 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user');
+            $table->unsignedBigInteger('user_id');
             $table->string('path');
             $table->string('name');
             $table->unsignedBigInteger('size');
-            $table->text('shareLink');
+            $table->string('shareLink')->nullable()->default('');
             $table->string('type');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
