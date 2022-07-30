@@ -8,15 +8,18 @@
 @import 'Components/Header.scss';
 @import 'Components/CreateBtn.scss';
 @import 'Components/UploadBtn.scss';
+@import 'Components/CloseBtn.scss';
 @import 'Components/SpaceLeftBlock.scss';
 @import 'Components/Asidebar.scss';
 @import 'Components/UploadFileBlock.scss';
+@import 'Components/UploadFilesWindow.scss';
 @import 'Components/FilesList.scss';
 @import 'Components/FileCard.scss';
 // pages
 @import 'Pages/HomeLayout.scss';
 // layouts
 @import 'Layouts/PageLayout.scss';
+@import 'Layouts/WindowLayout.scss';
 
 
 // base
@@ -33,6 +36,26 @@ h3,
 h4,
 h5 {
     margin: 0;
+}
+
+h1 {
+    font-size: var(--fontSize1);
+}
+
+h2 {
+    font-size: var(--fontSize2);
+}
+
+h3 {
+    font-size: var(--fontSize3);
+}
+
+h3 {
+    font-size: var(--fontSize4);
+}
+
+h5 {
+    font-size: var(--fontSize5);
 }
 
 .app-logo {

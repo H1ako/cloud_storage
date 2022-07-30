@@ -1,0 +1,12 @@
+.close-btn {
+    $pos: 2rem;
+
+    @include btn;
+    padding: 0;
+    background: none;
+    position: absolute;
+    top: $pos;
+    right: $pos;
+    font-size: var(--fontSize2);
+    color: var(--colorText);
+}

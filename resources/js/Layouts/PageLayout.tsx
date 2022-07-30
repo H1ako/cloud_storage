@@ -5,7 +5,8 @@ import Header from '../Components/Header';
 import Asidebar from '../Components/Asidebar';
 // store
 import { updateSpaceData, updateUser } from '../store/slices/userSlice';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import UploadFilesWindow from '../Components/UploadFilesWindow';
 
 interface Props {
     children: React.ReactNode,
@@ -15,6 +16,7 @@ interface Props {
 export default function PageLayout(props: Props) {
     const { children, user } = props
     const dispatch = useAppDispatch()
+    const { isUploadWindowOpened } = useAppSelector(state => state.files)
 
     React.useEffect(() => {
         if (user?.id) {
@@ -30,6 +32,10 @@ export default function PageLayout(props: Props) {
             <main>
                 <>{children}</>
             </main>
+            {/* Windows */}
+            {isUploadWindowOpened &&
+                <UploadFilesWindow />
+            }
         </div>
     )
 }

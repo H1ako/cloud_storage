@@ -3,15 +3,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // libs
 
 
-interface IFilesState {
-    files: IFile[] | [],
-    filesToUpload: FileListType
+interface FilesState {
+    files: IFile[],
+    filesToUpload: File[]
     status: RequestStatusType,
     error: string | null,
     isUploadWindowOpened: boolean
 }
 
-const initialState: IFilesState = {
+const initialState: FilesState = {
     files: [],
     filesToUpload: [],
     status: 'idle',
@@ -23,21 +23,32 @@ const filesSlice = createSlice({
     name: 'files',
     initialState,
     reducers: {
-        updateFiles: (state: IFilesState, action: PayloadAction<RequestFilesType>) => {
+        updateFiles: (state: FilesState, action: PayloadAction<RequestFilesType>) => {
             state.files = action.payload ?? []
         },
-        updateFilesToUpload: (state: IFilesState, action: PayloadAction<FileListType>) => {
-            state.filesToUpload = action.payload ?? []
+        updateFilesToUpload: (state: FilesState, action: PayloadAction<FileListType>) => {
+            const stateToUpdate = action.payload ? [...action.payload] : []
+
+            state.filesToUpload = stateToUpdate
 
             if (state.filesToUpload.length > 0) {
                 state.isUploadWindowOpened = true
             }
+        },
+        addFilesToUpload: (state: FilesState, action: PayloadAction<FileListType>) => {
+            const stateToUpdate = action.payload ?? []
+
+            state.filesToUpload = [...stateToUpdate, ...state.filesToUpload]
+        },
+        closeFilesToUploadWindow: (state: FilesState) => {
+            state.isUploadWindowOpened = false
+            state.filesToUpload = []
         }
     }
 })
 
 // export const getUser = createAsyncThunk('user/getUser', getUserData)
 
-export const { updateFiles, updateFilesToUpload } = filesSlice.actions
+export const { updateFiles, updateFilesToUpload, addFilesToUpload, closeFilesToUploadWindow } = filesSlice.actions
 
 export default filesSlice.reducer

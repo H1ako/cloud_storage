@@ -1,29 +1,19 @@
 // global
 import React from 'react'
 // store
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-// icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFile } from '@fortawesome/free-solid-svg-icons';
+import { useAppSelector } from '../store/hooks';
+// components
+import FileToUploadCard from './FileToUploadCard';
 
 
 export default function FilesToUploadList() {
-    const dispatch = useAppDispatch()
     const { filesToUpload } = useAppSelector(state => state.files)
+    console.log(filesToUpload)
 
     return (
-        <ul className='files-to-upload-list'>
-            {filesToUpload.map(file => (
-                <li className='to-upload-file'>
-                    button.file-card__
-                    <div className="to-upload-file__bg">
-                        <FontAwesomeIcon icon={faFile} />
-                    </div>
-                    <div className="to-upload-file__info">
-                        <input className="info__name">{file.name}</input>
-                        <h3 className="info__size">{file.size}</h3>
-                    </div>
-                </li>
+        <ul className='files-list'>
+            {filesToUpload.map((file, id) => (
+                <FileToUploadCard key={`up-file-${id}`} file={file} />
             ))}
         </ul>
     )

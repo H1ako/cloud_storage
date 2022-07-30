@@ -1,14 +1,15 @@
 // global
 import React from 'react'
-// components
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFile } from '@fortawesome/free-solid-svg-icons';
 import FileCardBg from './FileCardBg';
 
 
 interface Props {
-    file: IFile,
+    file: File,
 }
 
-export default function FileCard(props: Props) {
+export default function FileToUploadCard(props: Props) {
     const { file } = props
 
     return (

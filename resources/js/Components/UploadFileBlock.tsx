@@ -13,7 +13,9 @@ export default React.memo(function UploadFileBlock() {
     const [ isDragging, setIsDragging ] = React.useState<boolean>(false)
 
     const uploadHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const uploadedFiles: FileListType = e.target.files ?? []
+        if (!e.target.files) return
+
+        const uploadedFiles: FileListType = e.target.files
 
         dispatch(updateFilesToUpload(uploadedFiles))
     }
@@ -21,8 +23,9 @@ export default React.memo(function UploadFileBlock() {
     const dropFileHandler = (e: React.DragEvent): void => {
         e.stopPropagation();
         e.preventDefault()
+        if (!e.dataTransfer.files) return
 
-        const uploadedFiles: FileListType = e.dataTransfer.files ?? []
+        const uploadedFiles: FileListType = e.dataTransfer.files
 
         dispatch(updateFilesToUpload(uploadedFiles))
         setIsDragging(false)
@@ -43,7 +46,7 @@ export default React.memo(function UploadFileBlock() {
         >
             <label className="upload-file-block" htmlFor='upload-file-block'>
                 <FontAwesomeIcon className='upload-file-block__icon' icon={faFileArrowDown} />
-                <h1>Press or Hover the File to Upload</h1>
+                <h2 className='upload-file-block__text'>Press or Hover the File to Upload</h2>
             </label>
             <input type="file" multiple id='upload-file-block' onChange={uploadHandler} />
         </div>

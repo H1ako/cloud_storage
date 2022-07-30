@@ -1,0 +1,35 @@
+.upload-files-window {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: min(90vw, 1400px);
+    height: min(85vh, 800px);
+    background: var(--colorBg);
+    border-radius: var(--bdrsDefault);
+    padding: 1rem;
+    gap: 2rem;
+    align-items: center;
+    
+    .files-list {
+        width: 100%;
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 1rem;
+        justify-content: center;
+
+        @media screen and (max-width: 840px) {
+            grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+        }
+    }
+    
+    &__btns {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+        .btns__upload {
+            @include btn;
+            background: var(--colorAccent);
+        }
+    }
+}

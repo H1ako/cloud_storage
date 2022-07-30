@@ -11,8 +11,8 @@ export default function FilesList() {
 
     return (
         <ul className='files-list'>
-            {files.map(file => (
-                <FileCard file={file} />
+            {files.map((file, id) => (
+                <FileCard key={`file-${id}`} file={file} />
             ))}
         </ul>
     )
