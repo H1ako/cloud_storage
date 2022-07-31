@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/', HomeController::class);
+Route::resource('/', HomeController::class, [
+    'names' => [
+        'index' => 'home.index'
+    ]
+]);
 Route::get('/login', function() {
     return Response('status');
 })->name('login');

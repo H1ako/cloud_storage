@@ -1,3 +1,10 @@
+// global
+interface IPosition {
+    posX: number,
+    posY: number
+}
+
+
 // users
 interface IUser {
     id: IdType,

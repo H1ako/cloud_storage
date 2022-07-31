@@ -17,7 +17,7 @@ class HomeController extends Controller
         Auth::login($userA);
 
         $user = Auth::user();
-        $files = $user ? $user->files : [];
+        $files = $user ? $user->files()->orderBy('created_at', 'DESC')->get() : [];
 
         return inertia('HomePage', [
             'user' => $user,

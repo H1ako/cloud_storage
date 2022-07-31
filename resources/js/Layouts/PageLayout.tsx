@@ -6,15 +6,16 @@ import Asidebar from '../Components/Asidebar';
 // store
 import { updateSpaceData, updateUser } from '../store/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
+// windows components
 import UploadFilesWindow from '../Components/UploadFilesWindow';
+import RClickFileToUploadWindow from '../Components/RClickFileToUploadWindow';
 
 interface Props {
     children: React.ReactNode,
     user: RequestUserType
 }
 
-export default function PageLayout(props: Props) {
-    const { children, user } = props
+export default function PageLayout({ children, user }: Props) {
     const dispatch = useAppDispatch()
     const { isUploadWindowOpened } = useAppSelector(state => state.files)
 
@@ -33,7 +34,7 @@ export default function PageLayout(props: Props) {
                 <>{children}</>
             </main>
             {/* Windows */}
-            {isUploadWindowOpened &&
+            { isUploadWindowOpened &&
                 <UploadFilesWindow />
             }
         </div>

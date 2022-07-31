@@ -63,13 +63,12 @@ class User extends Authenticatable
 
     public function getSpaceDataAttribute() {
         $maxSpace = $this->subscription()->first()->maxSpace;
-        $rawUsedSpacesArray = $this->files()->get('size')->toArray();
-        $usedSpacesArray = count($rawUsedSpacesArray) ? $rawUsedSpacesArray[0] : [];
-        $usedSpace = array_sum($usedSpacesArray);
-
+        $usedSpaces = $this->files()->pluck('size')->toArray();
+        $totalUsedSpace = array_sum($usedSpaces);
+        
         return [
             'maxSpace' => $maxSpace,
-            'usedSpace' => $usedSpace
+            'usedSpace' => $totalUsedSpace
         ];
     }
 }

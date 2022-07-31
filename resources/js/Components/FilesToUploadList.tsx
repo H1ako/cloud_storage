@@ -13,7 +13,7 @@ export default function FilesToUploadList() {
     return (
         <ul className='files-list'>
             {filesToUpload.map((file, id) => (
-                <FileToUploadCard key={`up-file-${id}`} file={file} />
+                <FileToUploadCard key={`up-file-${id}`} fileId={id} file={file} />
             ))}
         </ul>
     )

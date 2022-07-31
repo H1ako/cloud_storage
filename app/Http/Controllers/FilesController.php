@@ -42,7 +42,6 @@ class FilesController extends Controller
         $files = $request->file('files', []);
         /** @var Illuminate\Filesystem\FilesystemAdapter */
         $fileSystem = Storage::disk('public');
-        Log::info($fileSystem->url(''));
 
         foreach($files as $file) {
             $fileSize = $file->getSize();
@@ -71,6 +70,8 @@ class FilesController extends Controller
             ]);
 
             $user->files()->save($newFile);
+            $redirecFiles = $user->files()->orderBy('created_at', 'DESC')->get();
+            return redirect()->route('home.index')->with('files', $redirecFiles)->with('user', $user);
         }
     }
 
