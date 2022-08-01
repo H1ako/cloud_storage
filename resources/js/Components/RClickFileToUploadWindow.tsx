@@ -1,14 +1,19 @@
 // global
 import React from 'react'
 // layouts
-import RClickWindowLayout from '../Layouts/RClickWindowLayout';
+import { RClickWindowLayout } from '../Layouts/RClickWindowLayout';
 import WindowLayout from '../Layouts/WindowLayout';
 // libs
 import getFileToDipslayLink from '../libs/getFileToDipslayLink';
-import { useAppSelector } from '../store/hooks';
+// store
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { changeNameFileToUpload } from '../store/slices/filesSlice';
+import { closeFileToUploadWindow } from '../store/slices/rClickWindowsSlice';
 
+type Props = {}
 
-export default function RClickFileToUploadWindow() {
+export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+    const dispatch = useAppDispatch()
     const { filesToUpload } = useAppSelector(state => state.files)
     const { clickedFileToUploadData, fileToUploadWindowPosition } = useAppSelector(state => state.windows)
     const [ toDisplayLink, setToDisplayLink ] = React.useState<string>('')
@@ -31,11 +36,15 @@ export default function RClickFileToUploadWindow() {
     }, [clickedFileToUploadData.file])
 
     const changeNameHandler = () => {
-
+        dispatch(changeNameFileToUpload({
+            fileId: clickedFileToUploadData.fileId,
+            name: fileName
+        }))
+        dispatch(closeFileToUploadWindow())
     }
 
     return (
-        <RClickWindowLayout posX={fileToUploadWindowPosition.posX} posY={fileToUploadWindowPosition.posY}>
+        <RClickWindowLayout ref={ref} posX={fileToUploadWindowPosition.posX} posY={fileToUploadWindowPosition.posY}>
             { isRenameWindowOpened &&
                 <WindowLayout>
                     <div className="rename-window">
@@ -60,4 +69,4 @@ export default function RClickFileToUploadWindow() {
             </ul>
         </RClickWindowLayout>
     )
-}
+})

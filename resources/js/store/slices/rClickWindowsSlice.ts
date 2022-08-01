@@ -5,7 +5,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IClickedFileToUpload {
     file: File | null,
-    fileId: number | null
+    fileId: ListFileId
 }
 
 interface IClickedFile {

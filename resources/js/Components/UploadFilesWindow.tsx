@@ -10,14 +10,16 @@ import CloseBtn from './CloseBtn';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { closeFilesToUploadWindow } from '../store/slices/filesSlice';
 // windows
-import RClickFileToUploadWindow from './RClickFileToUploadWindow';
+import { RClickFileToUploadWindow } from './RClickFileToUploadWindow';
+import { ClickOutsideLayout } from '../Layouts/ClickOutsideLayout';
+import { closeFileToUploadWindow } from '../store/slices/rClickWindowsSlice';
 
 
 export default function UploadFilesWindow() {
     const dispatch = useAppDispatch()
     const { filesToUpload } = useAppSelector(state => state.files)
     const { isFileToUploadWindowOpened } = useAppSelector(state => state.windows)
-    
+    const fileToUploadWindowRef = React.createRef<HTMLDivElement>()    
 
     const closeWindow = (): void => {
         dispatch(closeFilesToUploadWindow())
@@ -26,23 +28,15 @@ export default function UploadFilesWindow() {
     const clickOutsideHandler = (e: MouseEvent) => {
         if (!isFileToUploadWindowOpened) return
 
-        // if (RClickWindowRef.current && !RClickWindowRef.current.contains(e.target)) {
-        //     console.log(123)
-        // }
-
-        // if (e.target)
+        dispatch(closeFileToUploadWindow())
     }
-
-    React.useEffect(() => {
-        document.addEventListener('mouseup', clickOutsideHandler)
-
-        return document.removeEventListener('mouseup', clickOutsideHandler)
-    })
 
     return (
         <WindowLayout>
             { isFileToUploadWindowOpened &&
-                <RClickFileToUploadWindow />
+                <ClickOutsideLayout ref={fileToUploadWindowRef} onClick={clickOutsideHandler}>
+                    <RClickFileToUploadWindow />
+                </ClickOutsideLayout>
             }
             <CloseBtn onClose={closeWindow} />
             <div className="upload-files-window">

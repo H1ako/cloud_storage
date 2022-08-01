@@ -8,7 +8,6 @@ import FileToUploadCard from './FileToUploadCard';
 
 export default function FilesToUploadList() {
     const { filesToUpload } = useAppSelector(state => state.files)
-    console.log(filesToUpload)
 
     return (
         <ul className='files-list'>
