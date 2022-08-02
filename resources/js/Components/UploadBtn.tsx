@@ -7,10 +7,10 @@ import { addFilesToUpload, updateFilesToUpload } from '../store/slices/filesSlic
 
 interface Props {
     textInside?: string,
-    action: 'add' | 'set'
+    action?: 'add' | 'set'
 }
 
-export default React.memo(function UploadBtn({textInside, action='set'}: Props) {
+export default React.memo(function UploadBtn({textInside='Upload', action='set'}: Props) {
     const dispatch = useAppDispatch()
 
     const uploadHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -27,7 +27,7 @@ export default React.memo(function UploadBtn({textInside, action='set'}: Props) 
 
     return (
         <label className="upload-btn">
-            {textInside ?? 'Upload'}
+            {textInside}
             <input type="file" multiple onChange={uploadHandler} />
         </label>
     )

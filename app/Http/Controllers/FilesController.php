@@ -45,11 +45,10 @@ class FilesController extends Controller
 
         foreach($files as $file) {
             $fileSize = $file->getSize();
-            if ($fileSize > 1000000) continue;
+            if ($fileSize > 100000000) continue;
             
             $originalFileName = $file->getClientOriginalName();
             $fileName = time().$originalFileName;
-            Log::info($file->getMimeType());
             $fileType = explode('/', $file->getMimeType())[0];
             $filePath = "userFiles/$userId/";
 
@@ -70,9 +69,10 @@ class FilesController extends Controller
             ]);
 
             $user->files()->save($newFile);
-            $redirecFiles = $user->files()->orderBy('created_at', 'DESC')->get();
-            return redirect()->route('home.index')->with('files', $redirecFiles)->with('user', $user);
         }
+
+        $redirecFiles = $user->files()->orderBy('created_at', 'DESC')->get();
+        return redirect()->route('home.index')->with('files', $redirecFiles)->with('user', $user);
     }
 
     /**
