@@ -42,16 +42,16 @@ export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>(
 
     const changeNameHandler = () => {
         dispatch(changeNameFileToUpload({
-            fileId: clickedFileToUploadData.fileId,
+            fileId: clickedFileToUploadData.fileIndex,
             name: fileName
         }))
         dispatch(closeFileToUploadWindow())
     }
 
     const removeHandler = () => {
-        if (clickedFileToUploadData.fileId === null) return
+        if (clickedFileToUploadData.fileIndex === null) return
 
-        dispatch(removeFileToUpload(clickedFileToUploadData.fileId))
+        dispatch(removeFileToUpload(clickedFileToUploadData.fileIndex))
         dispatch(closeFileToUploadWindow())
     }
 

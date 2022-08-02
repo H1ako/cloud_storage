@@ -28,7 +28,7 @@ export default function FilesList() {
                 </ClickOutsideLayout>
             }
             {files.map((file, id) => (
-                <FileCard key={`file-${id}`} fileId={id} file={file} />
+                <FileCard key={`file-${id}`} fileIndex={id} file={file} />
             ))}
         </ul>
     )

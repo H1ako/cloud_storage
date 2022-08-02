@@ -9,10 +9,10 @@ import { openFileWindow } from '../store/slices/rClickWindowsSlice';
 
 interface Props {
     file: IFile,
-    fileId: number
+    fileIndex: number
 }
 
-export default function FileCard({ file, fileId }: Props) {
+export default function FileCard({ file, fileIndex }: Props) {
     const dispatch = useAppDispatch()
 
     const rClickHandler = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
@@ -27,7 +27,7 @@ export default function FileCard({ file, fileId }: Props) {
             },
             fileData: {
                 file: file,
-                fileId: fileId
+                fileIndex: fileIndex
             }
         }))
     }

@@ -8,10 +8,10 @@ import { openFileToUploadWindow } from '../store/slices/rClickWindowsSlice';
 
 interface Props {
     file: File,
-    fileId: number
+    fileIndex: number
 }
 
-export default function FileToUploadCard({ file, fileId }: Props) {
+export default function FileToUploadCard({ file, fileIndex }: Props) {
     const dispatch = useAppDispatch()
 
     const rClickHandler = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
@@ -27,7 +27,7 @@ export default function FileToUploadCard({ file, fileId }: Props) {
             },
             fileData: {
                 file: file,
-                fileId: fileId
+                fileIndex: fileIndex
             }
         }))
     }

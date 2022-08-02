@@ -1,5 +1,6 @@
 // global
 import React from 'react'
+import { Inertia } from '@inertiajs/inertia';
 // layouts
 import { RClickWindowLayout } from '../Layouts/RClickWindowLayout';
 import WindowLayout from '../Layouts/WindowLayout';
@@ -23,7 +24,9 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
     const [ fileName, setFileName ] = React.useState<string>('')
 
     const changeNameHandler = (e: React.MouseEvent) => {
-
+        if (clickedFileData.file) {
+            Inertia.put(`/api/files${clickedFileData.file.id}`, {name: fileName})
+        }
         dispatch(closeFileWindow())
     }
 

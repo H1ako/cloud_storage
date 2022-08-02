@@ -5,12 +5,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IClickedFileToUploadData {
     file: File | null,
-    fileId: ListFileId
+    fileIndex: ListFileId
 }
 
 interface IClickedFileData {
     file: IFile | null,
-    fileId: ListFileId
+    fileIndex: ListFileId
 }
 
 interface IActionOpenFileToUpload {
@@ -37,7 +37,7 @@ const initialState: WindowsState = {
     isFileWindowOpened: false,
     clickedFileData: {
         file: null,
-        fileId: null
+        fileIndex: null
     },
     fileWindowPosition: {
         posX: 0,
@@ -47,7 +47,7 @@ const initialState: WindowsState = {
     isFileToUploadWindowOpened: false,
     clickedFileToUploadData: {
         file: null,
-        fileId: null
+        fileIndex: null
     },
     fileToUploadWindowPosition: {
         posX: 0,
