@@ -3,44 +3,56 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // libs
 
 
-interface IClickedFileToUpload {
+interface IClickedFileToUploadData {
     file: File | null,
     fileId: ListFileId
 }
 
-interface IClickedFile {
-    file: File | null,
-    fileId: number | null
+interface IClickedFileData {
+    file: IFile | null,
+    fileId: ListFileId
 }
 
 interface IActionOpenFileToUpload {
     position: IPosition,
-    fileData: IClickedFileToUpload
+    fileData: IClickedFileToUploadData
+}
+
+interface IActionOpenFile {
+    position: IPosition,
+    fileData: IClickedFileData 
 }
 
 interface WindowsState {
     isFileWindowOpened: boolean,
     isFileToUploadWindowOpened: boolean,
     fileToUploadWindowPosition: IPosition,
-    clickedFileToUploadData: IClickedFileToUpload,
-    clickedFileData: IClickedFile,
+    clickedFileToUploadData: IClickedFileToUploadData,
+    clickedFileData: IClickedFileData,
+    fileWindowPosition: IPosition,
 }
 
 const initialState: WindowsState = {
+    // user's file
     isFileWindowOpened: false,
-    isFileToUploadWindowOpened: false,
-    fileToUploadWindowPosition: {
+    clickedFileData: {
+        file: null,
+        fileId: null
+    },
+    fileWindowPosition: {
         posX: 0,
         posY: 0
     },
+    // file to upload
+    isFileToUploadWindowOpened: false,
     clickedFileToUploadData: {
         file: null,
         fileId: null
     },
-    clickedFileData: {
-        file: null,
-        fileId: null
-    }
+    fileToUploadWindowPosition: {
+        posX: 0,
+        posY: 0
+    },
 }
 
 const rClickWindowsSlice = createSlice({
@@ -55,12 +67,21 @@ const rClickWindowsSlice = createSlice({
         },
         closeFileToUploadWindow: (state: WindowsState) => {
             state.isFileToUploadWindowOpened = false
+        },
+        openFileWindow: (state: WindowsState, action: PayloadAction<IActionOpenFile>) => {
+            state.fileWindowPosition = action.payload.position
+            state.clickedFileData = action.payload.fileData
+
+            state.isFileWindowOpened = true
+        },
+        closeFileWindow: (state: WindowsState) => {
+            state.isFileWindowOpened = false
         }
     }
 })
 
 // export const getUser = createAsyncThunk('user/getUser', getUserData)
 
-export const { openFileToUploadWindow, closeFileToUploadWindow } = rClickWindowsSlice.actions
+export const { openFileToUploadWindow, closeFileToUploadWindow, openFileWindow, closeFileWindow } = rClickWindowsSlice.actions
 
 export default rClickWindowsSlice.reducer

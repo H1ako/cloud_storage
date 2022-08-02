@@ -47,7 +47,7 @@
         }
     }
 
-    .btns {
+    ul {
         @include clearedUl;
         display: flex;
         flex-direction: column;
@@ -60,12 +60,14 @@
             button, a {
                 @include btn;
                 padding: 0;
-                text-align: left;
                 background: none;
                 text-decoration: none;
                 color: var(--colorTextDark);
                 font-size: var(--fontSize3-5);
-                display: inline-block;
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+                justify-content: flex-start;
             }
 
             &:not(:last-child)::after {

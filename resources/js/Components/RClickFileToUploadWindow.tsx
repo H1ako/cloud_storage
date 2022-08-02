@@ -2,17 +2,22 @@
 import React from 'react'
 // layouts
 import { RClickWindowLayout } from '../Layouts/RClickWindowLayout';
-import WindowLayout from '../Layouts/WindowLayout';
 // libs
 import getFileToDipslayLink from '../libs/getFileToDipslayLink';
 // store
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { changeNameFileToUpload } from '../store/slices/filesSlice';
 import { closeFileToUploadWindow } from '../store/slices/rClickWindowsSlice';
+// components
+import { RenameWindow } from './RenameWindow';
+// icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faFileSignature, faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
+
 
 type Props = {}
 
-export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref) => {
     const dispatch = useAppDispatch()
     const { filesToUpload } = useAppSelector(state => state.files)
     const { clickedFileToUploadData, fileToUploadWindowPosition } = useAppSelector(state => state.windows)
@@ -25,7 +30,7 @@ export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>(
             setFileName(clickedFileToUploadData.file.name)
         }
         
-    }, [clickedFileToUploadData.file && clickedFileToUploadData.file.name])
+    }, [clickedFileToUploadData.file?.name])
 
     React.useEffect(() => {
         if (clickedFileToUploadData.file) {
@@ -46,25 +51,26 @@ export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>(
     return (
         <RClickWindowLayout ref={ref} posX={fileToUploadWindowPosition.posX} posY={fileToUploadWindowPosition.posY}>
             { isRenameWindowOpened &&
-                <WindowLayout>
-                    <div className="rename-window">
-                        <input value={fileName} placeholder='File Name' className='rename-window__input' type="text" onChange={e => setFileName(e.target.value)} />
-                        <div className="rename-window__btns">
-                            <button className="btns__btn change-btn" onClick={changeNameHandler}>Change</button>
-                            <button className="btns__btn cancel-btn" onClick={() => setIsRenameWindowOpened(false)}>Cancel</button>
-                        </div>
-                    </div>
-                </WindowLayout>
+                <RenameWindow name={fileName} setName={setFileName} cancel={() => setIsRenameWindowOpened(false)} changeNameConfirm={changeNameHandler} />
             }
             <ul className="btns">
                 <li>
-                    <a target={'_blank'} href={toDisplayLink}>Open</a>
+                    <a target={'_blank'} href={toDisplayLink}>
+                        <FontAwesomeIcon icon={faArrowLeftLong} />
+                        Open
+                    </a>
                 </li>
                 <li>
-                    <button onClick={() => setIsRenameWindowOpened(true)}>Rename</button>
+                    <button onClick={() => setIsRenameWindowOpened(true)}>
+                        <FontAwesomeIcon icon={faFileSignature} />
+                        Rename
+                    </button>
                 </li>
                 <li>
-                    <button>Delete</button>
+                    <button>
+                        <FontAwesomeIcon icon={faTrash} />
+                        Delete
+                    </button>
                 </li>
             </ul>
         </RClickWindowLayout>
