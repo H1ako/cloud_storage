@@ -6,13 +6,13 @@ import { RClickWindowLayout } from '../Layouts/RClickWindowLayout';
 import getFileToDipslayLink from '../libs/getFileToDipslayLink';
 // store
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { changeNameFileToUpload } from '../store/slices/filesSlice';
+import { changeNameFileToUpload, removeFileToUpload } from '../store/slices/filesSlice';
 import { closeFileToUploadWindow } from '../store/slices/rClickWindowsSlice';
 // components
 import { RenameWindow } from './RenameWindow';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faFileSignature, faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
+import { faFileSignature, faArrowLeftLong, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 
 type Props = {}
@@ -48,6 +48,13 @@ export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>(
         dispatch(closeFileToUploadWindow())
     }
 
+    const removeHandler = () => {
+        if (clickedFileToUploadData.fileId === null) return
+
+        dispatch(removeFileToUpload(clickedFileToUploadData.fileId))
+        dispatch(closeFileToUploadWindow())
+    }
+
     return (
         <RClickWindowLayout ref={ref} posX={fileToUploadWindowPosition.posX} posY={fileToUploadWindowPosition.posY}>
             { isRenameWindowOpened &&
@@ -67,9 +74,9 @@ export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>(
                     </button>
                 </li>
                 <li>
-                    <button>
-                        <FontAwesomeIcon icon={faTrash} />
-                        Delete
+                    <button onClick={removeHandler}>
+                        <FontAwesomeIcon icon={faXmark} />
+                        Remove
                     </button>
                 </li>
             </ul>

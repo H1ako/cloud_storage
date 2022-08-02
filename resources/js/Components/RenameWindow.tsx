@@ -8,7 +8,7 @@ interface Props {
     name: string,
     setName: (name: string) => void,
     changeNameConfirm: (e: React.MouseEvent) => void,
-    cancel: (e: React.MouseEvent) => void
+    cancel: (e: React.MouseEvent) => void,
     placeholder?: string,
 
 }

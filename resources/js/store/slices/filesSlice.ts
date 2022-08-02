@@ -60,12 +60,15 @@ const filesSlice = createSlice({
             state.filesToUpload[fileId] = new File([oldFile], name, {
                 type: oldFile.type
             })
+        },
+        removeFileToUpload: (state: FilesState, action: PayloadAction<number>) => {
+            state.filesToUpload = state.filesToUpload.filter((file: File, index: number) => index !== action.payload)
         }
     }
 })
 
 // export const getUser = createAsyncThunk('user/getUser', getUserData)
 
-export const { updateFiles, updateFilesToUpload, addFilesToUpload, closeFilesToUploadWindow, changeNameFileToUpload } = filesSlice.actions
+export const { updateFiles, updateFilesToUpload, addFilesToUpload, closeFilesToUploadWindow, changeNameFileToUpload, removeFileToUpload } = filesSlice.actions
 
 export default filesSlice.reducer
