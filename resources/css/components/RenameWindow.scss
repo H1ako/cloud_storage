@@ -1,0 +1,30 @@
+.rename-window {
+    padding: 3rem 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    background: var(--colorBg);
+    border-radius: var(--bdrsDefault);
+
+    &__btns {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        .btns__btn {
+            @include btn;
+            
+            &.cancel-btn {
+                background: var(--colorMain);
+                color: var(--colorText);
+            }
+            
+
+            &.change-btn {
+                background: var(--colorAccent);
+            }
+        }
+        
+    }
+}

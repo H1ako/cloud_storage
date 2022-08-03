@@ -6,9 +6,16 @@ use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use PhpOption\None;
 
 class FilesController extends Controller
 {
+
+    protected function redirectToHomeWithFiles(Request $request) {
+        $user = $request->user();
+        $redirectFiles = $user->files()->orderBy('created_at', 'DESC')->get();
+        return redirect()->route('home.index')->with('files', $redirectFiles)->with('user', $user);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,16 +24,6 @@ class FilesController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
     }
 
     /**
@@ -65,14 +62,14 @@ class FilesController extends Controller
                 'type' => $fileType,
                 'size' => $fileSize,
                 'path' => $fullPath,
-                'shareLink' => ''
+                'shareLink' => Null
             ]);
 
             $user->files()->save($newFile);
         }
 
-        $redirecFiles = $user->files()->orderBy('created_at', 'DESC')->get();
-        return redirect()->route('home.index')->with('files', $redirecFiles)->with('user', $user);
+        
+        return $this->redirectToHomeWithFiles($request);
     }
 
     /**
@@ -83,18 +80,7 @@ class FilesController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        
     }
 
     /**
@@ -106,7 +92,15 @@ class FilesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $file = File::find($id);
+        $validatedData = $request->validate([
+            'name' => 'min:5',
+            'shareLink' => 'min:2|unique:files,shareLink,'.$file->id
+        ]);
+
+        $file->update($validatedData);
+
+        return $this->redirectToHomeWithFiles($request);
     }
 
     /**
@@ -117,6 +111,9 @@ class FilesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $file = File::find($id);
+
+        Storage::disk('public')->delete($file->path);
+        $file->destroy();
     }
 }

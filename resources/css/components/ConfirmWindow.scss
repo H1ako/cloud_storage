@@ -1,0 +1,63 @@
+.confirm-window {
+    padding: 3rem 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    background: var(--colorBg);
+    border-radius: var(--bdrsDefault);
+
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+
+    &__heading {
+        font-weight: 500;
+    }
+
+    input {
+        @include input;
+
+        width: 100%;
+        padding: 0;
+        text-align: center;
+
+        &.text-start {
+            text-align: left;
+        }
+    }
+    
+    label {
+        font-weight: 500
+    }
+
+    button {
+        @include btn;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        &.copy-link {
+            padding: .5rem;
+        }
+    }
+
+    &__btns {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        .btns__btn {
+            &.cancel-btn {
+                background: var(--colorMain);
+                color: var(--colorText);
+            }
+            
+            &.confirm-btn {
+                background: var(--colorAccent);
+            }
+        }
+        
+    }
+}

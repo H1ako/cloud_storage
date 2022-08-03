@@ -26,7 +26,7 @@ Route::get('/login', function() {
 
 
 Route::prefix('api')->middleware('auth')->group(function () {
-    Route::resource('files', FilesController::class);
+    Route::resource('files', FilesController::class)->except(['create', 'edit']);
 });
 
 // require __DIR__.'/auth.php';

@@ -9,7 +9,7 @@ import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { changeNameFileToUpload, removeFileToUpload } from '../store/slices/filesSlice';
 import { closeFileToUploadWindow } from '../store/slices/rClickWindowsSlice';
 // components
-import { RenameWindow } from './RenameWindow';
+import { ConfirmWindow } from './ConfirmWindow';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileSignature, faArrowLeftLong, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +19,6 @@ type Props = {}
 
 export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref) => {
     const dispatch = useAppDispatch()
-    const { filesToUpload } = useAppSelector(state => state.files)
     const { clickedFileToUploadData, fileToUploadWindowPosition } = useAppSelector(state => state.windows)
     const [ toDisplayLink, setToDisplayLink ] = React.useState<string>('')
     const [ isRenameWindowOpened, setIsRenameWindowOpened ] = React.useState<boolean>(false)
@@ -40,7 +39,7 @@ export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>(
         }
     }, [clickedFileToUploadData.file])
 
-    const changeNameHandler = () => {
+    const renameHandler = () => {
         dispatch(changeNameFileToUpload({
             fileId: clickedFileToUploadData.fileIndex,
             name: fileName
@@ -55,10 +54,20 @@ export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>(
         dispatch(closeFileToUploadWindow())
     }
 
+    const closeWindow = () => {
+        dispatch(closeFileToUploadWindow())
+    }
+
     return (
         <RClickWindowLayout ref={ref} posX={fileToUploadWindowPosition.posX} posY={fileToUploadWindowPosition.posY}>
             { isRenameWindowOpened &&
-                <RenameWindow name={fileName} setName={setFileName} cancel={() => setIsRenameWindowOpened(false)} changeNameConfirm={changeNameHandler} />
+                <ConfirmWindow
+                    confirm={renameHandler}
+                    confirmButtonText="Rename"
+                    cancel={closeWindow}
+                >
+                    <input value={fileName} placeholder='File Name' className='confirm-window__input' type="text" onChange={e => setFileName(e.target.value)} />
+                </ConfirmWindow>
             }
             <ul className="btns">
                 <li>
