@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use PhpOption\None;
@@ -14,7 +15,7 @@ class FilesController extends Controller
     protected function redirectToHomeWithFiles(Request $request) {
         $user = $request->user();
         $redirectFiles = $user->files()->orderBy('created_at', 'DESC')->get();
-        return redirect()->route('home.index')->with('files', $redirectFiles)->with('user', $user);
+        return redirect()->route('home')->with('files', $redirectFiles)->with('user', $user);
     }
     /**
      * Display a listing of the resource.
@@ -75,12 +76,18 @@ class FilesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $shareLink
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($shareLink)
     {
+        $file = File::where('shareLink', $shareLink)->first();
+        $user = Auth::user();
         
+        return inertia('FilePage', [
+            'file' => $file,
+            'user' => $user
+        ]);
     }
 
     /**

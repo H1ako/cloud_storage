@@ -40,7 +40,7 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
     }
 
     const shareLinkHandler = () => {
-        if (clickedFileData.file && shareLink) {
+        if (clickedFileData.file) {
             Inertia.put(`/api/files/${clickedFileData.file.id}`, {shareLink: shareLink})
         }
         dispatch(closeFileWindow())
@@ -78,11 +78,11 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
             { isShareLinkWindowOpened &&
                 <ConfirmWindow
                     confirm={shareLinkHandler}
-                    confirmButtonText='Share'
+                    confirmButtonText={shareLink ? 'Share' : 'Stop Sharing'}
                     cancel={closeWindow}
                 >
                     <div className="flex">
-                        <label htmlFor="share-link-input">{window.location.origin}/</label>
+                        <label htmlFor="share-link-input">{window.location.origin}/files/</label>
                         <input value={shareLink} id='share-link-input' placeholder='Share Link' className='confirm-window__input text-start' type="text" onChange={e => setShareLink(e.target.value)} />
                         <button className="confirm-window__btn copy-link" onClick={copyShareLink}>
                             <FontAwesomeIcon icon={faLink} />

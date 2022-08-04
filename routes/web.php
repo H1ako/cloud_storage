@@ -2,31 +2,35 @@
 
 use App\Http\Controllers\FilesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Middleware\EnsureShareLinkIsValid;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-Route::resource('/', HomeController::class, [
-    'names' => [
-        'index' => 'home.index'
-    ]
-]);
+Route::get('/', function() {
+    /** @var \App\Models\User $user **/
+    $user = Auth::user();
+    $files = $user->files()->orderBy('created_at', 'DESC')->get();
+
+    return inertia('HomePage', [
+        'user' => $user,
+        'files' => $files
+    ]);
+})->middleware('auth')->name('home');
+
 Route::get('/login', function() {
-    return Response('status');
+    // $newUser = new User(['email' => 'nikita@yandex.ru', 'name' => 'Nikita']);
+    // $newUser->setPassword('25256789');
+    // $newUser->save();
+    $userA = User::where('email', 'nikita@yandex.ru')->first();
+    Auth::login($userA);
+    return redirect()->route('home');
 })->name('login');
 
 
 Route::prefix('api')->middleware('auth')->group(function () {
-    Route::resource('files', FilesController::class)->except(['create', 'edit']);
+    Route::resource('files', FilesController::class)->except(['create', 'edit', 'show']);
 });
 
-// require __DIR__.'/auth.php';
+Route::get('files/{shareLink}', [FilesController::class, 'show'])->middleware(EnsureShareLinkIsValid::class);

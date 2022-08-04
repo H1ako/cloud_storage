@@ -15,7 +15,6 @@ interface Props {
 
 export default function HomePage({user, files}: Props) {
     const dispatch = useAppDispatch()
-
     
     React.useEffect(() => {
         dispatch(updateFiles(files))

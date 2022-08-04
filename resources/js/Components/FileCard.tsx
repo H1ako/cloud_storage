@@ -1,5 +1,6 @@
 // global
 import React from 'react'
+import { Link } from '@inertiajs/inertia-react';
 // components
 import FileCardBg from './FileCardBg';
 // store
@@ -34,11 +35,13 @@ export default function FileCard({ file, fileIndex }: Props) {
 
     return (
         <li className='file-card' onContextMenu={rClickHandler}>
-            <FileCardBg file={file} />
-            <div className="file-card__info">
-                <h3 className="info__name">{file.name}</h3>
-                <h4 className="info__size">{file.size}</h4>
-            </div>
+            <Link href={file.shareLink ? `/files/${file.shareLink}` : '#'}>
+                <FileCardBg file={file} />
+                <div className="file-card__info">
+                    <h3 className="info__name">{file.name}</h3>
+                    <h4 className="info__size">{file.size}</h4>
+                </div>
+            </Link>
         </li>
     )
 }
