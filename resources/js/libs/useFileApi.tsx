@@ -13,6 +13,7 @@ export default function useFileApi(file: ReceivedFileType, dispatch: AppDispatch
     const [ fileNameForAction, setFileNameForAction ] = React.useState<string>('')
     const [ shareLinkForAction, setShareLinkForAction ] = React.useState<string>('')
 
+
     function deleteFile() {
         if (fileForAction) {
             Inertia.delete(`/api/files/${fileForAction.id}`)
@@ -62,12 +63,9 @@ export default function useFileApi(file: ReceivedFileType, dispatch: AppDispatch
         navigator.clipboard.writeText(link)
     }
 
-    React.useEffect(() => {
-        if (!file) return
 
+    React.useEffect(() => {
         updateFile(file)
-        updateShareLink(file.shareLink)
-        updateName(file.name)
     }, [file])
 
     return {
