@@ -10,6 +10,8 @@ type ReceivedFileType = IFile | null
 
 export default function useFileApi(file: ReceivedFileType, dispatch: AppDispatch) {
     const [ fileForAction, setFileForAction ] = React.useState<ReceivedFileType>(null)
+    const [ fileNameForAction, setFileNameForAction ] = React.useState<string>('')
+    const [ shareLinkForAction, setShareLinkForAction ] = React.useState<string>('')
 
     function deleteFile() {
         if (fileForAction) {
@@ -18,16 +20,16 @@ export default function useFileApi(file: ReceivedFileType, dispatch: AppDispatch
         dispatch(closeFileWindow())
     }
 
-    function renameFile(fileName: string) {
-        if (fileForAction && fileName) {
-            Inertia.put(`/api/files/${fileForAction.id}`, {name: fileName})
+    function renameFile() {
+        if (fileForAction && fileNameForAction) {
+            Inertia.put(`/api/files/${fileForAction.id}`, {name: fileNameForAction})
         }
         dispatch(closeFileWindow())
     }
 
-    function shareFile(shareLink: string) {
+    function shareFile() {
         if (fileForAction) {
-            Inertia.put(`/api/files/${fileForAction.id}`, {shareLink: shareLink})
+            Inertia.put(`/api/files/${fileForAction.id}`, {shareLink: shareLinkForAction})
         }
         dispatch(closeFileWindow())
     }
@@ -36,17 +38,48 @@ export default function useFileApi(file: ReceivedFileType, dispatch: AppDispatch
         if (!newFile) return
 
         setFileForAction(newFile)
+        setShareLinkForAction(newFile.shareLink)
+        setFileNameForAction(newFile.name)
+    }
+
+    function updateShareLink(shareLink: ShareLinkType) {
+        if (shareLink) setShareLinkForAction(shareLink)
+        else setShareLinkForAction('')
+    }
+
+    function updateName(fileName: string) {
+        if (!fileName) return
+
+        setFileNameForAction(fileName)
+    }
+
+    function copyShareLink() {
+        if (!fileForAction) return
+
+        const origin = window.location.origin
+        const link = `${origin}/files/${fileForAction.shareLink}`
+
+        navigator.clipboard.writeText(link)
     }
 
     React.useEffect(() => {
+        if (!file) return
+
         updateFile(file)
-    }, [])
+        updateShareLink(file.shareLink)
+        updateName(file.name)
+    }, [file])
 
     return {
         updateFile,
         deleteFile,
         renameFile,
         shareFile,
-        file: fileForAction
+        updateName,
+        updateShareLink,
+        copyShareLink,
+        file: fileForAction,
+        shareLink: shareLinkForAction,
+        fileName: fileNameForAction
     }
 }

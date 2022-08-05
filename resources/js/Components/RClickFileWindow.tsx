@@ -26,36 +26,13 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
     const [ isRenameWindowOpened, setIsRenameWindowOpened ] = React.useState<boolean>(false)
     const [ isShareLinkWindowOpened, setIsShareLinkWindowOpened ] = React.useState<boolean>(false)
     const [ isDeleteConfirmWindowOpened, setIsDeleteConfirmWindowOpened ] = React.useState<boolean>(false)
-    // file's data to update
-    const [ fileName, setFileName ] = React.useState<string>('')
-    const [ shareLink, setShareLink ] = React.useState<string>('')
     
 
-    const copyShareLink = () => {
-        if (!clickedFileData.file) return
-
-        const origin = window.location.origin
-        const link = `${origin}/files/${clickedFileData.file.shareLink}`
-
-        navigator.clipboard.writeText(link)
-    }
+    
 
     const closeWindow = () => {
         dispatch(closeFileWindow())
     }
-
-
-    React.useEffect(() => {
-        if (clickedFileData.file && clickedFileData.file.name) {
-            setFileName(clickedFileData.file.name)
-        }
-    }, [clickedFileData.file?.name])
-
-    React.useEffect(() => {
-        if (clickedFileData.file && clickedFileData.file.shareLink) {
-            setShareLink(clickedFileData.file.shareLink)
-        }
-    }, [clickedFileData.file?.shareLink])
 
     React.useEffect(() => {
         fileApi.updateFile(clickedFileData.file)
@@ -66,14 +43,14 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
         <RClickWindowLayout ref={ref} posX={fileWindowPosition.posX} posY={fileWindowPosition.posY}>
             { isShareLinkWindowOpened &&
                 <ConfirmWindow
-                    confirm={() => fileApi.shareFile(shareLink)}
-                    confirmButtonText={shareLink ? 'Share' : 'Stop Sharing'}
+                    confirm={fileApi.shareFile}
+                    confirmButtonText={fileApi.shareLink ? 'Share' : 'Stop Sharing'}
                     cancel={closeWindow}
                 >
                     <div className="flex">
                         <label htmlFor="share-link-input">{window.location.origin}/files/</label>
-                        <input value={shareLink} id='share-link-input' placeholder='Share Link' className='confirm-window__input text-start' type="text" onChange={e => setShareLink(e.target.value)} />
-                        <button className="confirm-window__btn copy-link" onClick={copyShareLink}>
+                        <input value={fileApi.shareLink} id='share-link-input' placeholder='Share Link' className='confirm-window__input text-start' type="text" onChange={e => fileApi.updateShareLink(e.target.value)} />
+                        <button className="confirm-window__btn copy-link" onClick={fileApi.copyShareLink}>
                             <FontAwesomeIcon icon={faLink} />
                             Copy
                         </button>
@@ -82,11 +59,11 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
             }
             { isRenameWindowOpened &&
                 <ConfirmWindow
-                    confirm={() => fileApi.renameFile(fileName)}
+                    confirm={fileApi.renameFile}
                     confirmButtonText="Rename"
                     cancel={closeWindow}
                 >
-                    <input value={fileName} placeholder='File Name' className='confirm-window__input' type="text" onChange={e => setFileName(e.target.value)} />
+                    <input value={fileApi.fileName} placeholder='File Name' className='confirm-window__input' type="text" onChange={e => fileApi.updateName(e.target.value)} />
                 </ConfirmWindow>
             }
             { isDeleteConfirmWindowOpened &&
@@ -99,9 +76,9 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
                 </ConfirmWindow>
             }
             <ul>
-                { shareLink &&
+                { fileApi.shareLink &&
                     <li>
-                        <Link onClick={closeWindow} href={`/files/${shareLink}`}>
+                        <Link onClick={closeWindow} href={`/files/${fileApi.shareLink}`}>
                             <FontAwesomeIcon icon={faArrowLeftLong} />
                             Open
                         </Link>
