@@ -1,0 +1,32 @@
+main {
+    justify-content: center;
+    .file-info {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &__name,
+        &__size {
+            font-weight: 400;
+        }
+
+        &__bg {
+            position: relative;
+            font-size: var(--fontSize1);
+            color: var(--colorTextDark);
+            box-shadow: 0rem 0 2rem var(--colorTextDark);
+            
+            img {
+                width: inherit;
+                height: inherit;
+                object-fit: cover;
+                width: auto;
+                max-width: 100%;
+                max-height: 60vh;
+                object-position: center;
+            }
+        }
+    }
+    
+}
