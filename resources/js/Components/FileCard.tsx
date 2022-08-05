@@ -2,7 +2,7 @@
 import React from 'react'
 import { Link } from '@inertiajs/inertia-react';
 // components
-import FileCardBg from './FileCardBg';
+import FileBgByType from './FileBgByType';
 // store
 import { useAppDispatch } from '../store/hooks';
 import { openFileWindow } from '../store/slices/rClickWindowsSlice';
@@ -35,9 +35,12 @@ export default function FileCard({ file, fileIndex }: Props) {
 
     return (
         <li className='file-card' onContextMenu={rClickHandler}>
-            <Link href={file.shareLink ? `/files/${file.shareLink}` : '#'}>
-                <FileCardBg file={file} />
+            <Link className={file.shareLink ?? 'no-link'} href={file.shareLink ? `/files/${file.shareLink}` : ''}>
+                <FileBgByType className='file-card__bg' file={file} />
                 <div className="file-card__info">
+                    { file.shareLink &&
+                        <h5 className="info__share-status">Shared</h5>
+                    }
                     <h3 className="info__name">{file.name}</h3>
                     <h4 className="info__size">{file.size}</h4>
                 </div>

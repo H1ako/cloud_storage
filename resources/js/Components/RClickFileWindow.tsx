@@ -1,6 +1,7 @@
 // global
 import React from 'react'
 import { Inertia } from '@inertiajs/inertia';
+import { Link } from '@inertiajs/inertia-react';
 // layouts
 import { RClickWindowLayout } from '../Layouts/RClickWindowLayout';
 // components
@@ -10,7 +11,9 @@ import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { closeFileWindow } from '../store/slices/rClickWindowsSlice';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeftLong, faFileSignature, faShareFromSquare, faTrash, faFileArrowDown, faLink } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeftLong, faFileSignature, faShareFromSquare, faTrash, faFileArrowDown, faLink, faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
+// libs
+import useFileApi from '../libs/useFileApi';
 
 
 type Props = {}
@@ -18,33 +21,15 @@ type Props = {}
 export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref) => {
     const dispatch = useAppDispatch()
     const { clickedFileData, fileWindowPosition } = useAppSelector(state => state.windows)
+    const fileApi = useFileApi(clickedFileData.file, dispatch)
+    // windows open state
     const [ isRenameWindowOpened, setIsRenameWindowOpened ] = React.useState<boolean>(false)
     const [ isShareLinkWindowOpened, setIsShareLinkWindowOpened ] = React.useState<boolean>(false)
     const [ isDeleteConfirmWindowOpened, setIsDeleteConfirmWindowOpened ] = React.useState<boolean>(false)
+    // file's data to update
     const [ fileName, setFileName ] = React.useState<string>('')
     const [ shareLink, setShareLink ] = React.useState<string>('')
-
-
-    const renameHandler = () => {
-        if (clickedFileData.file && fileName) {
-            Inertia.put(`/api/files/${clickedFileData.file.id}`, {name: fileName})
-        }
-        dispatch(closeFileWindow())
-    }
-
-    const deleteHandler = () => {
-        if (clickedFileData.file) {
-            Inertia.delete(`/api/files/${clickedFileData.file.id}`)
-        }
-        dispatch(closeFileWindow())
-    }
-
-    const shareLinkHandler = () => {
-        if (clickedFileData.file) {
-            Inertia.put(`/api/files/${clickedFileData.file.id}`, {shareLink: shareLink})
-        }
-        dispatch(closeFileWindow())
-    }
+    
 
     const copyShareLink = () => {
         if (!clickedFileData.file) return
@@ -72,12 +57,16 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
         }
     }, [clickedFileData.file?.shareLink])
 
+    React.useEffect(() => {
+        fileApi.updateFile(clickedFileData.file)
+    }, [clickedFileData.file])
+
     
     return (
         <RClickWindowLayout ref={ref} posX={fileWindowPosition.posX} posY={fileWindowPosition.posY}>
             { isShareLinkWindowOpened &&
                 <ConfirmWindow
-                    confirm={shareLinkHandler}
+                    confirm={() => fileApi.shareFile(shareLink)}
                     confirmButtonText={shareLink ? 'Share' : 'Stop Sharing'}
                     cancel={closeWindow}
                 >
@@ -93,7 +82,7 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
             }
             { isRenameWindowOpened &&
                 <ConfirmWindow
-                    confirm={renameHandler}
+                    confirm={() => fileApi.renameFile(fileName)}
                     confirmButtonText="Rename"
                     cancel={closeWindow}
                 >
@@ -102,7 +91,7 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
             }
             { isDeleteConfirmWindowOpened &&
                 <ConfirmWindow
-                    confirm={deleteHandler}
+                    confirm={fileApi.deleteFile}
                     confirmButtonText='Delete'
                     cancel={closeWindow}
                 >
@@ -110,10 +99,18 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
                 </ConfirmWindow>
             }
             <ul>
+                { shareLink &&
+                    <li>
+                        <Link onClick={closeWindow} href={`/files/${shareLink}`}>
+                            <FontAwesomeIcon icon={faArrowLeftLong} />
+                            Open
+                        </Link>
+                    </li>
+                }
                 <li>
-                    <a target={'_blank'} onClick={() => dispatch(closeFileWindow())} href={clickedFileData.file?.path}>
-                        <FontAwesomeIcon icon={faArrowLeftLong} />
-                        Open
+                    <a target={'_blank'} onClick={closeWindow} href={clickedFileData.file?.path}>
+                        <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
+                        Full Size
                     </a>
                 </li>
                 <li>

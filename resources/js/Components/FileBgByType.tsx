@@ -9,41 +9,41 @@ import getFileToDipslayLink from '../libs/getFileToDipslayLink';
 
 interface Props {
     file: File | IFile,
+    className?: string
 }
 
-export default function FileCardBg(props: Props) {
-    const { file } = props
+export default function FileBgByType({ file, className }: Props) {
     const picture = file instanceof File ? getFileToDipslayLink(file) : file.path
 
     switch (file.type.split('/')[0]) {
         case 'video':
             return (
-                <div className="file-card__bg">
+                <div className={className}>
                     <img src={picture} alt="" />
                 </div>
             )
             
         case 'image':
             return (
-                <div className="file-card__bg">
+                <div className={className}>
                     <img src={picture} alt="" />
                 </div>
             )
         case 'application':
             return (
-                <div className="file-card__bg">
+                <div className={className}>
                     <FontAwesomeIcon icon={faFileZipper} />
                 </div>
             )
         case 'text':
             return (
-                <div className="file-card__bg">
+                <div className={className}>
                     <FontAwesomeIcon icon={faFileLines} />
                 </div>
             )
         default:
             return (
-                <div className="file-card__bg">
+                <div className={className}>
                     <FontAwesomeIcon icon={faFile} />
                 </div>
             )

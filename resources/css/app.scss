@@ -63,3 +63,8 @@ h5 {
 .app-logo {
     width: 15rem;
 }
+
+.no-link {
+    cursor: default;
+    pointer-events: none;
+}

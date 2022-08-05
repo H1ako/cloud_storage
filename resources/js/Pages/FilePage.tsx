@@ -3,7 +3,7 @@ import React from 'react'
 // layout
 import PageLayout from '../Layouts/PageLayout';
 // components
-import FileCardBg from '../Components/FileCardBg';
+import FileBgByType from '../Components/FileBgByType';
 // store
 import { useAppDispatch } from '../store/hooks';
 
@@ -18,7 +18,7 @@ export default function FilePage({user, file}: Props) {
 
     return (
         <PageLayout user={user}>
-            <FileCardBg file={file} />
+            <FileBgByType file={file} className='file-container' />
         </PageLayout>
     )
 }

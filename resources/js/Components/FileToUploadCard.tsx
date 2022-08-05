@@ -1,7 +1,7 @@
 // global
 import React from 'react'
 // components
-import FileCardBg from './FileCardBg';
+import FileBgByType from './FileBgByType';
 import { useAppDispatch } from '../store/hooks';
 import { openFileToUploadWindow } from '../store/slices/rClickWindowsSlice';
 
@@ -34,7 +34,7 @@ export default function FileToUploadCard({ file, fileIndex }: Props) {
 
     return (
         <li className='file-card' onContextMenu={rClickHandler}>
-            <FileCardBg file={file} />
+            <FileBgByType className='file-card__bg' file={file} />
             <div className="file-card__info">
                 <h3 className="info__name">{file.name}</h3>
                 <h4 className="info__size">{file.size}</h4>
