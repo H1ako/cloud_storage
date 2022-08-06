@@ -49,7 +49,7 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
                 <DeleteConfirmWindow fileApi={fileApi} closeWindow={closeWindow} />
             }
             <ul>
-                { fileApi.shareLink &&
+                { fileApi.file?.shareLink &&
                     <li>
                         <Link onClick={closeWindow} href={`/files/${fileApi.shareLink}`}>
                             <FontAwesomeIcon icon={faArrowLeftLong} />

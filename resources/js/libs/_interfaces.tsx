@@ -1,8 +1,8 @@
 interface IUseFileApiReturned {
-    updateFile: (file: ReceivedFileType) => void,
+    updateFile: (file?: ReceivedFileType) => void,
     deleteFile: () => void,
-    renameFile: () => void,
-    shareFile: () => void,
+    renameFile: (nameForAction?: string) => void,
+    shareFile: (shareLinkForAction?: ShareLinkType) => void,
     updateName: (newName: string) => void,
     updateShareLink: (newLink: ShareLinkType) => void,
     copyShareLink: () => void,

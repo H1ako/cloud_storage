@@ -15,12 +15,17 @@ export const RenameWindow =({ fileApi, closeWindow }: Props) => {
         closeWindow()
     }
 
+    const cancelHandler = () => {
+        fileApi.updateFile()
+        closeWindow()
+    }
+
 
     return (
         <ConfirmWindowLayout
             confirm={confirmHandler}
             confirmButtonText="Rename"
-            cancel={closeWindow}
+            cancel={cancelHandler}
         >
             <input value={fileApi.fileName} placeholder='File Name' className='confirm-window__input' type="text" onChange={e => fileApi.updateName(e.target.value)} />
         </ConfirmWindowLayout>

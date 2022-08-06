@@ -15,19 +15,19 @@ export default function useFileApi<Props>(file: ReceivedFileType): IUseFileApiRe
         }
     }
 
-    function renameFile() {
+    function renameFile(nameForAction: string=fileName) {
         if (fileForAction && fileName) {
-            Inertia.put(`/api/files/${fileForAction.id}`, {name: fileName})
+            Inertia.put(`/api/files/${fileForAction.id}`, {name: nameForAction})
         }
     }
 
-    function shareFile() {
+    function shareFile(shareLinkForAction: ShareLinkType=shareLink) {
         if (fileForAction) {
-            Inertia.put(`/api/files/${fileForAction.id}`, {shareLink: shareLink})
+            Inertia.put(`/api/files/${fileForAction.id}`, {shareLink: shareLinkForAction})
         }
     }
 
-    function updateFile(newFile: ReceivedFileType) {
+    function updateFile(newFile: ReceivedFileType = file) {
         if (!newFile) return
 
         setFileForAction(newFile)

@@ -40,7 +40,7 @@ export default function FilePage({user, file}: Props) {
             <div className="file-controll-btns">
                 <button className="file-controll-btns__btn" onClick={() => setIsRenameWindowOpened(true)}>Rename</button>
                 <button className="file-controll-btns__btn" onClick={() => setIsDeleteConfirmWindowOpened(true)}>Delete</button>
-                <a target='_blank' href={fileApi.file?.path} className="file-controll-btns__btn">Full Size</a>
+                <a target='_blank' href={file.path} className="file-controll-btns__btn">Full Size</a>
             </div>
             <div className="file-info">
                 <FileBgByType file={file} className='file-info__bg' />
@@ -48,7 +48,7 @@ export default function FilePage({user, file}: Props) {
                 <h3 className="file-info__size">{file.size}</h3>
             </div>
             <div className="main-btns">
-                <button className="main-btns__btn">Stop Sharing</button>
+                <button className="main-btns__btn" onClick={() => setIsShareLinkWindowOpened(true)}>Share</button>
                 <a href={file.path} download={file.name}>
                     <FontAwesomeIcon icon={faFileArrowDown} />
                     Download
