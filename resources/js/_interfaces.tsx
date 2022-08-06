@@ -31,14 +31,15 @@ interface IUserSpaceData {
 
 // files
 interface IFile {
-    id: IdType,
-    path: string,
+    readonly id: IdType,
+    readonly path: string,
+    readonly displayPath: string,
     name: string,
     size: SpaceSizeType,
     type: FileType,
     shareLink: string
-    user?: IUser,
-    user_id: IdType
+    readonly user?: IUser,
+    readonly user_id: IdType
 }
 
 // requests

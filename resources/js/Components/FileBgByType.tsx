@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function FileBgByType({ file, className }: Props) {
-    const picture = file instanceof File ? getFileToDipslayLink(file) : file.path
+    const picture = file instanceof File ? getFileToDipslayLink(file) : file.displayPath
 
     switch (file.type.split('/')[0]) {
         case 'video':

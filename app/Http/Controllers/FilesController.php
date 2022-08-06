@@ -44,11 +44,11 @@ class FilesController extends Controller
             $fileType = explode('/', $file->getMimeType())[0];
             $filePath = "userFiles/$userId/";
 
-            // $fileSystem->putFileAs(
-            //     $filePath,
-            //     $file,
-            //     $fileName
-            // );
+            $fileSystem->putFileAs(
+                $filePath,
+                $file,
+                $fileName
+            );
 
             $fullPath = $filePath.$fileName;
 
@@ -115,10 +115,11 @@ class FilesController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        
         $user = $request->user();
         $file = $user->files()->find($id);
         if (! $file) return redirect()->back();
-
+        
         Storage::disk('public')->delete($file->path);
         $file->delete();
 

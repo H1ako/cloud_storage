@@ -13,7 +13,7 @@ class File extends Model
 
     protected $fillable = [
         'name',
-        // 'path',
+        'path',
         'size',
         'type',
         'user_id',
@@ -22,17 +22,18 @@ class File extends Model
 
     protected $guarded = [];
 
-    protected $appends = ['path'];
+    protected $appends = ['displayPath'];
 
-
-    public function getPathAttribute($original) {
-        // Log::info($original);
+    protected function getDisplayPathAttribute() {
         /** @var Illuminate\Filesystem\FilesystemAdapter */
         $fileSystem = Storage::disk('public');
-        $path = $fileSystem->url($original);
-        // Log::info($path);
+        $path = $fileSystem->url($this->path);
         
         return $path;
+    }
+
+    public function getOriginalPathAttribute() {
+        return $this->path;
     }
 
     public function user() {
