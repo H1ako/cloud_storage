@@ -19,32 +19,32 @@ export default function FileBgByType({ file, className }: Props) {
         case 'video':
             return (
                 <div className={className}>
-                    <img src={picture} alt="" />
+                    <video className='bg__content' src={picture} controls />
                 </div>
             )
             
         case 'image':
             return (
                 <div className={className}>
-                    <img src={picture} alt="" />
+                    <img className='bg__content' src={picture} alt="" />
                 </div>
             )
         case 'application':
             return (
                 <div className={className}>
-                    <FontAwesomeIcon icon={faFileZipper} />
+                    <FontAwesomeIcon className='bg__content' icon={faFileZipper} />
                 </div>
             )
         case 'text':
             return (
                 <div className={className}>
-                    <FontAwesomeIcon icon={faFileLines} />
+                    <FontAwesomeIcon className='bg__content' icon={faFileLines} />
                 </div>
             )
         default:
             return (
                 <div className={className}>
-                    <FontAwesomeIcon icon={faFile} />
+                    <FontAwesomeIcon className='bg__content' icon={faFile} />
                 </div>
             )
     }

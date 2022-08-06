@@ -16,18 +16,22 @@ main {
 
         &__bg {
             position: relative;
-            font-size: var(--fontSize1);
-            color: var(--colorTextDark);
-            box-shadow: 0rem 0 2rem var(--colorTextDark);
+            line-height: 0px;
             
-            img {
+            video.bg__content,
+            img.bg__content {
                 width: inherit;
                 height: inherit;
-                object-fit: cover;
-                width: auto;
                 max-width: 100%;
                 max-height: 45vh;
                 object-position: center;
+                object-fit: cover;
+                box-shadow: 0rem 0 2rem var(--colorTextDark);
+            }
+            svg.bg__content {
+                font-size: var(--fontSize0);
+                color: var(--colorTextDark);
+                background: inherit;
             }
         }
     }
