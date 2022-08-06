@@ -58,7 +58,7 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
                     </li>
                 }
                 <li>
-                    <a target={'_blank'} onClick={closeWindow} href={clickedFileData.file?.path}>
+                    <a target={'_blank'} onClick={closeWindow} href={clickedFileData.file?.displayPath}>
                         <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
                         Full Size
                     </a>
@@ -82,7 +82,7 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
                     </button>
                 </li>
                 <li>
-                    <a href={clickedFileData.file?.path} download={clickedFileData.file?.name}>
+                    <a href={clickedFileData.file?.displayPath} download={clickedFileData.file?.name}>
                         <FontAwesomeIcon icon={faFileArrowDown} />
                         Download
                     </a>

@@ -26,7 +26,7 @@ class File extends Model
 
     protected function getDisplayPathAttribute() {
         /** @var Illuminate\Filesystem\FilesystemAdapter */
-        $fileSystem = Storage::disk('public');
+        $fileSystem = Storage::disk('userFiles');
         $path = $fileSystem->url($this->path);
         
         return $path;

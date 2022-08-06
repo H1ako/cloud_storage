@@ -33,7 +33,7 @@ class FilesController extends Controller
         $userId = $user->id;
         $files = $request->file('files', []);
         /** @var Illuminate\Filesystem\FilesystemAdapter */
-        $fileSystem = Storage::disk('public');
+        $fileSystem = Storage::disk('userFiles');
 
         foreach($files as $file) {
             $fileSize = $file->getSize();
@@ -42,7 +42,7 @@ class FilesController extends Controller
             $originalFileName = $file->getClientOriginalName();
             $fileName = time().$originalFileName;
             $fileType = explode('/', $file->getMimeType())[0];
-            $filePath = "userFiles/$userId/";
+            $filePath = "$userId/";
 
             $fileSystem->putFileAs(
                 $filePath,
@@ -85,6 +85,26 @@ class FilesController extends Controller
     }
 
     /**
+     * Display the full size file.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $filePath
+     * @return \Illuminate\Http\Response
+     */
+    public function showFullSize(Request $request, $filePath)
+    {
+        $file = File::where('path', $filePath)->first();
+        if (! $file) return 'no file';
+        $user = $request->user();
+
+        if (!$file->user_id === $user->id && !$file->shareLink) return 'no permissions';
+
+        $path = storage_path("app/userFiles\\${filePath}");
+
+        return response()->file($path);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -119,8 +139,8 @@ class FilesController extends Controller
         $user = $request->user();
         $file = $user->files()->find($id);
         if (! $file) return redirect()->back();
-        
-        Storage::disk('public')->delete($file->path);
+
+        Storage::disk('userFiles')->delete($file->path);
         $file->delete();
 
         return redirect()->back();

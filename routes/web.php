@@ -1,12 +1,11 @@
 <?php
 
 use App\Http\Controllers\FilesController;
-use App\Http\Controllers\HomeController;
 use App\Http\Middleware\EnsureShareLinkIsValid;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function() {
     /** @var \App\Models\User $user **/
@@ -34,3 +33,7 @@ Route::prefix('api')->middleware('auth')->group(function () {
 });
 
 Route::get('files/{shareLink}', [FilesController::class, 'show'])->middleware(EnsureShareLinkIsValid::class);
+// Route::get('test', function() {
+    // return Storage::disk('userFiles')->url('/1/1659794382webDevSite.png');
+// });
+Route::get('storage/userFiles/{filePath}', [FilesController::class, 'showFullSize'])->where('filePath', '.*');
