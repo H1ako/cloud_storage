@@ -44,13 +44,13 @@ class FilesController extends Controller
             $fileType = explode('/', $file->getMimeType())[0];
             $filePath = "userFiles/$userId/";
 
-            $fileSystem->putFileAs(
-                $filePath,
-                $file,
-                $fileName
-            );
+            // $fileSystem->putFileAs(
+            //     $filePath,
+            //     $file,
+            //     $fileName
+            // );
 
-            $fullPath = $fileSystem->url($filePath.$fileName);
+            $fullPath = $filePath.$fileName;
 
             $newFile = new File([
                 'name' => $originalFileName,
@@ -93,10 +93,13 @@ class FilesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $file = File::find($id);
+        $user = $request->user();
+        $file = $user->files()->find($id);
+        if (! $file) return;
+
         $validatedData = $request->validate([
             'name' => 'min:5',
-            'shareLink' => 'min:2|unique:files,shareLink,'.$file->id
+            'shareLink' => 'nullable|unique:files,shareLink,'.$file->id
         ]);
 
         $file->update($validatedData);
@@ -110,11 +113,15 @@ class FilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $file = File::find($id);
+        $user = $request->user();
+        $file = $user->files()->find($id);
+        if (! $file) return redirect()->back();
 
         Storage::disk('public')->delete($file->path);
-        $file->destroy();
+        $file->delete();
+
+        return redirect()->back();
     }
 }

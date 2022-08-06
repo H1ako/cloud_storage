@@ -1,9 +1,12 @@
 main {
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
     .file-info {
+        flex-grow: 1;
         position: relative;
         display: flex;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
 
         &__name,
@@ -23,10 +26,45 @@ main {
                 object-fit: cover;
                 width: auto;
                 max-width: 100%;
-                max-height: 60vh;
+                max-height: 45vh;
                 object-position: center;
             }
         }
     }
-    
+
+    .main-btns {
+        &__btn {
+            &.download-btn {
+                background: var(--colorMain);
+                color: var(--colorText);
+            }
+
+            &.share-btn {
+                background: var(--colorAccent);
+                color: var(--colorBlack);
+            }
+        }
+    }
+
+    .file-controll-btns {
+        &__btn {
+            background: var(--colorGray);
+            color: var(--colorBlack);
+        }
+    }
+
+    .main-btns,
+    .file-controll-btns {
+        margin: 0 auto;
+        width: min(100%, 35rem);;
+        display: flex;
+        justify-content: space-around;
+        gap: 1rem;
+        align-items: center;
+
+        button, a {
+            width: 100%;
+            @include btn;
+        }
+    }
 }

@@ -48,8 +48,8 @@ export default function FilePage({user, file}: Props) {
                 <h3 className="file-info__size">{file.size}</h3>
             </div>
             <div className="main-btns">
-                <button className="main-btns__btn" onClick={() => setIsShareLinkWindowOpened(true)}>Share</button>
-                <a href={file.path} download={file.name}>
+                <button className="main-btns__btn share-btn" onClick={() => setIsShareLinkWindowOpened(true)}>Share</button>
+                <a className='main-btns__btn download-btn' href={file.path} download={file.name}>
                     <FontAwesomeIcon icon={faFileArrowDown} />
                     Download
                 </a>

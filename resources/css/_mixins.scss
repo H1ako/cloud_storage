@@ -23,6 +23,12 @@
     outline: none;
     cursor: pointer;
     transition: var(--transitionDefault);
+    display: flex;
+    gap: .5rem;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
 
     &:hover,
     &:focus-within {
