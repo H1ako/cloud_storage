@@ -9,20 +9,20 @@ interface Props {
     closeWindow: () => void
 }
 
-export const RenameWindow =({ fileApi, closeWindow }: Props) => {
+export const DeleteConfirmWindow =({ fileApi, closeWindow }: Props) => {
     const confirmHandler = () => {
-        fileApi.renameFile()
+        fileApi.deleteFile()
         closeWindow()
     }
 
-
+    
     return (
         <ConfirmWindowLayout
             confirm={confirmHandler}
-            confirmButtonText="Rename"
+            confirmButtonText='Delete'
             cancel={closeWindow}
         >
-            <input value={fileApi.fileName} placeholder='File Name' className='confirm-window__input' type="text" onChange={e => fileApi.updateName(e.target.value)} />
+            <h3 className="confirm-window__heading">Are you sure you want to Delete this File?</h3>
         </ConfirmWindowLayout>
     )
 }

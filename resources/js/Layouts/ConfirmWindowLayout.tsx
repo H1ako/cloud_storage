@@ -1,7 +1,7 @@
 // global
 import React from 'react'
 // layouts
-import WindowLayout from '../Layouts/WindowLayout';
+import WindowLayout from './WindowLayout';
 
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
     children?: React.ReactNode
 }
 
-export const ConfirmWindow = ({ confirm, cancel, children, text='', confirmButtonText='Confirm', cancelButtonText='Cancel'}: Props) => {
+export const ConfirmWindowLayout = ({ confirm, cancel, children, text='', confirmButtonText='Confirm', cancelButtonText='Cancel'}: Props) => {
     return (
         <WindowLayout>
             <div className="confirm-window">

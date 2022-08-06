@@ -1,0 +1,1 @@
+type ReceivedFileType = IFile | null

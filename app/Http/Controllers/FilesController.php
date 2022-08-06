@@ -11,12 +11,6 @@ use PhpOption\None;
 
 class FilesController extends Controller
 {
-
-    protected function redirectToHomeWithFiles(Request $request) {
-        $user = $request->user();
-        $redirectFiles = $user->files()->orderBy('created_at', 'DESC')->get();
-        return redirect()->route('home')->with('files', $redirectFiles)->with('user', $user);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -70,7 +64,7 @@ class FilesController extends Controller
         }
 
         
-        return $this->redirectToHomeWithFiles($request);
+        return redirect()->back();
     }
 
     /**
@@ -107,7 +101,7 @@ class FilesController extends Controller
 
         $file->update($validatedData);
 
-        return $this->redirectToHomeWithFiles($request);
+        return redirect()->back();
     }
 
     /**

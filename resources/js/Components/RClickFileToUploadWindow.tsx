@@ -9,7 +9,7 @@ import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { changeNameFileToUpload, removeFileToUpload } from '../store/slices/filesSlice';
 import { closeFileToUploadWindow } from '../store/slices/rClickWindowsSlice';
 // components
-import { ConfirmWindow } from './ConfirmWindow';
+import { ConfirmWindowLayout } from '../Layouts/ConfirmWindowLayout';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileSignature, faArrowLeftLong, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -61,13 +61,13 @@ export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>(
     return (
         <RClickWindowLayout ref={ref} posX={fileToUploadWindowPosition.posX} posY={fileToUploadWindowPosition.posY}>
             { isRenameWindowOpened &&
-                <ConfirmWindow
+                <ConfirmWindowLayout
                     confirm={renameHandler}
                     confirmButtonText="Rename"
                     cancel={closeWindow}
                 >
                     <input value={fileName} placeholder='File Name' className='confirm-window__input' type="text" onChange={e => setFileName(e.target.value)} />
-                </ConfirmWindow>
+                </ConfirmWindowLayout>
             }
             <ul className="btns">
                 <li>
