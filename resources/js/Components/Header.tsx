@@ -39,12 +39,6 @@ export default function Header() {
             <nav className={isNavVisible ? '' : 'hidden'}>
                 <ul className='links'>
                     <li>
-                        <Link href='/files'>
-                            <FontAwesomeIcon icon={faFolder} />
-                            Files
-                        </Link>
-                    </li>
-                    <li>
                         <Link href='/last'>
                             <FontAwesomeIcon icon={faClockRotateLeft} />
                             Last Used

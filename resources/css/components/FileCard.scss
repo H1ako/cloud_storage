@@ -23,16 +23,19 @@
         height: 70%;
         display: grid;
         place-items: center;
-        font-size: var(--fontSize1);
-        color: var(--colorTextDark);
-
-        .bg__content {
-            position: absolute;
+        
+        video.bg__content,
+        img.bg__content {
             width: 100%;
             height: 100%;
             border-radius: var(--bdrsDefault);
             object-fit: cover;
             object-position: center;
+        }
+
+        svg.bg__content {
+            font-size: var(--fontSize1);
+            color: var(--colorTextDark);
         }
     }
 

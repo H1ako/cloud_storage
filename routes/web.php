@@ -5,7 +5,6 @@ use App\Http\Middleware\EnsureShareLinkIsValid;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function() {
     /** @var \App\Models\User $user **/
@@ -17,6 +16,39 @@ Route::get('/', function() {
         'files' => $files
     ]);
 })->middleware('auth')->name('home');
+
+Route::get('/shared', function() {
+    /** @var \App\Models\User $user **/
+    $user = Auth::user();
+    $files = $user->files()->orderBy('created_at', 'DESC')->get();
+
+    return inertia('HomePage', [
+        'user' => $user,
+        'files' => $files
+    ]);
+})->middleware('auth')->name('shared');
+
+Route::get('/trash', function() {
+    /** @var \App\Models\User $user **/
+    $user = Auth::user();
+    $files = $user->files()->orderBy('created_at', 'DESC')->get();
+
+    return inertia('HomePage', [
+        'user' => $user,
+        'files' => $files
+    ]);
+})->middleware('auth')->name('trash');
+
+Route::get('/last', function() {
+    /** @var \App\Models\User $user **/
+    $user = Auth::user();
+    $files = $user->files()->orderBy('created_at', 'DESC')->get();
+
+    return inertia('HomePage', [
+        'user' => $user,
+        'files' => $files
+    ]);
+})->middleware('auth')->name('last');
 
 Route::get('/login', function() {
     // $newUser = new User(['email' => 'nikita@yandex.ru', 'name' => 'Nikita']);
@@ -33,7 +65,4 @@ Route::prefix('api')->middleware('auth')->group(function () {
 });
 
 Route::get('files/{shareLink}', [FilesController::class, 'show'])->middleware(EnsureShareLinkIsValid::class);
-// Route::get('test', function() {
-    // return Storage::disk('userFiles')->url('/1/1659794382webDevSite.png');
-// });
 Route::get('storage/userFiles/{filePath}', [FilesController::class, 'showFullSize'])->where('filePath', '.*');
