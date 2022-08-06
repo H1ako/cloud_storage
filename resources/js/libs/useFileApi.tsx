@@ -37,14 +37,14 @@ export default function useFileApi<Props>(file: ReceivedFileType): IUseFileApiRe
     }
 
     function updateShareLink(newShareLink: ShareLinkType) {
-        if (newShareLink) setShareLink(newShareLink)
+        if (newShareLink) setShareLink(newShareLink.replace(/\s/g, ''))
         else setShareLink('')
     }
 
     function updateName(newFileName: string) {
         if (!newFileName) return
 
-        setFileName(newFileName)
+        setFileName(newFileName.replace(/\s/g, ''))
     }
 
     function copyShareLink() {

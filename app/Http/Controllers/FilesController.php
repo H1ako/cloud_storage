@@ -118,8 +118,8 @@ class FilesController extends Controller
         if (! $file) return;
 
         $validatedData = $request->validate([
-            'name' => 'min:5',
-            'shareLink' => 'nullable|unique:files,shareLink,'.$file->id
+            'name' => 'min:5|not_regex:/\s+/',
+            'shareLink' => 'nullable|not_regex:/\s+/|unique:files,shareLink,'.$file->id
         ]);
 
         $file->update($validatedData);
