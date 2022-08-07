@@ -11,19 +11,25 @@ export default function useFileApi<Props>(file: ReceivedFileType): IFileApi {
 
     function deleteFile() {
         if (fileForAction) {
-            Inertia.delete(`/api/files/${fileForAction.id}`)
+            Inertia.delete(`/api/files/${fileForAction.id}`, {
+                preserveScroll: true
+            })
         }
     }
 
     function renameFile(nameForAction: string=fileName) {
         if (fileForAction && fileName) {
-            Inertia.put(`/api/files/${fileForAction.id}`, {name: nameForAction})
+            Inertia.put(`/api/files/${fileForAction.id}`, {name: nameForAction}, {
+                preserveScroll: true
+            })
         }
     }
 
     function shareFile(shareLinkForAction: ShareLinkType=shareLink) {
         if (fileForAction) {
-            Inertia.put(`/api/files/${fileForAction.id}`, {shareLink: shareLinkForAction ?? null})
+            Inertia.put(`/api/files/${fileForAction.id}`, {shareLink: shareLinkForAction ?? null}, {
+                preserveScroll: true
+            })
         }
     }
 

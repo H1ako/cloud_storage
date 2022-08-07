@@ -50,6 +50,7 @@ export default function UploadFilesWindow() {
                         data={{files: filesToUpload}}
                         as='button'
                         method='post'
+                        preserveScroll={true}
                     >
                         Upload
                     </Link>
