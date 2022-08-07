@@ -1,6 +1,6 @@
 type FileListType = File[] | FileList
 type ShareLinkType = string | null
-type ListFileId = number | null
+type ListFileId = number
 type FileType = 'video' | 'image' | 'application' | 'text'
 type RequestStatusType = 'idle' | 'loading' | 'failed' | 'succeeded'
 type SpaceSizeType = number

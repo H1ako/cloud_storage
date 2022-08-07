@@ -37,7 +37,7 @@ const initialState: WindowsState = {
     isFileWindowOpened: false,
     clickedFileData: {
         file: null,
-        fileIndex: null
+        fileIndex: -1
     },
     fileWindowPosition: {
         posX: 0,
@@ -47,7 +47,7 @@ const initialState: WindowsState = {
     isFileToUploadWindowOpened: false,
     clickedFileToUploadData: {
         file: null,
-        fileIndex: null
+        fileIndex: -1
     },
     fileToUploadWindowPosition: {
         posX: 0,

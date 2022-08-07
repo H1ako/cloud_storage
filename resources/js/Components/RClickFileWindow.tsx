@@ -12,7 +12,7 @@ import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { closeFileWindow } from '../store/slices/rClickWindowsSlice';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeftLong, faFileSignature, faShareFromSquare, faTrash, faFileArrowDown, faLink, faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeftLong, faFileSignature, faShareFromSquare, faTrash, faFileArrowDown, faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
 // libs
 import useFileApi from '../libs/useFileApi';
 
@@ -32,11 +32,6 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
         dispatch(closeFileWindow())
     }
 
-
-    React.useEffect(() => {
-        fileApi.updateFile(clickedFileData.file)
-    }, [clickedFileData.file])
-    
     return (
         <RClickWindowLayout ref={ref} posX={fileWindowPosition.posX} posY={fileWindowPosition.posY}>
             { isShareLinkWindowOpened &&

@@ -5,7 +5,7 @@ import { ConfirmWindowLayout } from '../Layouts/ConfirmWindowLayout';
 
 
 interface Props {
-    fileApi: IUseFileApiReturned,
+    fileApi: IFileApi,
     closeWindow: () => void
 }
 

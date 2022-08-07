@@ -16,7 +16,7 @@ interface Props {
 export default function FileCard({ file, fileIndex }: Props) {
     const dispatch = useAppDispatch()
 
-    const rClickHandler = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    const rClickHandler = (e: React.MouseEvent) => {
         // if pressed button is not right
         e.preventDefault()
         if (e.button !== 2) return

@@ -8,7 +8,7 @@ import { faLink } from '@fortawesome/free-solid-svg-icons';
 
 
 interface Props {
-    fileApi: IUseFileApiReturned,
+    fileApi: IFileApi,
     closeWindow: () => void
 }
 

@@ -3,7 +3,7 @@ import React from 'react'
 import { Inertia } from '@inertiajs/inertia';
 
 
-export default function useFileApi<Props>(file: ReceivedFileType): IUseFileApiReturned {
+export default function useFileApi<Props>(file: ReceivedFileType): IFileApi {
     const [ fileForAction, setFileForAction ] = React.useState<ReceivedFileType>(null)
     const [ fileName, setFileName ] = React.useState<string>('')
     const [ shareLink, setShareLink ] = React.useState<string>('')
@@ -41,10 +41,10 @@ export default function useFileApi<Props>(file: ReceivedFileType): IUseFileApiRe
         else setShareLink('')
     }
 
-    function updateName(newFileName: string) {
-        if (!newFileName) return
+    function updateName(newName: string) {
+        if (!newName) return
 
-        setFileName(newFileName.replace(/\s/g, ''))
+        setFileName(newName.replace(/\s/g, ''))
     }
 
     function copyShareLink() {
