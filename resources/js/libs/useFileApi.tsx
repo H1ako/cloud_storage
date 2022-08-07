@@ -23,7 +23,6 @@ export default function useFileApi<Props>(file: ReceivedFileType): IFileApi {
 
     function shareFile(shareLinkForAction: ShareLinkType=shareLink) {
         if (fileForAction) {
-            console.log(1)
             Inertia.put(`/api/files/${fileForAction.id}`, {shareLink: shareLinkForAction ?? null})
         }
     }
