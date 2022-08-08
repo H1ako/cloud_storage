@@ -12,7 +12,6 @@ Route::get('/', function() {
     $files = $user->files()->orderBy('created_at', 'DESC')->get();
 
     return inertia('HomePage', [
-        'user' => $user,
         'files' => $files
     ]);
 })->middleware('auth')->name('home');
@@ -23,7 +22,6 @@ Route::get('/shared', function() {
     $files = $user->files()->orderBy('created_at', 'DESC')->get();
 
     return inertia('HomePage', [
-        'user' => $user,
         'files' => $files
     ]);
 })->middleware('auth')->name('shared');
@@ -34,7 +32,6 @@ Route::get('/trash', function() {
     $files = $user->files()->orderBy('created_at', 'DESC')->get();
 
     return inertia('HomePage', [
-        'user' => $user,
         'files' => $files
     ]);
 })->middleware('auth')->name('trash');
@@ -45,7 +42,6 @@ Route::get('/last', function() {
     $files = $user->files()->orderBy('created_at', 'DESC')->get();
 
     return inertia('HomePage', [
-        'user' => $user,
         'files' => $files
     ]);
 })->middleware('auth')->name('last');

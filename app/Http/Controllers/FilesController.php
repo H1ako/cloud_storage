@@ -76,11 +76,9 @@ class FilesController extends Controller
     public function show($shareLink)
     {
         $file = File::where('shareLink', $shareLink)->first();
-        $user = Auth::user();
         
         return inertia('FilePage', [
             'file' => $file,
-            'user' => $user
         ]);
     }
 

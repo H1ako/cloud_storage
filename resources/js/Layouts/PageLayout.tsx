@@ -1,5 +1,6 @@
 // global
 import React from 'react'
+import { InertiaAppOptionsForSSR, usePage } from '@inertiajs/inertia-react'
 // components
 import Header from '../Components/Header';
 import Asidebar from '../Components/Asidebar';
@@ -8,23 +9,30 @@ import { updateSpaceData, updateUser } from '../store/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 // windows components
 import UploadFilesWindow from '../Components/UploadFilesWindow';
-import RClickFileToUploadWindow from '../Components/RClickFileToUploadWindow';
+import { Page, PageProps } from '@inertiajs/inertia';
 
 interface Props {
     children: React.ReactNode,
     user: RequestUserType
 }
 
-export default function PageLayout({ children, user }: Props) {
+interface SharedProps extends PageProps {
+    auth: {
+        user: RequestUserType
+    }
+}
+
+export default function PageLayout({ children }: Props) {
+    const { auth }: SharedProps = usePage<Page<SharedProps>>().props
     const dispatch = useAppDispatch()
     const { isUploadWindowOpened } = useAppSelector(state => state.files)
 
     React.useEffect(() => {
-        if (user?.id) {
-            dispatch(updateUser(user))
-            dispatch(updateSpaceData(user.spaceData))
+        if (auth.user) {
+            dispatch(updateUser(auth.user))
+            dispatch(updateSpaceData(auth.user.spaceData))
         }
-    }, [user])
+    }, [auth.user])
 
     return (
         <div className="page">
