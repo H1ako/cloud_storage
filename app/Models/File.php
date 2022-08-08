@@ -17,7 +17,8 @@ class File extends Model
         'size',
         'type',
         'user_id',
-        'shareLink'
+        'shareLink',
+        'iseDeleted'
     ];
 
     protected $guarded = [];

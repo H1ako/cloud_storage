@@ -37,7 +37,8 @@ interface IFile {
     name: string,
     size: SpaceSizeType,
     type: FileType,
-    shareLink: string
+    shareLink: string,
+    isDeleted: 0 | 1,
     readonly user?: IUser,
     readonly user_id: IdType
 }

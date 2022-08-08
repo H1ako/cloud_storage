@@ -133,13 +133,19 @@ class FilesController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        
         $user = $request->user();
         $file = $user->files()->find($id);
         if (! $file) return redirect()->back();
 
-        Storage::disk('userFiles')->delete($file->path);
-        $file->delete();
+        $isDeleteCompletely = $request->post('isDeleteCompletely', false);
+        if ($isDeleteCompletely) {
+            Storage::disk('userFiles')->delete($file->path);
+            $file->delete();
+        }
+        else {
+            $file->isDeleted = true;
+            $file->save();
+        }
 
         return redirect()->back();
     }
