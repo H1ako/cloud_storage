@@ -1,11 +1,15 @@
 aside {
+    position: sticky;
+    left: 0;
+    top: var(--heightHeader);
     display: flex;
     flex-direction: column;
     gap: 1rem;
     align-items: center;
     width: 20rem;
-    height: 100%;
+    height: calc(100vh - var(--heightHeader));
     padding: 2rem 2rem;
+    transition: var(--transitionDefault);
 
     .upload-btn,
     .create-btn {

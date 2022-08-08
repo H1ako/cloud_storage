@@ -16,7 +16,7 @@ export default function Header() {
     
 
     return (
-        <header>
+        <header className={isNavVisible ? '' : 'nav-hidden'}>
             <div className="main-part">
                 <Link href="/" >
                     <Logo />
@@ -36,7 +36,7 @@ export default function Header() {
                     }
                 </button>
             </div>
-            <nav className={isNavVisible ? '' : 'hidden'}>
+            <nav>
                 <ul className='links'>
                     <li>
                         <Link href='/last'>

@@ -22,4 +22,8 @@
     --fontSize3-5: clamp(1.25rem, 1.9vw, 1.5rem);
     --fontSize4: clamp(1rem, 1.5vw, 1.25rem);
     --fontSize5: clamp(.75rem, 2vw, 1rem);
+    // sizes
+    --heightHeaderMain: 6.5rem;
+    --heightHeaderNav: 4.5rem;
+    --heightHeader: calc(var(--heightHeaderMain) + var(--heightHeaderNav));
 }
