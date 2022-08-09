@@ -40,4 +40,8 @@ class File extends Model
     public function user() {
         return $this->belongsTo(User::class, 'id', 'user_id');
     }
+
+    public function lastChecks() {
+        return $this->hasMany(LastCheckedFile::class);
+    }
 }

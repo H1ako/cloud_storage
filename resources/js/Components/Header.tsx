@@ -39,6 +39,12 @@ export default function Header() {
             <nav>
                 <ul className='links'>
                     <li>
+                        <Link href='/shared'>
+                            <FontAwesomeIcon icon={faShareNodes} />
+                            Shared
+                        </Link>
+                    </li>
+                    <li>
                         <Link href='/last'>
                             <FontAwesomeIcon icon={faClockRotateLeft} />
                             Last Checked
@@ -48,12 +54,6 @@ export default function Header() {
                         <Link href='/trash'>
                             <FontAwesomeIcon icon={faTrash} />
                             Trash
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href='/shared'>
-                            <FontAwesomeIcon icon={faShareNodes} />
-                            Shared
                         </Link>
                     </li>
                 </ul>

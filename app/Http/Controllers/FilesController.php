@@ -5,22 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use PhpOption\None;
 
 class FilesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -78,6 +66,21 @@ class FilesController extends Controller
         $file = File::where('shareLink', $shareLink)->first();
 
         if ($file->isDeleted) return redirect()->route('home');
+
+        /** @var \App\Models\User $user **/
+        $user = Auth::user();
+
+        if ($user) {
+            $fileCheck = $user->lastCheckedFiles()->where('file_id', $file->id)->first();
+
+            if ($fileCheck) {
+                $fileCheck->updated_at = now();
+                $fileCheck->save();
+            }
+            else $user->lastCheckedFiles()->create([
+                'file_id' => $file->id
+            ]);
+        }
         
         return inertia('FilePage', [
             'file' => $file,

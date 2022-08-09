@@ -14,11 +14,15 @@ class LastCheckedFile extends Model
         'user_id'
     ];
 
+    protected $with = [
+        'file'
+    ];
+
     public function file() {
-        return $this->belongsTo(File::class, 'id', 'file_id');
+        return $this->belongsTo(File::class, 'file_id', 'id');
     }
 
     public function user() {
-        return $this->belongsTo(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

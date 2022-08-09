@@ -4,6 +4,7 @@ use App\Http\Controllers\FilesController;
 use App\Http\Middleware\EnsureShareLinkIsValid;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 
@@ -40,7 +41,7 @@ Route::get('/trash', function() {
 Route::get('/last', function() {
     /** @var \App\Models\User $user **/
     $user = Auth::user();
-    $files = $user->files()->orderBy('created_at', 'DESC')->get();
+    $files = $user->lastCheckedFiles()->orderBy('updated_at', 'DESC')->get()->pluck('file');
 
     return inertia('HomePage', [
         'files' => $files
@@ -58,7 +59,7 @@ Route::get('/login', function() {
 
 
 Route::prefix('api')->middleware('auth')->group(function () {
-    Route::resource('files', FilesController::class)->except(['create', 'edit', 'show']);
+    Route::resource('files', FilesController::class)->except(['create', 'edit', 'show', 'index']);
 });
 
 Route::get('files/{shareLink}', [FilesController::class, 'show'])->middleware(EnsureShareLinkIsValid::class);
