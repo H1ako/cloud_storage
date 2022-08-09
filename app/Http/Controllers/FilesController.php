@@ -122,7 +122,6 @@ class FilesController extends Controller
             'shareLink' => 'nullable|not_regex:/\s+/|unique:files,shareLink,'.$file->id,
             'isDeleted' => 'boolean'
         ]);
-        Log::info($validatedData);
 
         $file->update($validatedData);
 
