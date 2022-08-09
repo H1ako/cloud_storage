@@ -41,7 +41,7 @@ export default function Header() {
                     <li>
                         <Link href='/last'>
                             <FontAwesomeIcon icon={faClockRotateLeft} />
-                            Last Used
+                            Last Checked
                         </Link>
                     </li>
                     <li>

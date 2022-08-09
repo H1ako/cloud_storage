@@ -49,18 +49,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function setPassword($password): void {
-        $this->password = Hash::make($password);
-    }
-
-    public function files() {
-        return $this->hasMany(File::class);
-    }
-
-    public function subscription() {
-        return $this->belongsTo(Subscription::class, 'subscription', 'name');
-    }
-
     public function getSpaceDataAttribute() {
         $maxSpace = $this->subscription()->first()->maxSpace;
         $usedSpaces = $this->files()->pluck('size')->toArray();
@@ -70,5 +58,21 @@ class User extends Authenticatable
             'maxSpace' => $maxSpace,
             'usedSpace' => $totalUsedSpace
         ];
+    }
+
+    public function setPassword($password): void {
+        $this->password = Hash::make($password);
+    }
+
+    public function files() {
+        return $this->hasMany(File::class);
+    }
+
+    public function lastCheckedFiles() {
+        return $this->hasMany(LastCheckedFile::class);
+    }
+
+    public function subscription() {
+        return $this->belongsTo(Subscription::class, 'subscription', 'name');
     }
 }
