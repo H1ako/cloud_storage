@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function() {
     /** @var \App\Models\User $user **/
     $user = Auth::user();
@@ -19,7 +20,7 @@ Route::get('/', function() {
 Route::get('/shared', function() {
     /** @var \App\Models\User $user **/
     $user = Auth::user();
-    $files = $user->files()->orderBy('created_at', 'DESC')->get();
+    $files = $user->files()->where('shareLink', '!=', NULL)->where('isDeleted', false)->orderBy('created_at', 'DESC')->get();
 
     return inertia('HomePage', [
         'files' => $files
@@ -29,7 +30,7 @@ Route::get('/shared', function() {
 Route::get('/trash', function() {
     /** @var \App\Models\User $user **/
     $user = Auth::user();
-    $files = $user->files()->orderBy('created_at', 'DESC')->get();
+    $files = $user->files()->where('isDeleted', true)->orderBy('created_at', 'DESC')->get();
 
     return inertia('HomePage', [
         'files' => $files

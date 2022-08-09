@@ -12,7 +12,7 @@ import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { closeFileWindow } from '../store/slices/rClickWindowsSlice';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeftLong, faFileSignature, faShareFromSquare, faTrash, faFileArrowDown, faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeftLong, faFileSignature, faShareFromSquare, faTrash, faFileArrowDown, faUpRightAndDownLeftFromCenter, faXmark, faTrashRestore } from '@fortawesome/free-solid-svg-icons';
 // libs
 import useFileApi from '../libs/useFileApi';
 
@@ -44,7 +44,7 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
                 <DeleteConfirmWindow fileApi={fileApi} closeWindow={closeWindow} />
             }
             <ul>
-                { fileApi.file?.shareLink &&
+                { fileApi.file?.shareLink && !fileApi.file?.isDeleted &&
                     <li>
                         <Link onClick={closeWindow} href={`/files/${fileApi.shareLink}`}>
                             <FontAwesomeIcon icon={faArrowLeftLong} />
@@ -59,28 +59,57 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
                     </a>
                 </li>
                 <li>
+                    <a href={clickedFileData.file?.displayPath} download={clickedFileData.file?.name}>
+                        <FontAwesomeIcon icon={faFileArrowDown} />
+                        Download
+                    </a>
+                </li>
+                { !fileApi.file?.isDeleted &&
+                    <li>
+                        <button onClick={() => setIsShareLinkWindowOpened(true)}>
+                            <FontAwesomeIcon icon={faShareFromSquare} />
+                            Share
+                        </button>
+                    </li>                
+                }
+                
+                <li>
                     <button onClick={() => setIsRenameWindowOpened(true)}>
                         <FontAwesomeIcon icon={faFileSignature} />
                         Rename
                     </button>
                 </li>
                 <li>
-                    <button onClick={() => setIsShareLinkWindowOpened(true)}>
-                        <FontAwesomeIcon icon={faShareFromSquare} />
-                        Share
-                    </button>
+                    <Link
+                        href={`/api/files/${fileApi.file?.id}`}
+                        type='button'
+                        data={{isDeleted: fileApi.file?.isDeleted === 0}}
+                        as='button'
+                        method='put'
+                        preserveScroll={true}
+                        preserveState={false}
+                        onSuccess={closeWindow}
+                    >
+                        { fileApi.file?.isDeleted ?
+                            <>
+                                <FontAwesomeIcon icon={faTrashRestore} />
+                                Restore
+                            </>
+                            
+                        :
+                            <>
+                                <FontAwesomeIcon icon={faTrash} />
+                                Delete
+                            </>
+                        }
+                        
+                    </Link>
                 </li>
                 <li>
                     <button onClick={() => setIsDeleteConfirmWindowOpened(true)}>
-                        <FontAwesomeIcon icon={faTrash} />
-                        Delete
+                        <FontAwesomeIcon icon={faXmark} />
+                        Delete Completely
                     </button>
-                </li>
-                <li>
-                    <a href={clickedFileData.file?.displayPath} download={clickedFileData.file?.name}>
-                        <FontAwesomeIcon icon={faFileArrowDown} />
-                        Download
-                    </a>
                 </li>
             </ul>
         </RClickWindowLayout>

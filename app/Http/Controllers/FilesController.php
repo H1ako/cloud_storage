@@ -76,6 +76,8 @@ class FilesController extends Controller
     public function show($shareLink)
     {
         $file = File::where('shareLink', $shareLink)->first();
+
+        if ($file->isDeleted) return redirect()->route('home');
         
         return inertia('FilePage', [
             'file' => $file,
@@ -117,8 +119,10 @@ class FilesController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'min:5|not_regex:/\s+/',
-            'shareLink' => 'nullable|not_regex:/\s+/|unique:files,shareLink,'.$file->id
+            'shareLink' => 'nullable|not_regex:/\s+/|unique:files,shareLink,'.$file->id,
+            'isDeleted' => 'boolean'
         ]);
+        Log::info($validatedData);
 
         $file->update($validatedData);
 
@@ -137,15 +141,8 @@ class FilesController extends Controller
         $file = $user->files()->find($id);
         if (! $file) return redirect()->back();
 
-        $isDeleteCompletely = $request->post('isDeleteCompletely', false);
-        if ($isDeleteCompletely) {
-            Storage::disk('userFiles')->delete($file->path);
-            $file->delete();
-        }
-        else {
-            $file->isDeleted = true;
-            $file->save();
-        }
+        Storage::disk('userFiles')->delete($file->path);
+        $file->delete();
 
         return redirect()->back();
     }

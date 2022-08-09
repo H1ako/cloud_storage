@@ -38,7 +38,9 @@ export default function FileCard({ file, fileIndex }: Props) {
             <Link className={file.shareLink ?? 'no-link'} href={file.shareLink ? `/files/${file.shareLink}` : ''}>
                 <FileBgByType className='file-card__bg' file={file} />
                 <div className="file-card__info">
-                    { file.shareLink &&
+                    { file.isDeleted ?
+                        <h5 className="info__share-status">Deleted</h5>
+                    : file.shareLink &&
                         <h5 className="info__share-status">Shared</h5>
                     }
                     <h3 className="info__name">{file.name}</h3>
