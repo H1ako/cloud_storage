@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Services\FileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -114,18 +115,22 @@ class FilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, FileService $fileService)
     {
         $user = $request->user();
         $file = $user->files()->find($id);
         if (! $file) return;
 
         $validatedData = $request->validate([
+            'order' => 'integer',
             'name' => 'min:5|not_regex:/\s+/',
             'shareLink' => 'nullable|not_regex:/\s+/|unique:files,shareLink,'.$file->id,
             'isDeleted' => 'boolean'
         ]);
 
+        if ($validatedData['order']) {
+            $fileService->updateOrder($user, $validatedData['order']);
+        }
         $file->update($validatedData);
 
         return redirect()->back();

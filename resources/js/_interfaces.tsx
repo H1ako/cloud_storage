@@ -35,12 +35,13 @@ interface IFile {
     readonly path: string,
     readonly displayPath: string,
     name: string,
-    size: SpaceSizeType,
-    type: FileType,
+    readonly size: SpaceSizeType,
+    readonly type: FileType,
     shareLink: string,
     isDeleted: 0 | 1,
     readonly user?: IUser,
-    readonly user_id: IdType
+    readonly user_id: IdType,
+    order: number
 }
 
 // requests
