@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function() {
     /** @var \App\Models\User $user **/
     $user = Auth::user();
-    $files = $user->files()->where('isDeleted', false)->orderBy('created_at', 'DESC')->get();
+    $files = $user->files()->where('isDeleted', false)->orderBy('order', 'ASC')->get();
 
     return inertia('HomePage', [
         'files' => $files

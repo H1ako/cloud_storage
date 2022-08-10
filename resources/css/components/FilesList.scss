@@ -1,9 +1,43 @@
 .files-list {
+    $fileCardWidth: clamp(12rem, 15vw, 12.5rem);
+    $fileCardHeight: clamp(16rem, 20vh, 17.5rem);
     @include clearedUl;
-
-    display: grid;
+    
     position: relative;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 12.5rem));
-    grid-auto-rows: minmax(16rem, 17.5rem);
+    // display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax(12rem, 12.5rem));
+    // grid-auto-rows: minmax(16rem, 17.5rem);
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
+
+    
+
+    .file-card {
+        width: clamp(12rem, 15vw, 12.5rem);
+        height: clamp(16rem, 20vh, 17.5rem);
+        z-index: 0;
+
+        &.react-draggable-dragging {
+            z-index: 999;
+            pointer-events: none;
+            user-select:none;
+        }
+    }
+
+    .order-card {
+        width: clamp(12rem, 15vw, 12.5rem);
+        height: clamp(16rem, 20vh, 17.5rem);
+        flex-shrink: 0;
+        border-radius: var(--bdrsDefault);
+        display: none;
+        flex-shrink: 0;
+        background: var(--colorTextDark);
+        border: 2px solid var(--colorMain);
+        
+        &.visible,
+        &:hover {
+            display: block;
+        }
+    }
 }

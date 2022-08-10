@@ -2,13 +2,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // libs
 
+type DraggingFileIdType = IdType | null
 
 interface FilesState {
     files: IFile[],
     filesToUpload: File[]
     status: RequestStatusType,
     error: string | null,
-    isUploadWindowOpened: boolean
+    isUploadWindowOpened: boolean,
+    draggingFileId: DraggingFileIdType,
 }
 
 interface ChangeNameAction {
@@ -21,7 +23,8 @@ const initialState: FilesState = {
     filesToUpload: [],
     status: 'idle',
     error: null,
-    isUploadWindowOpened: false
+    isUploadWindowOpened: false,
+    draggingFileId: null,
 }
 
 const filesSlice = createSlice({
@@ -63,12 +66,13 @@ const filesSlice = createSlice({
         },
         removeFileToUpload: (state: FilesState, action: PayloadAction<number>) => {
             state.filesToUpload = state.filesToUpload.filter((file: File, index: number) => index !== action.payload)
-        }
+        },
+        updateDraggingFileId: (state: FilesState, action: PayloadAction<DraggingFileIdType>) => {
+            state.draggingFileId = action.payload
+        },
     }
 })
 
-// export const getUser = createAsyncThunk('user/getUser', getUserData)
-
-export const { updateFiles, updateFilesToUpload, addFilesToUpload, closeFilesToUploadWindow, changeNameFileToUpload, removeFileToUpload } = filesSlice.actions
+export const { updateFiles, updateFilesToUpload, addFilesToUpload, closeFilesToUploadWindow, changeNameFileToUpload, removeFileToUpload, updateDraggingFileId } = filesSlice.actions
 
 export default filesSlice.reducer

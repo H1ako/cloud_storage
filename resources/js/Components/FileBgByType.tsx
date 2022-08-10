@@ -19,14 +19,14 @@ export default function FileBgByType({ file, className }: Props) {
         case 'video':
             return (
                 <div className={className}>
-                    <video className='bg__content' src={picture} controls />
+                    <video className='bg__content' draggable='false' src={picture} controls />
                 </div>
             )
             
         case 'image':
             return (
                 <div className={className}>
-                    <img className='bg__content' src={picture} alt="" />
+                    <img className='bg__content' draggable='false' src={picture} alt="" />
                 </div>
             )
         case 'application':

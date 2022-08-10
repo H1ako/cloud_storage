@@ -14,14 +14,24 @@ export default function FilesList() {
     const dispatch = useAppDispatch()
     const { files } = useAppSelector(state => state.files)
     const { isFileWindowOpened } = useAppSelector(state => state.windows)
+    const { draggingFileId } = useAppSelector(state => state.files)
     const fileWindowRef = React.createRef<HTMLDivElement>()
 
     const clickOutsideHandler = () => {
         dispatch(closeFileWindow())
     }
 
+    const changeOrderhandler = (order: number) => {
+        console.log(`/files/${draggingFileId}`, {
+            order: order
+        })
+        // Inertia.put(`/files/${draggingFileId}`, {
+        //     order: file.order + 1
+        // })
+    }
+
     return (
-        <ul className='files-list'>
+        <ul className='files-list dragging'>
             { isFileWindowOpened &&
                 <ClickOutsideLayout ref={fileWindowRef} onClick={clickOutsideHandler}>
                     <RClickFileWindow />

@@ -1,18 +1,11 @@
 .file-card {
     position: relative;
     background: var(--colorGray);
-    transition: var(--transitionDefault);
+    transition: all var(--transitionDefault), transform 0ms;
     border-radius: var(--bdrsDefault);
     box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.25);
-
-    a {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        text-decoration: none;
-    }
+    display: flex;
+    flex-direction: column;
 
     &__bg {
         flex-shrink: 0;
