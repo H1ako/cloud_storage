@@ -1,7 +1,6 @@
 // global
 import React from 'react'
-import { Link } from '@inertiajs/inertia-react';
-import Draggable from 'react-draggable';
+import Draggable, {DraggableEventHandler} from 'react-draggable';
 // components
 import FileBgByType from './FileBgByType';
 // store
@@ -38,7 +37,7 @@ export default function FileCard({ file, fileIndex }: Props) {
         }))
     }
 
-    const startDraggingHandler = () => {
+    const startDraggingHandler: DraggableEventHandler = (e, data) => {
         setDragging(true)
         dispatch(updateDraggingFileId(file.order))
     }
@@ -57,6 +56,14 @@ export default function FileCard({ file, fileIndex }: Props) {
         // })
     }
 
+    const onDrag: DraggableEventHandler = (parent, data) => {
+        const newY = `${data.y}px`
+        const newX = `${data.x}px`
+        // data.node.style.top = newY
+        // data.node.style.left = newX
+        // console.log(data)
+    }
+
     return (
         <>
         <div className={`order-card${hovering && draggingFileId !== null && !dragging ? '  visible' : ''}`} onMouseUp={changeOrderhandler}/>
@@ -65,6 +72,7 @@ export default function FileCard({ file, fileIndex }: Props) {
             axis='both'
             onStart={startDraggingHandler}
             onStop={stopDraggingHandler}
+            onDrag={onDrag}
         >
             <li onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)} className='file-card' onContextMenu={rClickHandler}>
                 <FileBgByType className='file-card__bg' file={file} />

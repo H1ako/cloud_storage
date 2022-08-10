@@ -1,7 +1,7 @@
 .file-card {
     position: relative;
     background: var(--colorGray);
-    transition: all var(--transitionDefault), transform 0ms;
+    transition: all var(--transitionDefault), transform 0ms, top 0ms, left 0 ms;
     border-radius: var(--bdrsDefault);
     box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.25);
     display: flex;
