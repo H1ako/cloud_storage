@@ -7,6 +7,7 @@ export default function useFileApi<Props>(file: ReceivedFileType): IFileApi {
     const [ fileForAction, setFileForAction ] = React.useState<ReceivedFileType>(null)
     const [ fileName, setFileName ] = React.useState<string>('')
     const [ shareLink, setShareLink ] = React.useState<string>('')
+    const [ order, setOrder ] = React.useState<number>(0)
 
 
     function deleteFile() {
@@ -25,12 +26,25 @@ export default function useFileApi<Props>(file: ReceivedFileType): IFileApi {
         }
     }
 
-    function shareFile(shareLinkForAction: ShareLinkType=shareLink) {
-        if (fileForAction) {
-            Inertia.put(`/api/files/${fileForAction.id}`, {shareLink: shareLinkForAction ?? null}, {
-                preserveScroll: true
-            })
-        }
+    function updateName(newName: string) {
+        if (!newName) return
+
+        setFileName(newName.replace(/\s/g, ''))
+    }
+
+    function reorderFile(orderForAction: number = order) {
+        if (!fileForAction) return
+        if (orderForAction === fileForAction.order) return
+        
+        Inertia.put(`/api/files/${fileForAction.id}`, {order: orderForAction}, {
+            preserveScroll: true
+        })
+    }
+
+    function updateOrder(newOrder: number) {
+        if (typeof newOrder !== 'number') return
+
+        setOrder(newOrder ?? 21230123123)
     }
 
     function updateFile(newFile: ReceivedFileType = file) {
@@ -46,10 +60,12 @@ export default function useFileApi<Props>(file: ReceivedFileType): IFileApi {
         else setShareLink('')
     }
 
-    function updateName(newName: string) {
-        if (!newName) return
-
-        setFileName(newName.replace(/\s/g, ''))
+    function shareFile(shareLinkForAction: ShareLinkType=shareLink) {
+        if (fileForAction) {
+            Inertia.put(`/api/files/${fileForAction.id}`, {shareLink: shareLinkForAction ?? null}, {
+                preserveScroll: true
+            })
+        }
     }
 
     function copyShareLink() {
@@ -63,19 +79,25 @@ export default function useFileApi<Props>(file: ReceivedFileType): IFileApi {
     
 
     React.useEffect(() => {
+        if (!file) return
+        
         updateFile(file)
+        setOrder(file.order)
     }, [file])
 
     return {
+        reorderFile,
         updateFile,
         deleteFile,
         renameFile,
         shareFile,
         updateName,
+        updateOrder,
         updateShareLink,
         copyShareLink,
         file: fileForAction,
         shareLink,
-        fileName
+        fileName,
+        order
     }
 }

@@ -1,12 +1,13 @@
 // global
 import React from 'react'
-import Draggable, {DraggableEventHandler, DraggableCore} from 'react-draggable';
+import Draggable, {DraggableEventHandler} from 'react-draggable';
 // components
 import FileBgByType from './FileBgByType';
 // store
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { openFileWindow } from '../store/slices/rClickWindowsSlice';
-import { updateDraggingFileId } from '../store/slices/filesSlice';
+import { updateDraggingFileId, updateDraggingFileToMoveOrder } from '../store/slices/filesSlice';
+import useFileApi from '../libs/useFileApi';
 
 
 interface Props {
@@ -16,14 +17,15 @@ interface Props {
 
 export default function FileCard({ file, fileIndex }: Props) {
     const dispatch = useAppDispatch()
-    const { draggingFileId } = useAppSelector(state => state.files)
+    const { draggingFileId, draggingFileToMoveOrder } = useAppSelector(state => state.files)
     const [ hovering, setHovering ] = React.useState<boolean>(false)
     const [ dragging, setDragging ] = React.useState<boolean>(false)
-    const ref = React.createRef<HTMLLIElement>()
     const [ position, setPosition ] = React.useState<any>({
         x: 0,
         y: 0
     })
+    const fileApi = useFileApi(file)
+    const ref = React.createRef<HTMLLIElement>()
 
     const rClickHandler = (e: React.MouseEvent) => {
         // if pressed button is not right
@@ -42,19 +44,18 @@ export default function FileCard({ file, fileIndex }: Props) {
         }))
     }
 
-    const startDraggingHandler: DraggableEventHandler = (e, data) => {
-        // console.log(e, data)
-        if (!ref.current) return
-        console.log(ref.current.offsetLeft, ref.current.offsetTop)
+    const startDraggingHandler = () => {
+        if (!ref.current) return false
         setDragging(true)
         setPosition({
             x: ref.current.offsetLeft,
             y: ref.current.offsetTop
         })
-        dispatch(updateDraggingFileId(file.order))
+        dispatch(updateDraggingFileId(file.id))
     }
 
     const stopDraggingHandler = () => {
+        fileApi.reorderFile(draggingFileToMoveOrder)
         setDragging(false)
         setPosition({
             x: 0,
@@ -63,30 +64,22 @@ export default function FileCard({ file, fileIndex }: Props) {
         dispatch(updateDraggingFileId(null))
     }
 
-    const changeOrderhandler = () => {
-        console.log(`/files/${draggingFileId}`, {
-            order: file.order
-        })
-        // Inertia.put(`/files/${draggingFileId}`, {
-        //     order: file.order + 1
-        // })
-    }
-
     const onDrag: DraggableEventHandler = (e, data) => {
-        const newY = `${data.y}px`
-        const newX = `${data.x}px`
         setPosition({
             x: data.x,
             y: data.y
         })
-        // data.node.style.top = newY
-        // data.node.style.left = newX
-        // console.log(data)
+    }
+
+    const onDragOver = () => {
+        if (draggingFileId === null) return
+
+        dispatch(updateDraggingFileToMoveOrder(file.order))
     }
 
     return (
         <>
-        <div className={`order-card${hovering && draggingFileId !== null && !dragging ? '  visible' : ''}`} onMouseUp={changeOrderhandler}/>
+        <div onMouseOver={onDragOver} className={`order-card${hovering && !dragging ? '  visible' : ''}${draggingFileId !== null ? ' dragging' : ''}`}/>
         <Draggable
             bounds='parent'
             axis='both'
@@ -96,15 +89,15 @@ export default function FileCard({ file, fileIndex }: Props) {
             position={position}
         >
             <li ref={ref} onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)} className='file-card' onContextMenu={rClickHandler}>
-                <FileBgByType className='file-card__bg' file={file} />
+                <FileBgByType className='file-card__bg' file={fileApi.file ?? file} />
                 <div className="file-card__info">
-                    { file.isDeleted ?
+                    { fileApi.file?.isDeleted ?
                         <h5 className="info__share-status">Deleted</h5>
-                    : file.shareLink &&
+                    : fileApi.file?.shareLink &&
                         <h5 className="info__share-status">Shared</h5>
                     }
-                    <h3 className="info__name">{file.name}</h3>
-                    <h4 className="info__size">{file.size}</h4>
+                    <h3 className="info__name">{fileApi.file?.name}</h3>
+                    <h4 className="info__size">{fileApi.file?.size}</h4>
                 </div>
             </li>
         </Draggable>

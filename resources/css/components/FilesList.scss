@@ -36,8 +36,8 @@
         background: var(--colorTextDark);
         border: 2px solid var(--colorMain);
         
-        &.visible,
-        &:hover {
+        &.dragging.visible,
+        &.dragging:hover {
             display: block;
         }
     }
