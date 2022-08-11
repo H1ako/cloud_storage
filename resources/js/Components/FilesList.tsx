@@ -31,7 +31,7 @@ export default function FilesList() {
     }
 
     return (
-        <ul className='files-list dragging'>
+        <ul className='files-list'>
             { isFileWindowOpened &&
                 <ClickOutsideLayout ref={fileWindowRef} onClick={clickOutsideHandler}>
                     <RClickFileWindow />

@@ -1,6 +1,6 @@
 // global
 import React from 'react'
-import Draggable, {DraggableEventHandler} from 'react-draggable';
+import Draggable, {DraggableEventHandler, DraggableCore} from 'react-draggable';
 // components
 import FileBgByType from './FileBgByType';
 // store
@@ -19,6 +19,11 @@ export default function FileCard({ file, fileIndex }: Props) {
     const { draggingFileId } = useAppSelector(state => state.files)
     const [ hovering, setHovering ] = React.useState<boolean>(false)
     const [ dragging, setDragging ] = React.useState<boolean>(false)
+    const ref = React.createRef<HTMLLIElement>()
+    const [ position, setPosition ] = React.useState<any>({
+        x: 0,
+        y: 0
+    })
 
     const rClickHandler = (e: React.MouseEvent) => {
         // if pressed button is not right
@@ -38,12 +43,23 @@ export default function FileCard({ file, fileIndex }: Props) {
     }
 
     const startDraggingHandler: DraggableEventHandler = (e, data) => {
+        // console.log(e, data)
+        if (!ref.current) return
+        console.log(ref.current.offsetLeft, ref.current.offsetTop)
         setDragging(true)
+        setPosition({
+            x: ref.current.offsetLeft,
+            y: ref.current.offsetTop
+        })
         dispatch(updateDraggingFileId(file.order))
     }
 
     const stopDraggingHandler = () => {
         setDragging(false)
+        setPosition({
+            x: 0,
+            y: 0
+        })
         dispatch(updateDraggingFileId(null))
     }
 
@@ -56,9 +72,13 @@ export default function FileCard({ file, fileIndex }: Props) {
         // })
     }
 
-    const onDrag: DraggableEventHandler = (parent, data) => {
+    const onDrag: DraggableEventHandler = (e, data) => {
         const newY = `${data.y}px`
         const newX = `${data.x}px`
+        setPosition({
+            x: data.x,
+            y: data.y
+        })
         // data.node.style.top = newY
         // data.node.style.left = newX
         // console.log(data)
@@ -73,8 +93,9 @@ export default function FileCard({ file, fileIndex }: Props) {
             onStart={startDraggingHandler}
             onStop={stopDraggingHandler}
             onDrag={onDrag}
+            position={position}
         >
-            <li onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)} className='file-card' onContextMenu={rClickHandler}>
+            <li ref={ref} onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)} className='file-card' onContextMenu={rClickHandler}>
                 <FileBgByType className='file-card__bg' file={file} />
                 <div className="file-card__info">
                     { file.isDeleted ?
