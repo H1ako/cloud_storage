@@ -68,7 +68,7 @@ export default function FileCard({ file, fileIndex }: Props) {
         dispatch(updateDraggingFileToMoveOrder(0))
         dispatch(updateDraggingFileId(null))
         // reordering
-        fileApi.reorderFile(draggingFileToMoveOrder - 1)
+        fileApi.reorderFile(draggingFileToMoveOrder-1)
     }
 
     const onDrag: DraggableEventHandler = (e, data) => {

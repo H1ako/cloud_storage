@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Log;
 class FileService
 {
     public function updateOrder(User $user, int $order, int $fileId) {
-        $filesToUpdateOrder = $user->files()->where('id', '!=', $fileId)->where('order', '>=', $order)->get();
+        $filesToUpdateOrder = $user->files()->where('id', '!=', $fileId)->where('order', '>', $order)->orderBy('order')->get();
 
+        $newOrder = $order + 1;
         foreach($filesToUpdateOrder as $fileToUpdate) {
+            $newOrder++;
             $fileToUpdate->update([
-                'order' => $fileToUpdate->order + 1
+                'order' => $newOrder
             ]);
         }
     }

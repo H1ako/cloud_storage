@@ -6,6 +6,7 @@ use App\Models\File;
 use App\Services\FileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class FilesController extends Controller
@@ -128,8 +129,9 @@ class FilesController extends Controller
             'isDeleted' => 'boolean'
         ]);
 
-        if (isset($validatedData['order'])) {
+        if (isset($validatedData['order']) && $file->order != $validatedData['order']) {
             $fileService->updateOrder($user, $validatedData['order'], $id);
+            $validatedData['order']++;
         }
         $file->update($validatedData);
 
