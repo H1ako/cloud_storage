@@ -22,8 +22,8 @@ export default function FileToUploadCard({ file, fileIndex }: Props) {
 
         dispatch(openFileToUploadWindow({
             position: {
-                posX: e.clientX,
-                posY: e.clientY
+                x: e.clientX,
+                y: e.clientY
             },
             fileData: {
                 file: file,

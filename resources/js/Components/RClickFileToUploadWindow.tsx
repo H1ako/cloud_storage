@@ -34,7 +34,7 @@ export const RClickFileToUploadWindow = React.forwardRef<HTMLDivElement, Props>(
 
 
     return (
-        <RClickWindowLayout ref={ref} posX={fileToUploadWindowPosition.posX} posY={fileToUploadWindowPosition.posY}>
+        <RClickWindowLayout ref={ref} posX={fileToUploadWindowPosition.x} posY={fileToUploadWindowPosition.y}>
             { isRenameWindowOpened &&
                 <RenameWindow fileApi={fileApi} closeWindow={closeWindow} />
             }

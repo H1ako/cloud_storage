@@ -33,7 +33,7 @@ export const RClickFileWindow = React.forwardRef<HTMLDivElement, Props>(({}, ref
     }
 
     return (
-        <RClickWindowLayout ref={ref} posX={fileWindowPosition.posX} posY={fileWindowPosition.posY}>
+        <RClickWindowLayout ref={ref} posX={fileWindowPosition.x} posY={fileWindowPosition.y}>
             { isShareLinkWindowOpened &&
                 <ShareLinkWindow fileApi={fileApi} closeWindow={closeWindow} />
             }

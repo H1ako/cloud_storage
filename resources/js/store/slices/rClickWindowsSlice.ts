@@ -40,8 +40,8 @@ const initialState: WindowsState = {
         fileIndex: -1
     },
     fileWindowPosition: {
-        posX: 0,
-        posY: 0
+        x: 0,
+        y: 0
     },
     // file to upload
     isFileToUploadWindowOpened: false,
@@ -50,8 +50,8 @@ const initialState: WindowsState = {
         fileIndex: -1
     },
     fileToUploadWindowPosition: {
-        posX: 0,
-        posY: 0
+        x: 0,
+        y: 0
     },
 }
 

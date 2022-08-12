@@ -34,8 +34,8 @@ export default function FileCard({ file, fileIndex }: Props) {
 
         dispatch(openFileWindow({
             position: {
-                posX: e.clientX,
-                posY: e.clientY
+                x: e.clientX,
+                y: e.clientY
             },
             fileData: {
                 file: file,

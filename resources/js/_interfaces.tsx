@@ -1,7 +1,7 @@
 // global
 interface IPosition {
-    posX: number,
-    posY: number
+    x: number,
+    y: number
 }
 
 
