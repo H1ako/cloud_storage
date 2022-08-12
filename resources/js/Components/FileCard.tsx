@@ -6,8 +6,9 @@ import FileBgByType from './FileBgByType';
 // store
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { openFileWindow } from '../store/slices/rClickWindowsSlice';
-import { updateDraggingFileId, updateDraggingFileToMoveOrder } from '../store/slices/filesSlice';
+import { clearDraggingFileToMoveData, updateDraggingFileId, updateDraggingFileToMoveData } from '../store/slices/filesSlice';
 import useFileApi from '../libs/useFileApi';
+import { Inertia } from '@inertiajs/inertia';
 
 
 interface Props {
@@ -17,15 +18,16 @@ interface Props {
 
 export default function FileCard({ file, fileIndex }: Props) {
     const dispatch = useAppDispatch()
-    const { draggingFileId, draggingFileToMoveOrder } = useAppSelector(state => state.files)
+    const { draggingFileId, draggingFileToMoveData } = useAppSelector(state => state.files)
     const [ hovering, setHovering ] = React.useState<boolean>(false)
     const [ dragging, setDragging ] = React.useState<boolean>(false)
-    const [ position, setPosition ] = React.useState<any>({
+    const [ position, setPosition ] = React.useState<IPosition>({
         x: 0,
         y: 0
     })
     const fileApi = useFileApi(file)
     const ref = React.createRef<HTMLLIElement>()
+    const orderCardRef = React.createRef<HTMLDivElement>()
 
     const rClickHandler = (e: React.MouseEvent) => {
         // if pressed button is not right
@@ -55,13 +57,16 @@ export default function FileCard({ file, fileIndex }: Props) {
     }
 
     const stopDraggingHandler = () => {
-        fileApi.reorderFile(draggingFileToMoveOrder)
-        setDragging(false)
-        setPosition({
+        const newPos: IPosition = {
             x: 0,
             y: 0
-        })
+        }
+        // console.log(newPos)
+        setDragging(false)
+        setPosition(newPos)
+        dispatch(clearDraggingFileToMoveData())
         dispatch(updateDraggingFileId(null))
+        fileApi.reorderFile(draggingFileToMoveData.order - 1)
     }
 
     const onDrag: DraggableEventHandler = (e, data) => {
@@ -72,14 +77,20 @@ export default function FileCard({ file, fileIndex }: Props) {
     }
 
     const onDragOver = () => {
-        if (draggingFileId === null) return
+        if (draggingFileId === null || !ref.current) return
 
-        dispatch(updateDraggingFileToMoveOrder(file.order))
+        dispatch(updateDraggingFileToMoveData({
+            order: file.order,
+            position: {
+                x: ref.current.offsetLeft,
+                y: ref.current.offsetTop
+            }
+        }))
     }
 
     return (
         <>
-        <div onMouseOver={onDragOver} className={`order-card${hovering && !dragging ? '  visible' : ''}${draggingFileId !== null ? ' dragging' : ''}`}/>
+        <div ref={orderCardRef} onMouseOver={onDragOver} className={`order-card${hovering && !dragging ? '  visible' : ''}${draggingFileId !== null ? ' dragging' : ''}`}/>
         <Draggable
             bounds='parent'
             axis='both'

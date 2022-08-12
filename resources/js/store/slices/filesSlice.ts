@@ -4,6 +4,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type DraggingFileIdType = IdType | null
 
+interface IDraggingFileToMoveData {
+    order: number,
+    position: IPosition
+}
+
 interface FilesState {
     files: IFile[],
     filesToUpload: File[]
@@ -11,7 +16,7 @@ interface FilesState {
     error: string | null,
     isUploadWindowOpened: boolean,
     draggingFileId: DraggingFileIdType,
-    draggingFileToMoveOrder: number
+    draggingFileToMoveData: IDraggingFileToMoveData,
 }
 
 interface ChangeNameAction {
@@ -26,7 +31,13 @@ const initialState: FilesState = {
     error: null,
     isUploadWindowOpened: false,
     draggingFileId: null,
-    draggingFileToMoveOrder: 0,
+    draggingFileToMoveData: {
+        order: 0,
+        position: {
+            x: 0,
+            y: 0
+        }
+    },
 }
 
 const filesSlice = createSlice({
@@ -72,8 +83,17 @@ const filesSlice = createSlice({
         updateDraggingFileId: (state: FilesState, action: PayloadAction<DraggingFileIdType>) => {
             state.draggingFileId = action.payload
         },
-        updateDraggingFileToMoveOrder: (state: FilesState, action: PayloadAction<number>) => {
-            state.draggingFileToMoveOrder = action.payload
+        updateDraggingFileToMoveData: (state: FilesState, action: PayloadAction<IDraggingFileToMoveData>) => {
+            state.draggingFileToMoveData = action.payload
+        },
+        clearDraggingFileToMoveData: (state: FilesState) => {
+            state.draggingFileToMoveData = {
+                order: 0,
+                position: {
+                    x: 0,
+                    y: 0
+                }
+            }
         },
     }
 })
@@ -86,7 +106,8 @@ export const {
     changeNameFileToUpload,
     removeFileToUpload,
     updateDraggingFileId,
-    updateDraggingFileToMoveOrder
+    updateDraggingFileToMoveData,
+    clearDraggingFileToMoveData
 } = filesSlice.actions
 
 export default filesSlice.reducer

@@ -4,9 +4,6 @@
     @include clearedUl;
     
     position: relative;
-    // display: grid;
-    // grid-template-columns: repeat(auto-fill, minmax(12rem, 12.5rem));
-    // grid-auto-rows: minmax(16rem, 17.5rem);
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
