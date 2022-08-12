@@ -41,13 +41,15 @@ class FilesController extends Controller
             );
 
             $fullPath = $filePath.$fileName;
+            $fileOrder = $user->files()->orderBy('order', 'DESC')->first()->order + 1;
 
             $newFile = new File([
                 'name' => $originalFileName,
                 'type' => $fileType,
                 'size' => $fileSize,
                 'path' => $fullPath,
-                'shareLink' => Null
+                'shareLink' => Null,
+                'order' => $fileOrder
             ]);
 
             $user->files()->save($newFile);
