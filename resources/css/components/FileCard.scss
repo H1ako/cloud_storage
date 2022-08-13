@@ -14,8 +14,10 @@
         border-radius: var(--bdrsDefault);
         width: inherit;
         height: 70%;
-        display: grid;
-        place-items: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // overflow: hidden;
         
         video.bg__content,
         img.bg__content {
