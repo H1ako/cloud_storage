@@ -26,7 +26,7 @@ export default function FileBgByType({ file, className }: Props) {
         case 'image':
             return (
                 <div className={className}>
-                    <img className='bg__content' draggable='false' src={picture} alt="" />
+                    <img loading='lazy' className='bg__content' draggable='false' src={picture} alt="" />
                 </div>
             )
         case 'application':
