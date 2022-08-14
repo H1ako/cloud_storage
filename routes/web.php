@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FilesController;
+use App\Http\Controllers\SearchController;
 use App\Http\Middleware\EnsureShareLinkIsValid;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -65,8 +66,9 @@ Route::get('/login', function() {
 })->name('login');
 
 
-Route::prefix('api')->middleware('auth')->group(function () {
-    Route::resource('files', FilesController::class)->except(['create', 'edit', 'show', 'index']);
+Route::prefix('api')->group(function () {
+    Route::resource('files', FilesController::class)->except(['create', 'edit', 'show', 'index'])->middleware('auth');
+    Route::get('/search/files', [SearchController::class, 'showFiles']);
 });
 
 Route::get('files/{shareLink}', [FilesController::class, 'show'])->middleware(EnsureShareLinkIsValid::class);

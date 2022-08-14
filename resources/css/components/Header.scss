@@ -34,9 +34,20 @@ header {
         display: flex;
         gap: 1rem;
         align-items: center;
+        justify-content: center;
         padding: $padding;
         z-index: 0;
         background: var(--colorBg);
+
+        .app-logo-link {
+            margin-right: auto;
+        }
+
+        .more-space-btn {
+            @include btn;
+            background: var(--colorAccent);
+            margin-left: auto;
+        }
 
         &__btn-toggle {
             background: none;
@@ -46,11 +57,6 @@ header {
             font-size: 2rem;
             color: var(--colorTextDark);
             cursor: pointer;
-        }
-
-        .more-space-btn {
-            @include btn;
-            background: var(--colorAccent);
         }
     }
 

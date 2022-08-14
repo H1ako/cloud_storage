@@ -1,0 +1,28 @@
+.search {
+    position: relative;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    max-width: 50%;
+    flex-grow: 1;
+
+    label {
+        border-radius: var(--bdrsDefault) 0 0 var(--bdrsDefault);
+        background: var(--colorGray);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        flex-shrink: 0;
+    }
+
+    input {
+        @include clearedInput;
+
+        border-radius: 0 var(--bdrsDefault) var(--bdrsDefault) 0;
+        background: var(--colorGray);
+        height: 100%;
+        flex-grow: 1;
+    }
+}

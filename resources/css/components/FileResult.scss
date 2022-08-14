@@ -1,0 +1,32 @@
+.file-result {
+    position: relative;
+    display: flex;
+    padding: 1rem .75rem;
+    background: var(--colorBg);
+
+    &__bg {
+        position: relative;
+        flex-shrink: 0;
+        display: grid;
+        place-content: center;
+
+        img.bg__content {
+            border-radius: 50%;
+            border: 2px solid var(--colorBg);
+            object-fit: cover;
+            object-position: center;
+        }
+
+        video.bg__content {
+            display: none;
+        }
+
+        svg.bg__content {
+            font-size: var(--fontSize5);
+        }
+    }
+
+    &__info {
+        flex-grow: 1;
+    }
+}

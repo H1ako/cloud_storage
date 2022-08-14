@@ -5,10 +5,9 @@
     
     position: relative;
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
-
-    
 
     .file-card {
         width: clamp(12rem, 15vw, 12.5rem);

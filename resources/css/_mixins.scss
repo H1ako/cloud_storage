@@ -15,6 +15,11 @@
     }
 }
 
+@mixin clearedInput {
+    border: none;
+    outline: none;
+}
+
 @mixin btn {
     padding: .5rem 2.75rem;
     border: none;

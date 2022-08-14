@@ -1,0 +1,24 @@
+.profile {
+    position: relative;
+    flex-shrink: 0;
+    
+
+    &__top {
+        position: relative;
+        height: var(--heightHeaderMain);
+        width: 4rem;
+        display: grid;
+        place-items: center;
+
+        .top__picture {
+            background-color: var(--colorMain);
+            height: 55%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid white;
+        }
+    }
+}

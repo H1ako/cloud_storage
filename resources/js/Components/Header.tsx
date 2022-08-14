@@ -18,7 +18,7 @@ export default function Header() {
     return (
         <header className={isNavVisible ? '' : 'nav-hidden'}>
             <div className="main-part">
-                <Link href="/" preserveState>
+                <Link className='app-logo-link' href="/" preserveState>
                     <Logo />
                 </Link>
                 <Search />
@@ -45,15 +45,15 @@ export default function Header() {
                         </Link>
                     </li>
                     <li>
-                        <Link href='/last' preserveState>
-                            <FontAwesomeIcon icon={faClockRotateLeft} />
-                            Last Checked
-                        </Link>
-                    </li>
-                    <li>
                         <Link href='/trash' preserveState>
                             <FontAwesomeIcon icon={faTrash} />
                             Trash
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href='/last' preserveState>
+                            <FontAwesomeIcon icon={faClockRotateLeft} />
+                            Last Checked
                         </Link>
                     </li>
                 </ul>
