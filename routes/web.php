@@ -4,7 +4,6 @@ use App\Http\Controllers\FilesController;
 use App\Http\Middleware\EnsureShareLinkIsValid;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 

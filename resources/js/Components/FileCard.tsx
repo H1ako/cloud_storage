@@ -6,32 +6,31 @@ import FileBgByType from './FileBgByType';
 // store
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { openFileWindow } from '../store/slices/rClickWindowsSlice';
-import { updateDraggingFileId, updateDraggingFileToMoveOrder } from '../store/slices/filesSlice';
+import { updateDraggingFileId, updateDraggingFileToMoveOrder, updateIsFileDragged } from '../store/slices/filesSlice';
+// libs
 import useFileApi from '../libs/useFileApi';
-import { Inertia } from '@inertiajs/inertia';
 
 
 interface Props {
     file: IFile,
-    fileIndex: number
+    fileIndex: number,
+    orderCardRef: React.RefObject<HTMLDivElement>
 }
 
-export default function FileCard({ file, fileIndex }: Props) {
+export default function FileCard({ file, fileIndex, orderCardRef }: Props) {
     const dispatch = useAppDispatch()
+    const { isFileDragged } = useAppSelector(state => state.files)
     const { draggingFileId, draggingFileToMoveOrder } = useAppSelector(state => state.files)
-    const [ hovering, setHovering ] = React.useState<boolean>(false)
-    const [ dragging, setDragging ] = React.useState<boolean>(false)
     const [ position, setPosition ] = React.useState<IPosition>({
         x: 0,
         y: 0
     })
     const fileApi = useFileApi(file)
     const ref = React.createRef<HTMLLIElement>()
-    const orderCardRef = React.createRef<HTMLDivElement>()
 
     const rClickHandler = (e: React.MouseEvent) => {
-        // if pressed button is not right
         e.preventDefault()
+        // if pressed button is not right
         if (e.button !== 2) return
 
         dispatch(openFileWindow({
@@ -48,11 +47,13 @@ export default function FileCard({ file, fileIndex }: Props) {
 
     const startDraggingHandler = () => {
         if (!ref.current) return false
-        setDragging(true)
+
+        // setting start position
         setPosition({
             x: ref.current.offsetLeft,
             y: ref.current.offsetTop
         })
+        // updating state to dragged file's id
         dispatch(updateDraggingFileId(file.id))
     }
 
@@ -62,13 +63,19 @@ export default function FileCard({ file, fileIndex }: Props) {
             y: 0
         }
 
-        // clearing data
-        setDragging(false)
+        // updating next card order by -1
+        dispatch(updateIsFileDragged((true)))
+        // clearing position
         setPosition(newPos)
-        dispatch(updateDraggingFileToMoveOrder(0))
+        // reordering files
+        fileApi.reorderFile(draggingFileToMoveOrder - 1)
+        // hidding order card
+        if (orderCardRef.current) {
+            orderCardRef.current.style.setProperty('--fileOrder', '')
+        }
+        // clearing data
         dispatch(updateDraggingFileId(null))
-        // reordering
-        fileApi.reorderFile(draggingFileToMoveOrder-1)
+        dispatch(updateDraggingFileToMoveOrder(-1))
     }
 
     const onDrag: DraggableEventHandler = (e, data) => {
@@ -79,14 +86,17 @@ export default function FileCard({ file, fileIndex }: Props) {
     }
 
     const onDragOver = () => {
-        if (draggingFileId === null || !ref.current) return
+        // if ref is broken or no dragged file or dragged file's id equals this file's id
+        if (!orderCardRef.current || draggingFileId === null || draggingFileId === file.id) return
 
+        // updating where to move order
         dispatch(updateDraggingFileToMoveOrder(file.order))
+        // showing order card
+        orderCardRef.current.style.setProperty('--fileOrder', `${file.order}`)
     }
 
     return (
         <>
-        <div style={{ order: fileApi.order * 2 - 1 }} data-file-order={file.order} ref={orderCardRef} onMouseOver={onDragOver} className={`order-card${hovering && !dragging ? '  visible' : ''}${draggingFileId !== null ? ' dragging' : ''}`}/>
         <Draggable
             bounds='parent'
             axis='both'
@@ -95,7 +105,13 @@ export default function FileCard({ file, fileIndex }: Props) {
             onDrag={onDrag}
             position={position}
         >
-            <li style={{ order: fileApi.order * 2 }} ref={ref} onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)} className='file-card' onContextMenu={rClickHandler}>
+            <li
+                style={{'--fileOrder': fileApi.order } as React.CSSProperties}
+                ref={ref}
+                onMouseOver={onDragOver}
+                className={`file-card${isFileDragged ? ' dragged' : ''}`}
+                onContextMenu={rClickHandler}
+            >
                 <FileBgByType className='file-card__bg' file={fileApi.file ?? file} />
                 <div className="file-card__info">
                     { fileApi.file?.isDeleted ?

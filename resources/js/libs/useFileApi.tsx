@@ -36,7 +36,7 @@ export default function useFileApi<Props>(file: ReceivedFileType): IFileApi {
         if (!fileForAction) return
         if (orderForAction === fileForAction.order) return
         
-        setOrder(orderForAction)
+        updateOrder(orderForAction)
         Inertia.put(`/api/files/${fileForAction.id}`, {order: orderForAction}, {
             preserveScroll: true,
         })
@@ -45,7 +45,7 @@ export default function useFileApi<Props>(file: ReceivedFileType): IFileApi {
     function updateOrder(newOrder: number) {
         if (typeof newOrder !== 'number') return
 
-        setOrder(newOrder ?? 21230123123)
+        setOrder(newOrder)
     }
 
     function updateFile(newFile: ReceivedFileType = file) {

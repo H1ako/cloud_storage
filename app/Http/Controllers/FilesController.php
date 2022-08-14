@@ -131,11 +131,11 @@ class FilesController extends Controller
             'isDeleted' => 'boolean'
         ]);
 
-        if (isset($validatedData['order']) && $file->order != $validatedData['order']) {
-            $fileService->updateOrder($user, $validatedData['order'], $id);
-            $validatedData['order']++;
-        }
         $file->update($validatedData);
+        
+        if (isset($validatedData['order'])) {
+            $fileService->updateOrder($user);
+        }
 
         return redirect()->back();
     }

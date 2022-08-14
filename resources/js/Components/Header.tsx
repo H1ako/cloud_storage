@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faAngleUp, faClockRotateLeft, faShareNodes, faTrash } from '@fortawesome/free-solid-svg-icons';
 // global
 import React from 'react'
-import { Link } from '@inertiajs/inertia-react'
+import { Link, useRemember } from '@inertiajs/inertia-react'
 // components
 import Logo from './Logo';
 import Search from './Search';
@@ -12,13 +12,13 @@ import MoreSpaceLayout from '../Layouts/MoreSpaceLayout';
 
 
 export default function Header() {
-    const [ isNavVisible, setIsNavVisible ] = React.useState(true)
+    const [ isNavVisible, setIsNavVisible ] = useRemember(true)
     
 
     return (
         <header className={isNavVisible ? '' : 'nav-hidden'}>
             <div className="main-part">
-                <Link href="/" >
+                <Link href="/" preserveState>
                     <Logo />
                 </Link>
                 <Search />
@@ -39,19 +39,19 @@ export default function Header() {
             <nav>
                 <ul className='links'>
                     <li>
-                        <Link href='/shared'>
+                        <Link href='/shared' preserveState>
                             <FontAwesomeIcon icon={faShareNodes} />
                             Shared
                         </Link>
                     </li>
                     <li>
-                        <Link href='/last'>
+                        <Link href='/last' preserveState>
                             <FontAwesomeIcon icon={faClockRotateLeft} />
                             Last Checked
                         </Link>
                     </li>
                     <li>
-                        <Link href='/trash'>
+                        <Link href='/trash' preserveState>
                             <FontAwesomeIcon icon={faTrash} />
                             Trash
                         </Link>

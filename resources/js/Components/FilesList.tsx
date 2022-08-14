@@ -8,27 +8,32 @@ import FileCard from './FileCard';
 import { RClickFileWindow } from './RClickFileWindow';
 // layouts
 import { ClickOutsideLayout } from '../Layouts/ClickOutsideLayout';
+import { updateIsFileDragged } from '../store/slices/filesSlice';
 
 
 export default function FilesList() {
     const dispatch = useAppDispatch()
-    const { files } = useAppSelector(state => state.files)
+    const { files, isFileDragged } = useAppSelector(state => state.files)
     const { isFileWindowOpened } = useAppSelector(state => state.windows)
-    const { draggingFileId } = useAppSelector(state => state.files)
     const fileWindowRef = React.createRef<HTMLDivElement>()
+    const orderCardRef = React.createRef<HTMLDivElement>()
 
     const clickOutsideHandler = () => {
         dispatch(closeFileWindow())
     }
 
-    const changeOrderhandler = (order: number) => {
-        console.log(`/files/${draggingFileId}`, {
-            order: order
-        })
-        // Inertia.put(`/files/${draggingFileId}`, {
-        //     order: file.order + 1
-        // })
+    const onDragOut = () => {
+        if (!orderCardRef.current) return
+
+        // hidding order card
+        orderCardRef.current.style.setProperty('--fileOrder', '')
     }
+
+    React.useEffect(() => {
+        if (!isFileDragged) return
+        
+        dispatch(updateIsFileDragged(false))
+    }, [files])
 
     return (
         <ul className='files-list'>
@@ -37,8 +42,14 @@ export default function FilesList() {
                     <RClickFileWindow />
                 </ClickOutsideLayout>
             }
+            <div
+                onMouseOut={onDragOut}
+                className="order-card"
+                ref={orderCardRef}
+                style={{ '--fileOrder': undefined } as React.CSSProperties}
+            />
             {files.map((file, id) => (
-                <FileCard key={`file-${id}`} fileIndex={id} file={file} />
+                <FileCard key={`file-${id}`} orderCardRef={orderCardRef} fileIndex={id} file={file} />
             ))}
         </ul>
     )
