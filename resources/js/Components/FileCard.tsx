@@ -6,7 +6,7 @@ import FileBgByType from './FileBgByType';
 // store
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { openFileWindow } from '../store/slices/rClickWindowsSlice';
-import { updateDraggingFileId, updateDraggingFileToMoveOrder, updateIsFileDragged } from '../store/slices/filesSlice';
+import { updateDraggingFileId, updateDraggingFileToMoveOrder } from '../store/slices/filesSlice';
 // libs
 import useFileApi from '../libs/useFileApi';
 
@@ -19,14 +19,15 @@ interface Props {
 
 export default function FileCard({ file, fileIndex, orderCardRef }: Props) {
     const dispatch = useAppDispatch()
-    const { isFileDragged } = useAppSelector(state => state.files)
+    const { files } = useAppSelector(state => state.files)
     const { draggingFileId, draggingFileToMoveOrder } = useAppSelector(state => state.files)
     const [ position, setPosition ] = React.useState<IPosition>({
         x: 0,
         y: 0
     })
+    const [ isFileDragged, setIsFileDragged ] = React.useState<boolean>(false)
     const fileApi = useFileApi(file)
-    const ref = React.createRef<HTMLLIElement>()
+    const ref = React.useRef<HTMLLIElement>(null)
 
     const rClickHandler = (e: React.MouseEvent) => {
         e.preventDefault()
@@ -63,8 +64,8 @@ export default function FileCard({ file, fileIndex, orderCardRef }: Props) {
             y: 0
         }
 
-        // updating next card order by -1
-        dispatch(updateIsFileDragged((true)))
+        // updating next card order by +1
+        setIsFileDragged(true)
         // clearing position
         setPosition(newPos)
         // reordering files
@@ -94,6 +95,10 @@ export default function FileCard({ file, fileIndex, orderCardRef }: Props) {
         // showing order card
         orderCardRef.current.style.setProperty('--fileOrder', `${file.order}`)
     }
+
+    React.useEffect(() => {
+        setIsFileDragged(false)
+    }, [files])
 
     return (
         <>

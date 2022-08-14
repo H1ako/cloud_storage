@@ -8,15 +8,14 @@ import FileCard from './FileCard';
 import { RClickFileWindow } from './RClickFileWindow';
 // layouts
 import { ClickOutsideLayout } from '../Layouts/ClickOutsideLayout';
-import { updateIsFileDragged } from '../store/slices/filesSlice';
 
 
 export default function FilesList() {
     const dispatch = useAppDispatch()
-    const { files, isFileDragged } = useAppSelector(state => state.files)
+    const { files } = useAppSelector(state => state.files)
     const { isFileWindowOpened } = useAppSelector(state => state.windows)
     const fileWindowRef = React.createRef<HTMLDivElement>()
-    const orderCardRef = React.createRef<HTMLDivElement>()
+    const orderCardRef = React.useRef<HTMLDivElement>(null)
 
     const clickOutsideHandler = () => {
         dispatch(closeFileWindow())
@@ -28,12 +27,6 @@ export default function FilesList() {
         // hidding order card
         orderCardRef.current.style.setProperty('--fileOrder', '')
     }
-
-    React.useEffect(() => {
-        if (!isFileDragged) return
-        
-        dispatch(updateIsFileDragged(false))
-    }, [files])
 
     return (
         <ul className='files-list'>

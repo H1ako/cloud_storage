@@ -12,7 +12,6 @@ interface FilesState {
     isUploadWindowOpened: boolean,
     draggingFileId: DraggingFileIdType,
     draggingFileToMoveOrder: number,
-    isFileDragged: boolean
 }
 
 interface ChangeNameAction {
@@ -28,7 +27,6 @@ const initialState: FilesState = {
     isUploadWindowOpened: false,
     draggingFileId: null,
     draggingFileToMoveOrder: -1,
-    isFileDragged: false
 }
 
 const filesSlice = createSlice({
@@ -77,9 +75,6 @@ const filesSlice = createSlice({
         updateDraggingFileToMoveOrder: (state: FilesState, action: PayloadAction<number>) => {
             state.draggingFileToMoveOrder = action.payload
         },
-        updateIsFileDragged: (state: FilesState, action: PayloadAction<boolean>) => {
-            state.isFileDragged = action.payload
-        },
     }
 })
 
@@ -92,7 +87,6 @@ export const {
     removeFileToUpload,
     updateDraggingFileId,
     updateDraggingFileToMoveOrder,
-    updateIsFileDragged
 } = filesSlice.actions
 
 export default filesSlice.reducer
