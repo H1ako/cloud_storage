@@ -1,6 +1,6 @@
 // global
 import React from 'react'
-import { Inertia } from '@inertiajs/inertia';
+import axios from 'axios';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -8,25 +8,28 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import FileResult from './FileResult';
 
 
-export default function Search({searchResults}: any) {
+export default function Search() {
     const [ searchQuery, setSearchQuery ] = React.useState<string>('')
-    const [ searchResultsa, setSearchResults ] = React.useState<IFile[]>([])
+    const [ searchResults, setSearchResults ] = React.useState<IFile[]>([])
+
 
     const onChangehandler = (e: React.ChangeEvent) => {
         const newQuery = (e.target as HTMLInputElement).value
         setSearchQuery(newQuery)
     }
 
+
     React.useEffect(() => {
-        Inertia.get('/api/search/files', {
-            query: searchQuery
-        }, {
-            preserveScroll: true,
-            onSuccess: (data) => {
-                console.log(data)
+        if (!searchQuery) return
+
+        axios('/api/search/files', {
+            data: {
+                query: searchQuery
             }
         })
+        .then(response => setSearchResults(response.data))
     }, [searchQuery])
+
 
     return (
         <div className='search'>
@@ -41,8 +44,8 @@ export default function Search({searchResults}: any) {
                 placeholder="Search For Files"
             />
             <ul className="search__results">
-                { searchResultsa.map(resultFile => (
-                    <FileResult file={resultFile} />
+                { searchResults.map(resultFile => (
+                    <FileResult file={resultFile} key={`search-file-${resultFile.id}`} />
                 ))}
             </ul>
         </div>
