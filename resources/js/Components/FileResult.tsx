@@ -4,6 +4,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import FileBgByType from './FileBgByType';
+import { Link } from '@inertiajs/inertia-react';
 
 
 interface Props {
@@ -12,12 +13,14 @@ interface Props {
 
 export default function FileResult({ file }: Props) {
     return (
-        <div className='file-result'>
-            <FileBgByType className='file-result__bg' file={file} />
-            <div className="file-result__info">
-                <h4 className="info__name">{file.name}</h4>
-                <h5 className="info__size">{file.size}</h5>
-            </div>
-        </div>
+        <li className='file-result'>
+            <Link href={`/files/${file.shareLink}`}>
+                <FileBgByType className='file-result__bg' file={file} />
+                <div className="file-result__info">
+                    <h3 className="info__name">{file.name}</h3>
+                    <h5 className="info__size">{file.size}</h5>
+                </div>
+            </Link>
+        </li>
     )
 }

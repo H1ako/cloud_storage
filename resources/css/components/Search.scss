@@ -6,6 +6,41 @@
     max-width: 50%;
     flex-grow: 1;
 
+    &:focus-within &__results {
+        display: flex;
+    }
+
+    &__results {
+        @include clearedUl;
+        @include colorMainBorder;
+
+        position: absolute;
+        top: 110%;
+        left: 0;
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        height: 20rem;
+        overflow-y: auto;
+        border-radius: var(--bdrsDefault);
+        
+        li {
+            width: 100%;
+
+            &:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                background: var(--colorTextDark);
+                top: 100%;
+                left: 5%;
+                width: 90%;
+                height: 1px;
+                z-index: 1;
+                opacity: .5;
+            }
+        }
+    }
+
     label {
         border-radius: var(--bdrsDefault) 0 0 var(--bdrsDefault);
         background: var(--colorGray);
