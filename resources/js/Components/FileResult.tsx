@@ -1,10 +1,8 @@
 // global
 import React from 'react'
-// icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import FileBgByType from './FileBgByType';
 import { Link } from '@inertiajs/inertia-react';
+// components
+import FileBgByType from './FileBgByType';
 
 
 interface Props {

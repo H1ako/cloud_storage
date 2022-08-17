@@ -11,6 +11,7 @@ import FileResult from './FileResult';
 export default function Search() {
     const [ searchQuery, setSearchQuery ] = React.useState<string>('')
     const [ searchResults, setSearchResults ] = React.useState<IFile[]>([])
+    const [ isOnlyUserFiles, setIsOnlyUserFiles ] = React.useState<boolean>(false)
 
 
     const onChangehandler = (e: React.ChangeEvent) => {
@@ -20,14 +21,18 @@ export default function Search() {
 
 
     React.useEffect(() => {
-        if (!searchQuery) return
+        if (!searchQuery) return setSearchResults([])
 
         axios('/api/search/files', {
-            data: {
-                query: searchQuery
+            params: {
+                query: searchQuery,
+                isOnlyUserFiles: isOnlyUserFiles
             }
         })
-        .then(response => setSearchResults(response.data))
+        .then(response => {
+            console.log(response)
+            setSearchResults(response.data)
+        })
     }, [searchQuery])
 
 
