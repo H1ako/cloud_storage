@@ -12,7 +12,7 @@ interface Props {
 export default function FileResult({ file }: Props) {
     return (
         <li className='file-result'>
-            <Link href={`/files/${file.shareLink}`}>
+            <Link href={`/files/${file.shareLink}`} preserveState>
                 <FileBgByType className='file-result__bg' file={file} />
                 <div className="file-result__info">
                     <h3 className="info__name">{file.name}</h3>

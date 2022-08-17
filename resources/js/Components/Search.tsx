@@ -3,7 +3,7 @@ import React from 'react'
 import axios from 'axios';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 // components
 import FileResult from './FileResult';
 
@@ -29,30 +29,46 @@ export default function Search() {
                 isOnlyUserFiles: isOnlyUserFiles
             }
         })
-        .then(response => {
-            console.log(response)
-            setSearchResults(response.data)
-        })
+        .then(response => setSearchResults(response.data))
     }, [searchQuery])
 
 
     return (
         <div className='search'>
-            <label htmlFor="search">
+            <label className='search__label' htmlFor="search">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
             </label>
             <input
                 id="search"
                 type="search"
+                className='search__input'
                 value={searchQuery}
                 onChange={onChangehandler}
                 placeholder="Search For Files"
             />
-            <ul className="search__results">
+            <div className="search__content">
+                <div className="content__tools">
+                    <label
+                        tabIndex={0}
+                        className='tools__label'
+                        htmlFor="isOnlyUserFiles"
+                        onClick={() => setIsOnlyUserFiles(state => !state)}
+                    >
+                        <div className="label__checkbox">
+                            { isOnlyUserFiles &&
+                                <FontAwesomeIcon icon={faCheck} />
+                            }
+                        </div>
+                        <h5 className='label__text'>Show Only My Files</h5>
+                    </label>
+                    <input className='tools__checkbox' type="checkbox" id="isOnlyUserFiles" />
+                </div>
+                <ul className="content__results">
                 { searchResults.map(resultFile => (
                     <FileResult file={resultFile} key={`search-file-${resultFile.id}`} />
                 ))}
             </ul>
+            </div>
         </div>
     )
 }
