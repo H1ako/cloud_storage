@@ -8,6 +8,7 @@
     border-radius: var(--bdrsDefault);
     z-index: 999999;
     padding: 1.5rem 1.25rem;
+    overflow-y: auto;
 
     ul {
         @include clearedUl;

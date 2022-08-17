@@ -25,6 +25,8 @@
         width: $size;
         height: $size;
         overflow: hidden;
+        background: var(--colorText);
+        border-radius: 50%;
 
         img.bg__content {
             width: 100%;
