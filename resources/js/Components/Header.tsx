@@ -36,7 +36,7 @@ export default function Header() {
                     }
                 </button>
             </div>
-            <nav>
+            <nav aria-label='main nav' className='main-nav'>
                 <ul className='links'>
                     <li>
                         <Link href='/shared' preserveState>

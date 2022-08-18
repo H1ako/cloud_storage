@@ -13,7 +13,7 @@ header {
     &.nav-hidden {
         --heightHeader: var(--heightHeaderMain);
         
-        nav {
+        .main-nav {
             user-select: none;
             pointer-events: none;
             transform: translateY(-100%);
@@ -60,7 +60,7 @@ header {
         }
     }
 
-    nav {
+    .main-nav {
         position: absolute;
         top: var(--heightHeaderMain);
         height: var(--heightHeaderNav);

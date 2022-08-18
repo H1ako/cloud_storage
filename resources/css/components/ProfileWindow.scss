@@ -1,0 +1,43 @@
+.profile-window {
+    position: relative;
+    background: var(--colorText);
+    border-radius: var(--bdrsDefault);
+    width: max(50vw, 600px);
+    height: min(90vh, 800px);
+    // padding: 1rem;
+    display: grid;
+    grid-template-areas: "N C";
+    grid-template-columns: max(12.5rem, 25%) auto;
+
+    &__nav {
+        border-right: 2px solid rgba($color: #000000, $alpha: .6);
+        padding: 1rem;
+
+        ul {
+            @include clearedUl;
+            
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+
+            li button {
+                @include clearedButton;
+                @include link;
+
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: var(--fontSize3);
+
+                &:disabled {
+                    color: var(--colorMain);
+                }
+            }
+        }
+    }
+
+    &__content {
+        padding: 1rem;
+
+    }
+}
