@@ -4,12 +4,11 @@
     border-radius: var(--bdrsDefault);
     width: max(50vw, 600px);
     height: min(90vh, 800px);
-    display: grid;
-    grid-template-areas: "N C";
-    grid-template-columns: max(12.5rem, 25%) auto;
+    display: flex;
     overflow: hidden;
 
     &__nav {
+        width: max(12.5rem, 25%);
         position: relative;
         background: var(--colorGray);
 
@@ -25,7 +24,6 @@
 
                 button {
                     @include clearedButton;
-                    @include link;
     
                     width: 100%;
                     display: flex;
@@ -33,10 +31,20 @@
                     gap: 0.5rem;
                     padding: .75rem 1.5rem;
                     font-size: var(--fontSize3);
+                    transition: var(--transitionDefault);
     
                     &:disabled {
                         background: var(--colorMain);
                         color: var(--colorText);
+                    }
+
+                    &:not(:disabled) {
+                        &:hover,
+                        &:focus-within {
+                            background: var(--colorTextDark);
+                            color: var(--colorGray);
+                            cursor: pointer;
+                        }
                     }
                 }
             }
@@ -44,6 +52,7 @@
     }
 
     &__content {
+        flex-grow: 1;
         position: relative;
         display: flex;
         flex-direction: column;
@@ -52,7 +61,70 @@
         padding: 1rem;
 
         &.content-main {
+            flex-wrap: wrap;
 
+            .content__user-info {
+                position: relative;
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+
+                .user-info__picture {
+                    background-color: var(--colorMain);
+                    width: max(12.5rem, 40%);
+                    flex-shrink: 0;
+                    aspect-ratio: 1;
+                    border-radius: 50%;
+                    border: 2px solid var(--colorText);
+                }
+
+                .user-info__main {
+                    position: relative;
+                    flex: 1;
+
+                    .main__email {
+                        font-weight: 600;
+                        font-size: clamp(1.4rem, 2vw, 2.5rem);
+                    }
+
+                    .main__info-blocks {
+                        margin-top: 1rem;
+                        width: 100%;
+                        gap: 1rem;
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+
+                        .info-blocks__block {
+                            min-width: 7rem;
+                            flex: 1 1 0px;
+                            border-radius: var(--bdrsDefault);
+                            background: var(--colorGray);
+                            padding: .75rem 1.25rem;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+                            .block__name {
+                                font-weight: 500;
+                                white-space: nowrap;
+                            }
+                            
+                            .block__count {
+                                font-weight: 300;
+                                color: var(--colorMain);
+                                white-space: nowrap;
+                                flex-grow: 1;
+                                display: grid;
+                                place-content: center;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         &.content-settings {

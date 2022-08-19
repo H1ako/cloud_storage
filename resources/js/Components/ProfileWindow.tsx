@@ -67,12 +67,28 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                                 <h2 className="main__email">{user?.email}</h2>
                                 <div className="main__info-blocks">
                                     <div className="info-blocks__block">
-                                        Files
-                                        30
+                                        <h5 className="block__name">
+                                            Shared Files
+                                        </h5>
+                                        <h3 className="block__count">
+                                            30
+                                        </h3>
                                     </div>
                                     <div className="info-blocks__block">
-                                        Shared Files
-                                        5
+                                        <h5 className="block__name">
+                                            Deleted Files
+                                        </h5>
+                                        <h3 className="block__count">
+                                            30
+                                        </h3>
+                                    </div>
+                                    <div className="info-blocks__block">
+                                        <h5 className="block__name">
+                                            Files
+                                        </h5>
+                                        <h3 className="block__count">
+                                            30
+                                        </h3>
                                     </div>
                                 </div>
                             </div>
