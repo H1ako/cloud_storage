@@ -7,3 +7,4 @@ type SpaceSizeType = number
 type IdType = number | string
 type RequestUserType = IUser | null
 type RequestFilesType = IFile[] | []
+type InputStateType = string | number

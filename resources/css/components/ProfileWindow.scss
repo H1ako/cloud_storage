@@ -4,40 +4,81 @@
     border-radius: var(--bdrsDefault);
     width: max(50vw, 600px);
     height: min(90vh, 800px);
-    // padding: 1rem;
     display: grid;
     grid-template-areas: "N C";
     grid-template-columns: max(12.5rem, 25%) auto;
+    overflow: hidden;
 
     &__nav {
-        border-right: 2px solid rgba($color: #000000, $alpha: .6);
-        padding: 1rem;
+        position: relative;
+        background: var(--colorGray);
 
         ul {
             @include clearedUl;
             
+            width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
 
-            li button {
-                @include clearedButton;
-                @include link;
+            li {
+                width: 100%;
 
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                font-size: var(--fontSize3);
-
-                &:disabled {
-                    color: var(--colorMain);
+                button {
+                    @include clearedButton;
+                    @include link;
+    
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    padding: .75rem 1.5rem;
+                    font-size: var(--fontSize3);
+    
+                    &:disabled {
+                        background: var(--colorMain);
+                        color: var(--colorText);
+                    }
                 }
             }
         }
     }
 
     &__content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
         padding: 1rem;
 
+        &.content-main {
+
+        }
+
+        &.content-settings {
+            .content__picture {
+                width: 40%;
+                aspect-ratio: 1;
+                border-radius: 50%;
+                border: 2px solid var(--colorText);
+                background-color: var(--colorMain);
+            }
+
+            .content__input {
+                width: min(100%, 30rem);
+            }
+
+            .content__passwords {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                width: 100%;
+                gap: 1rem;
+
+                .passwords__input {
+                    flex-grow: 1;
+                }
+            }
+        }
     }
 }

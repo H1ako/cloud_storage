@@ -1,0 +1,24 @@
+.top-text-input {
+    $marginInline: 1.5rem;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    &__text {
+        width: 100%;
+        margin-left: $marginInline;
+        color: var(--colorBlack);
+    }
+
+    &__input {
+        width: 100%;
+        outline: none;
+        border: none;
+        border-radius: var(--bdrsDefault);
+        background: var(--colorGray);
+        color: var(--colorBlack);
+        padding: .5rem $marginInline;
+    }
+}
