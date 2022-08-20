@@ -4,7 +4,7 @@ import React from 'react'
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { closeFileWindow } from '../store/slices/rClickWindowsSlice';
 // components
-import FileCard from './FileCard';
+import DraggableFileCard from './DraggableFileCard';
 import { RClickFileWindow } from './RClickFileWindow';
 // layouts
 import { ClickOutsideLayout } from '../Layouts/ClickOutsideLayout';
@@ -42,7 +42,7 @@ export default function FilesList() {
                 style={{ '--fileOrder': undefined } as React.CSSProperties}
             />
             {files.map((file, id) => (
-                <FileCard key={`file-${id}`} orderCardRef={orderCardRef} fileIndex={id} file={file} />
+                <DraggableFileCard key={`file-${id}`} orderCardRef={orderCardRef} fileIndex={id} file={file} />
             ))}
         </ul>
     )

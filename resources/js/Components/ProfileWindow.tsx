@@ -1,10 +1,12 @@
 // global
 import React from 'react'
+import { Link } from '@inertiajs/inertia-react';
 // layouts
 import WindowLayout from '../Layouts/WindowLayout';
 // components
 import CloseBtn from './CloseBtn';
-import { TopTextInput } from './TopTextInput';
+import TopTextInput from './TopTextInput';
+import FileCard from './FileCard';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -93,12 +95,16 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                                 </div>
                             </div>
                         </div>
+                        <ul className="content__most-popular-files">
+                            {/* <FileCard/> */}
+                        </ul>
                     </div>
                 }
                 { profilePage === 'settings' &&
                     <div className="profile-window__content content-settings">
                         <img src={user?.picture ?? ''} alt="" className="content__picture" />
                         <TopTextInput
+                            type='email'
                             className='content__input'
                             state={userEmail}
                             setState={setUserEmail}
@@ -121,6 +127,21 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                                 topText='Password Again'
                             />
                         </div>
+                        <Link
+                            method='put'
+                            href='/api/user'
+                            as='button'
+                            type='button'
+                            data={{ 
+                                email: userEmail,
+                                password: newPassword,
+                                passwordAgain: newPasswordAgain
+                            }}
+                            className='content__save-btn'
+                            preserveScroll={true}
+                        >
+                            Save Changes
+                        </Link>
                     </div>
                 }
             </div>

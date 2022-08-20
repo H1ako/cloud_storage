@@ -9,7 +9,7 @@ interface Props {
     closeWindow: () => void
 }
 
-export const RenameWindow =({ fileApi, closeWindow }: Props) => {
+export const RenameWindow = ({ fileApi, closeWindow }: Props) => {
     const confirmHandler = () => {
         fileApi.renameFile()
         closeWindow()

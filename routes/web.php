@@ -29,7 +29,7 @@ Route::get('/', function() {
 Route::get('/shared', function() {
     /** @var \App\Models\User $user **/
     $user = Auth::user();
-    $files = $user->files()->where('shareLink', '!=', NULL)->where('isDeleted', false)->orderBy('order')->get();
+    $files = $user->files()->where('isDeleted', false)->where('shareLink', '!=', NULL)->orderBy('order')->get();
 
     return inertia('HomePage', [
         'files' => $files
@@ -68,6 +68,7 @@ Route::get('/login', function() {
 
 Route::prefix('api')->group(function () {
     Route::resource('files', FilesController::class)->except(['create', 'edit', 'show', 'index'])->middleware('auth');
+    Route::resource('user', FilesController::class)->only(['show', 'update', 'destroy'])->middleware('auth');
     Route::get('/search/files', [SearchController::class, 'showFiles']);
 });
 

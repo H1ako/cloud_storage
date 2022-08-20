@@ -151,6 +151,15 @@
                     flex-grow: 1;
                 }
             }
+
+            .content__save-btn {
+                @include btn;
+
+                margin-top: auto;
+                color: var(--colorText);
+                background: var(--colorMain);
+
+            }
         }
     }
 }
