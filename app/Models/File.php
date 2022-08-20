@@ -24,7 +24,7 @@ class File extends Model
 
     protected $guarded = [];
 
-    protected $appends = ['displayPath'];
+    protected $appends = ['displayPath', 'checkedBy'];
 
     protected function getDisplayPathAttribute() {
         /** @var Illuminate\Filesystem\FilesystemAdapter */
@@ -34,9 +34,15 @@ class File extends Model
         return $path;
     }
 
-    public function getOriginalPathAttribute() {
-        return $this->path;
+    protected function getCheckedByAttribute() {
+        $checksTotal = count($this->lastChecks);
+        
+        return $checksTotal;
     }
+
+    // public function getOriginalPathAttribute() {
+    //     return $this->path;
+    // }
 
     public function user() {
         return $this->belongsTo(User::class, 'id', 'user_id');

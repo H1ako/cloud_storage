@@ -41,6 +41,7 @@ interface IFile {
     isDeleted: 0 | 1,
     readonly user?: IUser,
     readonly user_id: IdType,
+    readonly checkedBy: number,
     order: number
 }
 
