@@ -35,7 +35,7 @@ class File extends Model
     }
 
     protected function getCheckedByAttribute() {
-        $checksTotal = count($this->lastChecks);
+        $checksTotal = $this->lastChecks()->count();
         
         return $checksTotal;
     }

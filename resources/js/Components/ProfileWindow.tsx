@@ -1,6 +1,7 @@
 // global
 import React from 'react'
-import { Link } from '@inertiajs/inertia-react';
+import { Page, PageProps } from '@inertiajs/inertia';
+import { Link, usePage } from '@inertiajs/inertia-react';
 // layouts
 import WindowLayout from '../Layouts/WindowLayout';
 // components
@@ -10,8 +11,6 @@ import FileCard from './FileCard';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear, faUser } from '@fortawesome/free-solid-svg-icons';
-// store
-import { useAppSelector } from '../store/hooks';
 
 
 interface Props {
@@ -20,8 +19,15 @@ interface Props {
 
 type ProfilePages = 'main' | 'settings'
 
+interface SharedProps extends PageProps {
+    auth: {
+        user: RequestUserType,
+        mostCheckedFiles: IFile[]
+    }
+}
+
 export const ProfileWindow = ({ closeWindow }: Props) => {
-    const { user } = useAppSelector(state => state.user)
+    const { auth }: SharedProps = usePage<Page<SharedProps>>().props
     const [ profilePage, setProfilePage ] = React.useState<ProfilePages>('main')
     const [ userEmail, setUserEmail ] = React.useState<string>('')
     const [ newPassword, setNewPassowrd ] = React.useState<string>('')
@@ -29,10 +35,10 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
 
 
     React.useEffect(() => {
-        if (!user?.id) return
+        if (!auth.user?.id) return
 
-        setUserEmail(user.email)
-    }, [user])
+        setUserEmail(auth.user.email)
+    }, [auth.user])
 
 
     return (
@@ -66,7 +72,7 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                         <div className="content__user-info">
                             <img className="user-info__picture" />
                             <div className="user-info__main">
-                                <h2 className="main__email">{user?.email}</h2>
+                                <h2 className="main__email">{auth.user?.email}</h2>
                                 <div className="main__info-blocks">
                                     <div className="info-blocks__block">
                                         <h5 className="block__name">
@@ -95,14 +101,19 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                                 </div>
                             </div>
                         </div>
-                        <ul className="content__most-popular-files">
-                            {/* <FileCard/> */}
-                        </ul>
+                        <div className="content__most-popular-files">
+                            <h2 className='most-popular-files__heading'>Most Popular Files</h2>
+                                <ul className="most-popular-files__files-list">
+                                { Object.values(auth.mostCheckedFiles).map((file, index) => 
+                                    <FileCard key={`profile-file-${index}`} file={file} fileIndex={index} />
+                                )}
+                            </ul>
+                        </div>
                     </div>
                 }
                 { profilePage === 'settings' &&
                     <div className="profile-window__content content-settings">
-                        <img src={user?.picture ?? ''} alt="" className="content__picture" />
+                        <img src={auth.user?.picture ?? ''} alt="" className="content__picture" />
                         <TopTextInput
                             type='email'
                             className='content__input'

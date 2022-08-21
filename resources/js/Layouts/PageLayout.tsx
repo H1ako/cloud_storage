@@ -18,7 +18,8 @@ interface Props {
 
 interface SharedProps extends PageProps {
     auth: {
-        user: RequestUserType
+        user: RequestUserType,
+        mostCheckedFiles: IFile[]
     }
 }
 

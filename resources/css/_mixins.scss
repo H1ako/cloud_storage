@@ -47,6 +47,17 @@
     }
 }
 
+@mixin fileCardList {
+    @include clearedUl;
+
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 12.25rem;
+    margin-inline: auto;
+}
+
 @mixin link {
     cursor: pointer;
     

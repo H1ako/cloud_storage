@@ -8,9 +8,10 @@
     overflow: hidden;
 
     &__nav {
-        width: max(12.5rem, 25%);
+        min-width: 12.5rem;
         position: relative;
         background: var(--colorGray);
+        overflow: hidden;
 
         ul {
             @include clearedUl;
@@ -28,8 +29,10 @@
                     width: 100%;
                     display: flex;
                     align-items: center;
+                    justify-content: flex-start;
                     gap: 0.5rem;
                     padding: .75rem 1.5rem;
+
                     font-size: var(--fontSize3);
                     transition: var(--transitionDefault);
     
@@ -59,10 +62,9 @@
         align-items: center;
         gap: 1rem;
         padding: 1rem;
+        overflow-y: auto;
 
         &.content-main {
-            flex-wrap: wrap;
-
             .content__user-info {
                 position: relative;
                 width: 100%;
@@ -125,9 +127,28 @@
                     }
                 }
             }
+            
+            .content__most-popular-files {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+
+                .most-popular-files__heading {
+                    font-weight: 300;
+                    text-align: center;
+                }
+
+                .most-popular-files__files-list {
+                    @include fileCardList;
+                    justify-content: center;
+                }
+            }
         }
 
         &.content-settings {
+            overflow-x: hidden;
+
             .content__picture {
                 width: 40%;
                 aspect-ratio: 1;
@@ -141,6 +162,7 @@
             }
 
             .content__passwords {
+                position: relative;
                 display: flex;
                 flex-wrap: wrap;
                 align-items: center;
@@ -148,7 +170,7 @@
                 gap: 1rem;
 
                 .passwords__input {
-                    flex-grow: 1;
+                    flex: 1;
                 }
             }
 

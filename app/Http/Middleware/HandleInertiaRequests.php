@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
@@ -35,11 +36,14 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request)
     {
         $user = $request->user();
-        $mostCheckedFiles = $user->files()->where('checkedBy', '!=', 0)->orderBy('checkedBy')->get();
+        $mostCheckedFiles = $user->files->filter(function ($file) {
+            return $file->checkedBy > 0;
+        })->sortByDesc('checkedBy');
 
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $user,
+                'mostCheckedFiles' => $mostCheckedFiles
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [

@@ -9,6 +9,7 @@
     &__text {
         width: 100%;
         margin-left: $marginInline;
+        white-space: nowrap;
         color: var(--colorBlack);
     }
 
