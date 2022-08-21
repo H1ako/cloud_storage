@@ -4,6 +4,13 @@ interface IPosition {
     y: number
 }
 
+interface ISharedProps {
+    auth: {
+        user: RequestUserType
+    },
+    errors: {}
+}
+
 
 // users
 interface IUser {
@@ -34,14 +41,14 @@ interface IFile {
     readonly id: IdType,
     readonly path: string,
     readonly displayPath: string,
-    name: string,
     readonly size: SpaceSizeType,
     readonly type: FileType,
-    shareLink: string,
-    isDeleted: 0 | 1,
     readonly user?: IUser,
     readonly user_id: IdType,
     readonly checkedBy: number,
+    name: string,
+    shareLink: string,
+    isDeleted: 0 | 1,
     order: number
 }
 

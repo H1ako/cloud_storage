@@ -8,10 +8,7 @@ import FilesList from '../Components/FilesList';
 import { useAppDispatch } from '../store/hooks';
 import { updateFiles } from '../store/slices/filesSlice';
 
-interface Props {
-    auth: {
-        user: RequestUserType,
-    }
+interface Props extends ISharedProps {
     files: RequestFilesType
 }
 

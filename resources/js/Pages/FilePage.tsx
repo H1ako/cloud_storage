@@ -14,10 +14,7 @@ import { faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
 import useFileApi from '../libs/useFileApi';
 
 
-interface Props {
-    auth: {
-        user: RequestUserType,
-    }
+interface Props extends ISharedProps {
     file: IFile
 }
 
