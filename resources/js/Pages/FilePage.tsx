@@ -15,11 +15,13 @@ import useFileApi from '../libs/useFileApi';
 
 
 interface Props {
-    user: RequestUserType,
+    auth: {
+        user: RequestUserType,
+    }
     file: IFile
 }
 
-export default function FilePage({user, file}: Props) {
+export default function FilePage({auth, file}: Props) {
     const fileApi = useFileApi(file)
     // windows open state
     const [ isRenameWindowOpened, setIsRenameWindowOpened ] = React.useState<boolean>(false)
@@ -27,7 +29,7 @@ export default function FilePage({user, file}: Props) {
     const [ isDeleteConfirmWindowOpened, setIsDeleteConfirmWindowOpened ] = React.useState<boolean>(false)
 
     return (
-        <PageLayout user={user}>
+        <PageLayout user={auth.user}>
             { isShareLinkWindowOpened &&
                 <ShareLinkWindow fileApi={fileApi} closeWindow={() => setIsShareLinkWindowOpened(false)} />
             }
@@ -38,8 +40,12 @@ export default function FilePage({user, file}: Props) {
                 <DeleteConfirmWindow fileApi={fileApi} closeWindow={() => setIsDeleteConfirmWindowOpened(false)} />
             }
             <div className="file-controll-btns">
-                <button className="file-controll-btns__btn" onClick={() => setIsRenameWindowOpened(true)}>Rename</button>
-                <button className="file-controll-btns__btn" onClick={() => setIsDeleteConfirmWindowOpened(true)}>Delete</button>
+                { auth.user?.id === file.user_id &&
+                    <>
+                    <button className="file-controll-btns__btn" onClick={() => setIsRenameWindowOpened(true)}>Rename</button>
+                    <button className="file-controll-btns__btn" onClick={() => setIsDeleteConfirmWindowOpened(true)}>Delete</button>
+                    </>
+                }
                 <a target='_blank' href={file.displayPath} className="file-controll-btns__btn">Full Size</a>
             </div>
             <div className="file-info">

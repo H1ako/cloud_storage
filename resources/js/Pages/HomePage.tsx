@@ -9,11 +9,13 @@ import { useAppDispatch } from '../store/hooks';
 import { updateFiles } from '../store/slices/filesSlice';
 
 interface Props {
-    user: RequestUserType,
+    auth: {
+        user: RequestUserType,
+    }
     files: RequestFilesType
 }
 
-export default function HomePage({user, files}: Props) {
+export default function HomePage({auth, files}: Props) {
     const dispatch = useAppDispatch()
     
     React.useEffect(() => {
@@ -21,7 +23,7 @@ export default function HomePage({user, files}: Props) {
     }, [files])
 
     return (
-        <PageLayout user={user}>
+        <PageLayout user={auth.user}>
             <UploadFileBlock />
             <FilesList />
         </PageLayout>
