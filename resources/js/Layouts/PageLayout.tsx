@@ -1,6 +1,6 @@
 // global
 import React from 'react'
-import { InertiaAppOptionsForSSR, usePage } from '@inertiajs/inertia-react'
+import { usePage } from '@inertiajs/inertia-react'
 // components
 import Header from '../Components/Header';
 import Asidebar from '../Components/Asidebar';

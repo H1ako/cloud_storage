@@ -7,7 +7,7 @@ import { closeFileWindow } from '../store/slices/rClickWindowsSlice';
 import DraggableFileCard from './DraggableFileCard';
 import { RClickFileWindow } from './RClickFileWindow';
 // layouts
-import { ClickOutsideLayout } from '../Layouts/ClickOutsideLayout';
+import ClickOutsideLayout from '../Layouts/ClickOutsideLayout';
 
 
 export default function FilesList() {

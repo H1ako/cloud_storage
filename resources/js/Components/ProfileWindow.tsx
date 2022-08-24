@@ -4,6 +4,7 @@ import { Page, PageProps } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/inertia-react';
 // layouts
 import WindowLayout from '../Layouts/WindowLayout';
+import ClickOutsideLayout from '../Layouts/ClickOutsideLayout';
 // components
 import CloseBtn from './CloseBtn';
 import TopTextInput from './TopTextInput';
@@ -32,6 +33,7 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
     const [ userEmail, setUserEmail ] = React.useState<string>('')
     const [ newPassword, setNewPassowrd ] = React.useState<string>('')
     const [ newPasswordAgain, setNewPasswordAgain ] = React.useState<string>('')
+    const windowRef = React.useRef<HTMLDivElement>(null)
 
 
     React.useEffect(() => {
@@ -44,118 +46,120 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
     return (
         <WindowLayout>
             <CloseBtn onClose={closeWindow}/>
-            <div className="profile-window">
-                <nav aria-label='profile nav' className="profile-window__nav">
-                    <ul>
-                        <li>
-                            <button
-                                disabled={profilePage === 'main'}
-                                onClick={() => setProfilePage('main')}
-                            >
-                                <FontAwesomeIcon icon={faUser} />
-                                Profile
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                disabled={profilePage === 'settings'}
-                                onClick={() => setProfilePage('settings')}
-                            >
-                                <FontAwesomeIcon icon={faGear} />
-                                Settings
-                            </button>
-                        </li>
-                    </ul>
-                </nav>
-                { profilePage === 'main' &&
-                    <div className="profile-window__content content-main">
-                        <div className="content__user-info">
-                            <img className="user-info__picture" />
-                            <div className="user-info__main">
-                                <h2 className="main__email">{auth.user?.email}</h2>
-                                <div className="main__info-blocks">
-                                    <div className="info-blocks__block">
-                                        <h5 className="block__name">
-                                            Shared Files
-                                        </h5>
-                                        <h3 className="block__count">
-                                            30
-                                        </h3>
-                                    </div>
-                                    <div className="info-blocks__block">
-                                        <h5 className="block__name">
-                                            Deleted Files
-                                        </h5>
-                                        <h3 className="block__count">
-                                            30
-                                        </h3>
-                                    </div>
-                                    <div className="info-blocks__block">
-                                        <h5 className="block__name">
-                                            Files
-                                        </h5>
-                                        <h3 className="block__count">
-                                            30
-                                        </h3>
+            <ClickOutsideLayout onClick={closeWindow} ref={windowRef}>
+                <div ref={windowRef} className="profile-window">
+                    <nav aria-label='profile nav' className="profile-window__nav">
+                        <ul>
+                            <li>
+                                <button
+                                    disabled={profilePage === 'main'}
+                                    onClick={() => setProfilePage('main')}
+                                >
+                                    <FontAwesomeIcon icon={faUser} />
+                                    Profile
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    disabled={profilePage === 'settings'}
+                                    onClick={() => setProfilePage('settings')}
+                                >
+                                    <FontAwesomeIcon icon={faGear} />
+                                    Settings
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                    { profilePage === 'main' &&
+                        <div className="profile-window__content content-main">
+                            <div className="content__user-info">
+                                <img className="user-info__picture" />
+                                <div className="user-info__main">
+                                    <h2 className="main__email">{auth.user?.email}</h2>
+                                    <div className="main__info-blocks">
+                                        <div className="info-blocks__block">
+                                            <h5 className="block__name">
+                                                Shared Files
+                                            </h5>
+                                            <h3 className="block__count">
+                                                30
+                                            </h3>
+                                        </div>
+                                        <div className="info-blocks__block">
+                                            <h5 className="block__name">
+                                                Deleted Files
+                                            </h5>
+                                            <h3 className="block__count">
+                                                30
+                                            </h3>
+                                        </div>
+                                        <div className="info-blocks__block">
+                                            <h5 className="block__name">
+                                                Files
+                                            </h5>
+                                            <h3 className="block__count">
+                                                30
+                                            </h3>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div className="content__most-popular-files">
+                                <h2 className='most-popular-files__heading'>Most Popular Files</h2>
+                                    <ul className="most-popular-files__files-list">
+                                    { Object.values(auth.mostCheckedFiles).map((file, index) => 
+                                        <FileCard key={`profile-file-${index}`} file={file} fileIndex={index} />
+                                    )}
+                                </ul>
+                            </div>
                         </div>
-                        <div className="content__most-popular-files">
-                            <h2 className='most-popular-files__heading'>Most Popular Files</h2>
-                                <ul className="most-popular-files__files-list">
-                                { Object.values(auth.mostCheckedFiles).map((file, index) => 
-                                    <FileCard key={`profile-file-${index}`} file={file} fileIndex={index} />
-                                )}
-                            </ul>
-                        </div>
-                    </div>
-                }
-                { profilePage === 'settings' &&
-                    <div className="profile-window__content content-settings">
-                        <img src={auth.user?.picture ?? ''} alt="" className="content__picture" />
-                        <TopTextInput
-                            type='email'
-                            className='content__input'
-                            state={userEmail}
-                            setState={setUserEmail}
-                            placeholder='Email'
-                            topText='Change email to'
-                        />
-                        <div className="content__passwords">
+                    }
+                    { profilePage === 'settings' &&
+                        <div className="profile-window__content content-settings">
+                            <img src={auth.user?.picture ?? ''} alt="" className="content__picture" />
                             <TopTextInput
-                                className='passwords__input'
-                                state={newPassword}
-                                setState={setNewPassowrd}
-                                placeholder='New Password'
-                                topText='Change password to'
+                                type='email'
+                                className='content__input'
+                                state={userEmail}
+                                setState={setUserEmail}
+                                placeholder='Email'
+                                topText='Change email to'
                             />
-                            <TopTextInput
-                                className='passwords__input'
-                                state={newPasswordAgain}
-                                setState={setNewPasswordAgain}
-                                placeholder='New Password Again'
-                                topText='Password Again'
-                            />
+                            <div className="content__passwords">
+                                <TopTextInput
+                                    className='passwords__input'
+                                    state={newPassword}
+                                    setState={setNewPassowrd}
+                                    placeholder='New Password'
+                                    topText='Change password to'
+                                />
+                                <TopTextInput
+                                    className='passwords__input'
+                                    state={newPasswordAgain}
+                                    setState={setNewPasswordAgain}
+                                    placeholder='New Password Again'
+                                    topText='Password Again'
+                                />
+                            </div>
+                            <Link
+                                method='put'
+                                href='/api/user'
+                                as='button'
+                                type='button'
+                                data={{ 
+                                    email: userEmail,
+                                    password: newPassword,
+                                    passwordAgain: newPasswordAgain
+                                }}
+                                className='content__save-btn'
+                                preserveScroll={true}
+                            >
+                                Save Changes
+                            </Link>
                         </div>
-                        <Link
-                            method='put'
-                            href='/api/user'
-                            as='button'
-                            type='button'
-                            data={{ 
-                                email: userEmail,
-                                password: newPassword,
-                                passwordAgain: newPasswordAgain
-                            }}
-                            className='content__save-btn'
-                            preserveScroll={true}
-                        >
-                            Save Changes
-                        </Link>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
+            </ClickOutsideLayout>
         </WindowLayout>
     )
 }

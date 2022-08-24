@@ -11,7 +11,7 @@ export const store = configureStore({
         user: userReducer,
         files: filesReducer,
         windows: rClickWindowsReducer,
-        subscriptions: subscriptionsReducer
+        subscriptions: subscriptionsReducer,
     },
     devTools: true,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({

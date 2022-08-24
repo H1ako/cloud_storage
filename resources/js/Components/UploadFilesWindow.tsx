@@ -6,12 +6,13 @@ import WindowLayout from '../Layouts/WindowLayout';
 import FilesToUploadList from './FilesToUploadList';
 import UploadBtn from './UploadBtn';
 import CloseBtn from './CloseBtn';
+// layouts
+import ClickOutsideLayout from '../Layouts/ClickOutsideLayout';
 // store
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { closeFilesToUploadWindow } from '../store/slices/filesSlice';
 // windows
 import { RClickFileToUploadWindow } from './RClickFileToUploadWindow';
-import { ClickOutsideLayout } from '../Layouts/ClickOutsideLayout';
 import { closeFileToUploadWindow } from '../store/slices/rClickWindowsSlice';
 
 
