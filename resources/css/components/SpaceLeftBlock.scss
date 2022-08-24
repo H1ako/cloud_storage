@@ -8,28 +8,6 @@
         color: var(--colorTextDark);
     }
 
-    &__bar {
-        $bdrs: 1.5rem;
-        $height: 1rem;
-        --usedSpacePercent: 0;
-
-        position: relative;
-        width: 100%;
-        border-radius: $bdrs;
-        height: $height;
-        background: var(--colorGray);
-
-        &::after {
-            content: '';
-            position: absolute;
-            height: $height;
-            top: 0; left: 0;
-            border-radius: $bdrs;
-            width: calc(1% * var(--usedSpacePercent));
-            background: var(--colorMain);
-        }
-    }
-    
     &__more-space {
         @include btn;
         background: none;

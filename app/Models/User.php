@@ -74,6 +74,6 @@ class User extends Authenticatable
     }
 
     public function subscription() {
-        return $this->belongsTo(Subscription::class, 'subscription', 'name');
+        return $this->belongsTo(Subscription::class, 'subscription_name', 'name');
     }
 }

@@ -3,7 +3,8 @@ import React from 'react'
 // store
 import { useAppSelector } from '../store/hooks';
 // components
-import MoreSpaceLayout from '../Layouts/MoreSpaceLayout';
+import MoreSpaceBtn from './MoreSpaceBtn';
+import PercentageBar from './PercentageBar';
 
 
 export default function SpaceLeftBlock() {
@@ -12,13 +13,10 @@ export default function SpaceLeftBlock() {
     return (
         <div className="space-left">
             <h4 className="space-left__size">{spaceData.usedSpace}/{spaceData.maxSpace}</h4>
-            <div
-                className="space-left__bar"
-                style={{'--usedSpacePercent': Math.min(Math.round(spaceData.usedSpace / spaceData.maxSpace * 100), 100)} as React.CSSProperties}
-            />
-            <MoreSpaceLayout>
-                <button className='space-left__more-space'>Get More Space</button>
-            </MoreSpaceLayout>
+            <PercentageBar value={spaceData.usedSpace} maxValue={spaceData.maxSpace} />
+            <MoreSpaceBtn className='space-left__more-space'>
+                Get More Space
+            </MoreSpaceBtn>
         </div>
     )
 }

@@ -10,13 +10,15 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 // windows components
 import UploadFilesWindow from '../Components/UploadFilesWindow';
 import { Page, PageProps } from '@inertiajs/inertia';
+import SubscriptionsWindow from '../Components/SubscriptionsWindow';
+import { updateSubscriptions } from '../store/slices/subscriptionsSlice';
 
 interface Props {
     children: React.ReactNode,
     user: RequestUserType
 }
 
-interface SharedProps extends PageProps {
+interface SharedProps extends PageProps, ISharedProps {
     auth: {
         user: RequestUserType,
         mostCheckedFiles: IFile[]
@@ -24,14 +26,17 @@ interface SharedProps extends PageProps {
 }
 
 export default function PageLayout({ children }: Props) {
-    const { auth }: SharedProps = usePage<Page<SharedProps>>().props
+    const { auth, globalData }: SharedProps = usePage<Page<SharedProps>>().props
     const dispatch = useAppDispatch()
-    const { isUploadWindowOpened } = useAppSelector(state => state.files)
+    const globalState = useAppSelector(state => state)
+    const { isUploadWindowOpened } = globalState.files
+    const { isSubscriptionsWindowOpened } = globalState.subscriptions
 
     React.useEffect(() => {
         if (auth.user) {
             dispatch(updateUser(auth.user))
             dispatch(updateSpaceData(auth.user.spaceData))
+            dispatch(updateSubscriptions(globalData.subscriptions))
         }
     }, [auth.user])
 
@@ -45,6 +50,9 @@ export default function PageLayout({ children }: Props) {
             {/* Windows */}
             { isUploadWindowOpened &&
                 <UploadFilesWindow />
+            }
+            { isSubscriptionsWindowOpened &&
+                <SubscriptionsWindow />
             }
         </div>
     )

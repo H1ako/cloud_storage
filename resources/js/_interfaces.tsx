@@ -8,6 +8,9 @@ interface ISharedProps {
     auth: {
         user: RequestUserType
     },
+    globalData: {
+        subscriptions:ISubscription[]
+    }
     errors: {}
 }
 
@@ -17,7 +20,8 @@ interface IUser {
     id: IdType,
     email: string,
     picture?: string | null,
-    subscription: ISubscription | IdType,
+    subscription: ISubscription,
+    subscription_name: string,
     files?: null | File[],
     spaceData: IUserSpaceData
 }

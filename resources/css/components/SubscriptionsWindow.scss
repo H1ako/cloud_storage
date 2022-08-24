@@ -1,0 +1,12 @@
+.subscriptions-list {
+    @include clearedUl;
+
+    display: grid;
+    place-content: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 14rem));
+    grid-template-rows: repeat(auto-fit, minmax(18rem, 24rem));
+    gap: 2rem;
+}

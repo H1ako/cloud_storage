@@ -1,0 +1,21 @@
+.percentage-bar {
+    $bdrs: 1.5rem;
+    $height: 1rem;
+    --usedSpacePercent: 0;
+
+    position: relative;
+    width: 100%;
+    border-radius: $bdrs;
+    height: $height;
+    background: var(--colorGray);
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        position: absolute;
+        height: $height;
+        top: 0; left: 0;
+        width: calc(1% * var(--usedSpacePercent));
+        background: var(--colorMain);
+    }
+}

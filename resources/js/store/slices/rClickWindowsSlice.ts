@@ -3,32 +3,32 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // libs
 
 
-interface IClickedFileToUploadData {
+interface ClickedFileToUploadData {
     file: File | null,
     fileIndex: ListFileId
 }
 
-interface IClickedFileData {
+interface ClickedFileData {
     file: IFile | null,
     fileIndex: ListFileId
 }
 
-interface IActionOpenFileToUpload {
+interface ActionOpenFileToUpload {
     position: IPosition,
-    fileData: IClickedFileToUploadData
+    fileData: ClickedFileToUploadData
 }
 
-interface IActionOpenFile {
+interface ActionOpenFile {
     position: IPosition,
-    fileData: IClickedFileData 
+    fileData: ClickedFileData 
 }
 
 interface WindowsState {
     isFileWindowOpened: boolean,
     isFileToUploadWindowOpened: boolean,
     fileToUploadWindowPosition: IPosition,
-    clickedFileToUploadData: IClickedFileToUploadData,
-    clickedFileData: IClickedFileData,
+    clickedFileToUploadData: ClickedFileToUploadData,
+    clickedFileData: ClickedFileData,
     fileWindowPosition: IPosition,
 }
 
@@ -59,7 +59,7 @@ const rClickWindowsSlice = createSlice({
     name: 'rClickWindows',
     initialState,
     reducers: {
-        openFileToUploadWindow: (state: WindowsState, action: PayloadAction<IActionOpenFileToUpload>) => {
+        openFileToUploadWindow: (state: WindowsState, action: PayloadAction<ActionOpenFileToUpload>) => {
             state.fileToUploadWindowPosition = action.payload.position
             state.clickedFileToUploadData = action.payload.fileData
 
@@ -68,7 +68,7 @@ const rClickWindowsSlice = createSlice({
         closeFileToUploadWindow: (state: WindowsState) => {
             state.isFileToUploadWindowOpened = false
         },
-        openFileWindow: (state: WindowsState, action: PayloadAction<IActionOpenFile>) => {
+        openFileWindow: (state: WindowsState, action: PayloadAction<ActionOpenFile>) => {
             state.fileWindowPosition = action.payload.position
             state.clickedFileData = action.payload.fileData
 

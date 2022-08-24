@@ -1,0 +1,59 @@
+.subscription-card {
+    position: relative;
+    background: var(--colorText);
+    border-radius: var(--bdrsDefault);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    &__head {
+        width: 100%;
+        background: var(--colorMain);
+        flex-shrink: 0;
+        display: grid;
+        place-content: center;
+        padding: 1.5rem .5rem;
+        
+        .head__name {
+            color: var(--colorText);
+            font-weight: 800;
+            text-transform: capitalize;
+        }
+        
+    }
+
+    &__content {
+        flex-grow: 1;
+        width: 100%;
+        padding: 1.5rem .75rem;
+        display: flex;
+        flex-direction: column;
+        gap: .75rem;
+        align-items: center;
+        
+        .content__price {
+            margin-top: auto;
+            font-weight: 300;
+        }
+        
+        .content__max-space {
+            margin-top: auto;
+            font-weight: 400
+        }
+
+        .content__btn {
+            @include btn;
+            
+            width: 100%;
+            background: var(--colorAccent);
+            color: var(--colorTextDark);
+
+            &:disabled {
+                background: var(--colorMain);
+                color: var(--colorText);
+                user-select: none;
+                pointer-events: none;
+            }
+        }
+    }
+}

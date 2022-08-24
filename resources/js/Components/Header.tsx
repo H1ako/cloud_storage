@@ -8,7 +8,7 @@ import { Link, useRemember } from '@inertiajs/inertia-react'
 import Logo from './Logo';
 import Search from './Search';
 import Profile from './Profile';
-import MoreSpaceLayout from '../Layouts/MoreSpaceLayout';
+import MoreSpaceBtn from './MoreSpaceBtn';
 
 
 export default function Header() {
@@ -22,11 +22,9 @@ export default function Header() {
                     <Logo />
                 </Link>
                 <Search />
-                <MoreSpaceLayout>
-                    <button className="more-space-btn">
-                        More Space
-                    </button>
-                </MoreSpaceLayout>
+                <MoreSpaceBtn className="more-space-btn">
+                    More Space
+                </MoreSpaceBtn>
                 <Profile />
                 <button onClick={() => setIsNavVisible(state => !state)} className="main-part__btn-toggle">
                     {isNavVisible ?

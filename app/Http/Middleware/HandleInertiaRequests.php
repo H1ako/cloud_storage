@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Middleware;
@@ -35,15 +36,22 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+        // auth
         $user = $request->user();
-        $mostCheckedFiles = $user->files->filter(function ($file) {
+        $mostCheckedFiles = $user ? $user->files->filter(function ($file) {
             return $file->checkedBy > 0;
-        })->sortByDesc('checkedBy');
+        })->sortByDesc('checkedBy') : [];
+
+        // global data
+        $subscriptions = Subscription::all();
 
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $user,
                 'mostCheckedFiles' => $mostCheckedFiles
+            ],
+            'globalData' => [
+                'subscriptions' => $subscriptions
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
