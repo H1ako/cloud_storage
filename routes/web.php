@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FilesController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureShareLinkIsValid;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -68,8 +69,8 @@ Route::get('/login', function() {
 
 Route::prefix('api')->group(function () {
     Route::resource('files', FilesController::class)->except(['create', 'edit', 'show', 'index'])->middleware('auth');
-    Route::resource('user', FilesController::class)->only(['show', 'update', 'destroy'])->middleware('auth');
-    Route::get('/search/files', [SearchController::class, 'showFiles']);
+    Route::resource('user', UserController::class)->only(['show', 'update', 'destroy'])->middleware('auth');
+    Route::post('/user/subscription/{subscirptionId}', [UserController::class, 'updateSubscription'])->middleware('auth');
 });
 
 Route::get('files/{shareLink}', [FilesController::class, 'show'])->middleware(EnsureShareLinkIsValid::class);

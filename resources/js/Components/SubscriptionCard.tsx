@@ -1,4 +1,5 @@
 // global
+import { Link } from '@inertiajs/inertia-react';
 import React from 'react'
 // components
 import PercentageBar from './PercentageBar';
@@ -27,7 +28,14 @@ const SubscriptionCard = ({ subscription, className='', style={}, isUsersSubscri
                 { isUsersSubscription ?
                     <button disabled className="content__btn">Active</button>
                 :
-                    <button className="content__btn">Get</button>
+                <Link
+                    className='content__btn'
+                    href={`/api/user/subscription/${subscription.id}`}
+                    method='post'
+                    as='button'
+                    type='button'
+                >
+                    Get</Link>
                 }
             </div>
         </li>
