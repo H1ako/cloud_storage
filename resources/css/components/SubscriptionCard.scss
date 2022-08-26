@@ -12,12 +12,14 @@
         flex-shrink: 0;
         display: grid;
         place-content: center;
-        padding: 1.5rem .5rem;
+        // padding: 1.5rem .5rem;
+        height: 30%;
         
         .head__name {
             color: var(--colorText);
             font-weight: 800;
             text-transform: capitalize;
+            text-align: center;
         }
         
     }

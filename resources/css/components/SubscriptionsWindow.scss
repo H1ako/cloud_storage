@@ -1,12 +1,19 @@
-.subscriptions-list {
-    @include clearedUl;
-
-    display: grid;
-    place-content: center;
+.subscription-window {
+    position: relative;
     width: 100%;
-    min-height: 100vh;
-    padding: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 14rem));
-    grid-template-rows: repeat(auto-fit, minmax(18rem, 24rem));
-    gap: 2rem;
+    height: 100%;
+    overflow-y: auto;
+
+    .subscriptions-list {
+        @include clearedUl;
+    
+        place-content: center;
+        width: 100%;
+        min-height: 100%;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(10rem, 14rem));
+        grid-template-rows: repeat(auto-fit, minmax(18rem, 24rem));
+        gap: 2rem;
+    }
 }

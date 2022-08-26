@@ -43,7 +43,7 @@ class HandleInertiaRequests extends Middleware
         })->sortByDesc('checkedBy') : [];
 
         // global data
-        $subscriptions = Subscription::all();
+        $subscriptions = Subscription::orderBy('price')->get();
 
         return array_merge(parent::share($request), [
             'auth' => [

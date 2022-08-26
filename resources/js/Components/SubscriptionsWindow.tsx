@@ -22,16 +22,18 @@ export default function SubscriptionsWindow() {
     return (
         <WindowLayout>
             <CloseBtn onClose={closeWindow} />
-            <ul className="subscriptions-list">
-                { subscriptions.map(sub => (
-                    <SubscriptionCard
-                        usedSpace={user?.spaceData.usedSpace ?? 0}
-                        isUsersSubscription={user?.subscription_name === sub.name}
-                        subscription={sub}
-                        key={`sub-${sub.id}`}
-                    />
-                ))}
-            </ul>
+            <div className="subscription-window">
+                <ul className="subscriptions-list">
+                    { subscriptions.map(sub => (
+                        <SubscriptionCard
+                            usedSpace={user?.spaceData.usedSpace ?? 0}
+                            isUsersSubscription={user?.subscription_name === sub.name}
+                            subscription={sub}
+                            key={`sub-${sub.id}`}
+                        />
+                    ))}
+                </ul>
+            </div>
         </WindowLayout>
     )
 }
