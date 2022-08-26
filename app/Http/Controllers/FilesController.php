@@ -17,18 +17,20 @@ class FilesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, FileService $fileService)
     {
         $user = $request->user();
         $userId = $user->id;
         $files = $request->file('files', []);
+        $filesSizes = $fileService->getFilesToUploadSizes($files);
+        if ($user->spaceData['usedSpace'] + array_sum($filesSizes) > $user->spaceData['maxSpace']) {
+            return redirect()->back();
+        }
         /** @var Illuminate\Filesystem\FilesystemAdapter */
         $fileSystem = Storage::disk('userFiles');
 
         foreach($files as $file) {
             $fileSize = $file->getSize();
-            if ($fileSize > 100000000) continue;
-            
             $originalFileName = $file->getClientOriginalName();
             $fileName = time().$originalFileName;
             $fileType = explode('/', $file->getMimeType())[0];

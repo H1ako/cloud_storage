@@ -1,7 +1,7 @@
 // global
 import React from 'react'
 // store
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { addFilesToUpload, updateFilesToUpload } from '../store/slices/filesSlice';
 
 
@@ -12,11 +12,18 @@ interface Props {
 
 export default React.memo(function UploadBtn({textInside='Upload', action='set'}: Props) {
     const dispatch = useAppDispatch()
+    const { user } = useAppSelector(state => state.user)
 
     const uploadHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        if (!e.target.files) return
+        if (!e.target.files || user === null) return
         
         const uploadedFiles: FileListType = e.target.files
+        // total size
+        let filesTotalSize = 0
+        for(const file of uploadedFiles) {
+            filesTotalSize += file.size
+        }
+        if (user.spaceData.usedSpace + filesTotalSize > user.spaceData.maxSpace) return
 
         if (action === 'add') {
             dispatch(addFilesToUpload(uploadedFiles))

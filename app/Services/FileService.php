@@ -17,4 +17,14 @@ class FileService
             $newOrder++;
         }
     }
+
+    public function getFilesToUploadSizes($files) {
+        $sizes = [];
+
+        foreach ($files as $file) {
+            array_push($sizes, $file->getSize());
+        }
+        
+        return $sizes;
+    }
 }

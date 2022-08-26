@@ -12,7 +12,7 @@ interface Props {
     usedSpace: number
 }
 
-const SubscriptionCard = ({ subscription, className='', style={}, isUsersSubscription, usedSpace }: Props) => {
+const SubscriptionCard = ({ subscription, isUsersSubscription, usedSpace, className='', style={} }: Props) => {
     return (
         <li
             style={style}
