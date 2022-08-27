@@ -23,7 +23,7 @@ const SubscriptionCard = ({ subscription, isUsersSubscription, usedSpace, classN
             </div>
             <div className="subscription-card__content">
                 <h2 className="content__price">{subscription.price}{subscription.currency}</h2>
-                <h4 className="content__max-space">{subscription.maxSpace}</h4>
+                <h4 className="content__max-space">{subscription.displayMaxSpace}</h4>
                 <PercentageBar value={usedSpace} maxValue={subscription.maxSpace} />
                 { isUsersSubscription ?
                     <button disabled className="content__btn">Active</button>

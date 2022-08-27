@@ -30,13 +30,16 @@ interface ISubscription {
     id: IdType,
     name: string,
     maxSpace: SpaceSizeType,
+    displayMaxSpace: string,
     price: number,
     currency: string
 }
 
 interface IUserSpaceData {
     maxSpace: number,
-    usedSpace: number
+    displayMaxSpace: string,
+    usedSpace: number,
+    displayUsedSpace: string
 }
 
 
@@ -46,6 +49,7 @@ interface IFile {
     readonly path: string,
     readonly displayPath: string,
     readonly size: SpaceSizeType,
+    readonly displaySize: string,
     readonly type: FileType,
     readonly user?: IUser,
     readonly user_id: IdType,

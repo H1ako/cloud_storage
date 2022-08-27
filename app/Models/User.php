@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Services\SizeService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -51,13 +53,19 @@ class User extends Authenticatable
     ];
 
     public function getSpaceDataAttribute() {
+        $sizeService = new SizeService;
         $maxSpace = $this->subscription()->first()->maxSpace;
         $usedSpaces = $this->files()->pluck('size')->toArray();
         $totalUsedSpace = array_sum($usedSpaces);
+
+        $displayMaxSpace = $sizeService->getSize($maxSpace);
+        $displayUsedSpace = $sizeService->getSize($totalUsedSpace);
         
         return [
             'maxSpace' => $maxSpace,
-            'usedSpace' => $totalUsedSpace
+            'displayMaxSpace' => $displayMaxSpace,
+            'usedSpace' => $totalUsedSpace,
+            'displayUsedSpace' => $displayUsedSpace
         ];
     }
 

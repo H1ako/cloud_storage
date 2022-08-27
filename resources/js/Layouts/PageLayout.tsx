@@ -5,7 +5,7 @@ import { usePage } from '@inertiajs/inertia-react'
 import Header from '../Components/Header';
 import Asidebar from '../Components/Asidebar';
 // store
-import { updateSpaceData, updateUser } from '../store/slices/userSlice';
+import { updateUser } from '../store/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 // windows components
 import UploadFilesWindow from '../Components/UploadFilesWindow';
@@ -35,7 +35,6 @@ export default function PageLayout({ children }: Props) {
     React.useEffect(() => {
         if (auth.user) {
             dispatch(updateUser(auth.user))
-            dispatch(updateSpaceData(auth.user.spaceData))
             dispatch(updateSubscriptions(globalData.subscriptions))
         }
     }, [auth.user])

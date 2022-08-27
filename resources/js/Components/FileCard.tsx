@@ -55,7 +55,7 @@ const FileCard = React.forwardRef<HTMLLIElement, Props>(({ file, fileIndex, clas
                     <h5 className="info__share-status">Shared</h5>
                 }
                 <h3 className="info__name">{file.name}</h3>
-                <h4 className="info__size">{file.size}</h4>
+                <h4 className="info__size">{file.displaySize}</h4>
             </div>
         </li>
     )

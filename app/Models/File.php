@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\SizeService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
@@ -24,7 +25,7 @@ class File extends Model
 
     protected $guarded = [];
 
-    protected $appends = ['displayPath', 'checkedBy'];
+    protected $appends = ['displayPath', 'checkedBy', 'displaySize'];
 
     protected function getDisplayPathAttribute() {
         /** @var Illuminate\Filesystem\FilesystemAdapter */
@@ -32,6 +33,14 @@ class File extends Model
         $path = $fileSystem->url($this->path);
         
         return $path;
+    }
+    
+    // converting to Mb
+    protected function getDisplaySizeAttribute() {
+        $sizeService = new SizeService;
+        $size = $sizeService->getSize($this->size);
+        
+        return $size;
     }
 
     protected function getCheckedByAttribute() {
