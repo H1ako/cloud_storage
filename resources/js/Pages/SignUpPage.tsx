@@ -7,7 +7,7 @@ import TopTextInput from '../Components/TopTextInput';
 // components
 
 
-export default function LoginPage() {
+export default function SignUpPage() {
     const [ email, setEmail ] = React.useState<string>('')
     const [ password, setPassword ] = React.useState<string>('')
     
@@ -19,6 +19,7 @@ export default function LoginPage() {
                 topText='Your email'
                 state={email}
                 setState={setEmail}
+                required={true}
             />
             <TopTextInput
                 placeholder='Password'
@@ -26,17 +27,18 @@ export default function LoginPage() {
                 topText='Your password'
                 state={password}
                 setState={setPassword}
+                required={true}
             />
             <Link
                 data={{ 
                     email,
                     password
                 }}
-                href='/login'
+                href='/sign-up'
                 method='post'
                 as='button'
                 type='button'
-            >Log In</Link>
+            >Sign Up</Link>
         </AuthPageLayout>
     )
 }

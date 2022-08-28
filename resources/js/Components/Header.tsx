@@ -1,6 +1,3 @@
-// icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faAngleUp, faClockRotateLeft, faShareNodes, faTrash } from '@fortawesome/free-solid-svg-icons';
 // global
 import React from 'react'
 import { Link, useRemember } from '@inertiajs/inertia-react'
@@ -9,6 +6,9 @@ import Logo from './Logo';
 import Search from './Search';
 import Profile from './Profile';
 import MoreSpaceBtn from './MoreSpaceBtn';
+// icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleDown, faAngleUp, faClockRotateLeft, faShareNodes, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Header() {

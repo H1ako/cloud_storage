@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilesController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
@@ -57,14 +58,8 @@ Route::get('/last', function() {
     ]);
 })->middleware('auth')->name('last');
 
-Route::get('/login', function() {
-    // $newUser = new User(['email' => 'nikita@yandex.ru', 'name' => 'Nikita']);
-    // $newUser->setPassword('25256789');
-    // $newUser->save();
-    $userA = User::where('email', 'nikita@yandex.ru')->first();
-    Auth::login($userA);
-    return redirect()->route('home');
-})->name('login');
+Route::get('/login', [AuthController::class, 'loginPage'])->name('login');
+Route::get('/sign-up', [AuthController::class, 'signUpPage'])->name('login');
 
 
 Route::prefix('api')->group(function () {
