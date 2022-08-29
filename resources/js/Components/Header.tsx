@@ -16,7 +16,7 @@ export default function Header() {
     
 
     return (
-        <header className={isNavVisible ? '' : 'nav-hidden'}>
+        <header className={`main-header${isNavVisible ? '' : ' nav-hidden'}`}>
             <div className="main-part">
                 <Link className='app-logo-link' href="/" preserveState>
                     <Logo />
