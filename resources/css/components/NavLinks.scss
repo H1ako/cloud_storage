@@ -1,0 +1,14 @@
+.nav-links {
+    &__links {
+        a {
+            @include clearedA;
+            
+            color: var(--colorTextDark);
+            font-size: var(--fontSize3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-align: center;
+        }
+    }
+}

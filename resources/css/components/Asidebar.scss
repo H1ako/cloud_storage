@@ -1,6 +1,19 @@
+.burger-btn {
+    @include clearedButton;
+
+    font-size: 3rem;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10000;
+
+    @media screen and (min-width: 791px) {
+       display: none;
+    }
+}
+
 aside {
-    position: sticky;
-    left: 0;
+    position: sticky; 
     top: var(--heightHeader);
     display: flex;
     flex-direction: column;
@@ -8,11 +21,49 @@ aside {
     align-items: center;
     width: 20rem;
     height: calc(100vh - var(--heightHeader));
-    padding: 2rem 2rem;
+    padding: 2rem;
     transition: var(--transitionDefault);
-    
+    z-index: 9998;
+
     @media screen and (max-width: 790px) {
-        display: none;
+        position: fixed;
+        top: 0;
+        width: 100vw;
+        overflow: hidden;
+        display: flex;
+        height: 100vh;
+        background: var(--colorBg);
+        z-index: 9999;
+
+        &:not(.visible) {
+            padding: 2rem 0;
+            transform: translateX(-100%);
+        }
+    }
+    
+    .nav-links {
+        flex-grow: 1;
+        position: relative;
+        width: 100%;
+        display: grid;
+        place-content: center;
+
+        @media screen and (min-width: 791px) {
+            display: none;
+        }
+
+        &__links {
+            @include clearedUl;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+
+            a {
+                font-size: var(--fontSize2);
+            }
+        }
     }
 
     .upload-btn,
