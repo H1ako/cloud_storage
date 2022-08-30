@@ -65,6 +65,7 @@ Route::get('/sign-up', [AuthController::class, 'signUpPage'])->name('signUp');
 
 Route::prefix('api')->group(function () {
     Route::resource('files', FilesController::class)->except(['create', 'edit', 'show', 'index'])->middleware('auth');
+    Route::get('/search/files', [SearchController::class, 'showFiles']);
     Route::resource('user', UserController::class)->only(['show', 'update', 'destroy'])->middleware('auth');
     Route::post('/user/subscription/{subscirptionId}', [UserController::class, 'updateSubscription'])->middleware('auth');
 });
