@@ -41,8 +41,9 @@ export default function FilesList() {
                 ref={orderCardRef}
                 style={{ '--fileOrder': undefined } as React.CSSProperties}
             />
-            {files.map((file, id) => (
-                <DraggableFileCard key={`file-${id}`} orderCardRef={orderCardRef} fileIndex={id} file={file} />
+            {files
+            .map((file, id) => (
+                <DraggableFileCard key={file.id} orderCardRef={orderCardRef} fileIndex={id} file={file} />
             ))}
         </ul>
     )

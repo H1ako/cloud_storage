@@ -15,10 +15,6 @@
             pointer-events: none;
             user-select:none;
         }
-
-        &.dragged + .file-card {
-            order: calc(var(--fileOrder) - 1);
-        }
     }
 
     .order-card {

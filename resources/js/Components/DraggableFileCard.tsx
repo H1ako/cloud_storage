@@ -18,15 +18,13 @@ interface Props {
 
 export default function DraggableFileCard({ file, fileIndex, orderCardRef }: Props) {
     const dispatch = useAppDispatch()
-    const { files } = useAppSelector(state => state.files)
     const { draggingFileId, draggingFileToMoveOrder } = useAppSelector(state => state.files)
     const [ position, setPosition ] = React.useState<IPosition>({
         x: 0,
         y: 0
     })
-    const [ isFileDragged, setIsFileDragged ] = React.useState<boolean>(false)
     const fileApi = useFileApi(file)
-    const ref = React.createRef<HTMLLIElement>()
+    const ref = React.useRef<HTMLLIElement>(null)
 
     const startDraggingHandler = () => {
         
@@ -47,12 +45,12 @@ export default function DraggableFileCard({ file, fileIndex, orderCardRef }: Pro
             y: 0
         }
 
-        // updating next card order by +1
-        setIsFileDragged(true)
         // clearing position
         setPosition(newPos)
         // reordering files
-        fileApi.reorderFile(draggingFileToMoveOrder - 1)
+        const fileCardWithCurrentOrder = document.querySelector(`.file-card[style*="--fileOrder: ${draggingFileToMoveOrder}"]`)
+        ref.current?.parentNode?.insertBefore(ref.current, fileCardWithCurrentOrder)
+        fileApi.reorderFile(draggingFileToMoveOrder)
         // hidding order card
         if (orderCardRef.current) {
             orderCardRef.current.style.setProperty('--fileOrder', '')
@@ -79,9 +77,6 @@ export default function DraggableFileCard({ file, fileIndex, orderCardRef }: Pro
         orderCardRef.current.style.setProperty('--fileOrder', `${file.order}`)
     }
 
-    React.useEffect(() => {
-        setIsFileDragged(false)
-    }, [files])
 
     return (
         <Draggable
@@ -98,7 +93,6 @@ export default function DraggableFileCard({ file, fileIndex, orderCardRef }: Pro
                 style={{'--fileOrder': fileApi.order } as React.CSSProperties}
                 ref={ref}
                 onMouseOver={onDragOver}
-                className={isFileDragged ? 'dragged' : ''}
             />
         </Draggable>
     )
