@@ -1,6 +1,5 @@
 .file-card {
     position: relative;
-    width: clamp(12rem, 15vw, 12.5rem);
     height: clamp(16rem, 20vh, 17.5rem);
     background: var(--colorGray);
     transition: all var(--transitionDefault), transform 0ms, top 0ms, left 0 ms;

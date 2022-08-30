@@ -49,13 +49,16 @@
 
 @mixin fileCardList {
     @include clearedUl;
+    $fileCardWidth: clamp(12rem, 15vw, 12.5rem);
+    $fileCardHeight: clamp(16rem, 20vh, 17.5rem);
 
-    display: flex;
     width: 100%;
-    flex-wrap: wrap;
     gap: 1rem;
     padding-bottom: 12.25rem;
     margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 12.5rem));
+    justify-content: center;
 }
 
 @mixin link {

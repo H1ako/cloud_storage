@@ -40,6 +40,7 @@
         background: var(--colorBg);
 
         .app-logo-link {
+            flex-basis: 2rem;
             margin-right: auto;
         }
 
@@ -47,6 +48,10 @@
             @include btn;
             background: var(--colorAccent);
             margin-left: auto;
+
+            @media screen and (max-width: 850px) {
+                display: none;
+            }
         }
 
         &__btn-toggle {
@@ -72,6 +77,8 @@
         box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
         background: var(--colorBg);
         transition-delay: height var(--transitionDefault);
+        display: grid;
+        align-items: center;
 
         .links {
             @include clearedUl;

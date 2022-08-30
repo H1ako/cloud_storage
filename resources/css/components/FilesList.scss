@@ -14,12 +14,15 @@
             z-index: 999;
             pointer-events: none;
             user-select:none;
+
+            width: clamp(12rem, 15vw, 12.5rem);
+            height: clamp(16rem, 20vh, 17.5rem);
         }
     }
 
     .order-card {
-        width: clamp(12rem, 15vw, 12.5rem);
-        height: clamp(16rem, 20vh, 17.5rem);
+        // width: clamp(12rem, 15vw, 12.5rem);
+        // height: clamp(16rem, 20vh, 17.5rem);
         flex-shrink: 0;
         border-radius: var(--bdrsDefault);
         flex-shrink: 0;
