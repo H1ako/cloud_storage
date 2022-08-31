@@ -67,6 +67,23 @@
             font-size: 2rem;
             color: var(--colorTextDark);
             cursor: pointer;
+
+            @media screen and (max-width: 790px) {
+                display: none;
+            }
+        }
+
+        .asidebar-btn {
+            @include clearedButton;
+            
+            font-size: 2rem;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10000;
+        
+            @media screen and (min-width: 791px) {
+                display: none;
+            }
         }
     }
 

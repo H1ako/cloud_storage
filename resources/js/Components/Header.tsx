@@ -9,11 +9,25 @@ import MoreSpaceBtn from './MoreSpaceBtn';
 import NavLinks from './NavLinks';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp, faBars } from '@fortawesome/free-solid-svg-icons';
+// store
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { setAsideBarVisibility } from '../store/slices/globalSlice';
 
 
 export default function Header() {
+    const dispatch = useAppDispatch()
+    const { isAsideBarOpened } = useAppSelector(state => state.global)
     const [ isNavVisible, setIsNavVisible ] = useRemember(true)
+
+    const asideBarVisibilityHandler = () => {
+        const body = document.querySelector('body')
+
+        if (isAsideBarOpened) body?.classList.remove('no-scroll')
+        else body?.classList.add('no-scroll')
+
+        dispatch(setAsideBarVisibility(!isAsideBarOpened))
+    }
     
 
     return (
@@ -33,6 +47,9 @@ export default function Header() {
                     :
                         <FontAwesomeIcon icon={faAngleDown} />
                     }
+                </button>
+                <button className="asidebar-btn" onClick={asideBarVisibilityHandler}>
+                    <FontAwesomeIcon icon={faBars} />
                 </button>
             </div>
             <NavLinks className='main-nav' />

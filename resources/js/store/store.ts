@@ -5,6 +5,7 @@ import userReducer from './slices/userSlice';
 import filesReducer from './slices/filesSlice';
 import rClickWindowsReducer from './slices/rClickWindowsSlice'
 import subscriptionsReducer from './slices/subscriptionsSlice'
+import globalReducer from './slices/globalSlice'
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
         files: filesReducer,
         windows: rClickWindowsReducer,
         subscriptions: subscriptionsReducer,
+        global: globalReducer,
     },
     devTools: true,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
