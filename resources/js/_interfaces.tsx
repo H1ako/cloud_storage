@@ -23,7 +23,10 @@ interface IUser {
     subscription: ISubscription,
     subscription_name: string,
     files?: null | File[],
-    spaceData: IUserSpaceData
+    spaceData: IUserSpaceData,
+    totalFiles: number,
+    totalDeletedFiles: number,
+    totalSharedFiles: number
 }
 
 interface ISubscription {

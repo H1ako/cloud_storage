@@ -82,7 +82,7 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                                                 Shared Files
                                             </h5>
                                             <h3 className="block__count">
-                                                30
+                                                {auth.user?.totalSharedFiles}
                                             </h3>
                                         </div>
                                         <div className="info-blocks__block">
@@ -90,7 +90,7 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                                                 Deleted Files
                                             </h5>
                                             <h3 className="block__count">
-                                                30
+                                            {auth.user?.totalDeletedFiles}
                                             </h3>
                                         </div>
                                         <div className="info-blocks__block">
@@ -98,7 +98,7 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                                                 Files
                                             </h5>
                                             <h3 className="block__count">
-                                                30
+                                                {auth.user?.totalFiles}
                                             </h3>
                                         </div>
                                     </div>

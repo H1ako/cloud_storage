@@ -41,7 +41,7 @@ class User extends Authenticatable
 
     protected $with = ['files', 'subscription'];
 
-    protected $appends = ['spaceData'];
+    protected $appends = ['spaceData', 'totalSharedFiles', 'totalDeletedFiles', 'totalFiles'];
 
     /**
      * The attributes that should be cast.
@@ -51,6 +51,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getTotalSharedFilesAttribute() {
+        $totalAmount = $this->files()->where('shareLink', '!=', Null)->count();
+        return $totalAmount;
+    }
+
+    public function getTotalDeletedFilesAttribute() {
+        $totalAmount = $this->files()->where('isDeleted', true)->count();
+        return $totalAmount;
+    }
+
+    public function getTotalFilesAttribute() {
+        $totalAmount = $this->files()->count();
+        return $totalAmount;
+    }
 
     public function getSpaceDataAttribute() {
         $sizeService = new SizeService;
