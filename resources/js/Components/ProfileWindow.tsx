@@ -11,7 +11,7 @@ import TopTextInput from './TopTextInput';
 import FileCard from './FileCard';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGear, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 
 
 interface Props {
@@ -52,6 +52,7 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                         <ul>
                             <li>
                                 <button
+                                    className='nav__link'
                                     disabled={profilePage === 'main'}
                                     onClick={() => setProfilePage('main')}
                                 >
@@ -61,12 +62,19 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                             </li>
                             <li>
                                 <button
+                                    className='nav__link'
                                     disabled={profilePage === 'settings'}
                                     onClick={() => setProfilePage('settings')}
                                 >
                                     <FontAwesomeIcon icon={faGear} />
                                     Settings
                                 </button>
+                            </li>
+                            <li>
+                                <Link className='nav__link' href='/sign-out'>
+                                    <FontAwesomeIcon icon={faRightFromBracket} />
+                                    Sign Out
+                                </Link>
                             </li>
                         </ul>
                     </nav>

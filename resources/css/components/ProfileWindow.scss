@@ -23,7 +23,7 @@
             li {
                 width: 100%;
 
-                button {
+                .nav__link {
                     @include clearedButton;
     
                     width: 100%;
@@ -32,9 +32,10 @@
                     justify-content: flex-start;
                     gap: 0.5rem;
                     padding: .75rem 1.5rem;
-
+                    color: var(--colorTextDark);
                     font-size: var(--fontSize3);
                     transition: var(--transitionDefault);
+                    text-decoration: none;
     
                     &:disabled {
                         background: var(--colorMain);

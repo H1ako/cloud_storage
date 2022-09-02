@@ -61,6 +61,7 @@ Route::get('/last', function() {
 Route::get('/login', [AuthController::class, 'loginPage'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/sign-up', [AuthController::class, 'signUpPage'])->name('signUp');
+Route::get('/sign-out', [AuthController::class, 'signOut'])->name('signOut');
 
 
 Route::prefix('api')->group(function () {

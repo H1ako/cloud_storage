@@ -10,6 +10,7 @@ import TopTextInput from '../Components/TopTextInput';
 export default function SignUpPage() {
     const [ email, setEmail ] = React.useState<string>('')
     const [ password, setPassword ] = React.useState<string>('')
+    const [ passwordAgain, setPasswordAgain ] = React.useState<string>('')
     
     return (
         <AuthPageLayout>
@@ -21,14 +22,24 @@ export default function SignUpPage() {
                 setState={setEmail}
                 required={true}
             />
-            <TopTextInput
-                placeholder='Password'
-                type='password'
-                topText='Your password'
-                state={password}
-                setState={setPassword}
-                required={true}
-            />
+            <div className="passwords">
+                <TopTextInput
+                    placeholder='Password'
+                    type='password'
+                    topText='Your password'
+                    state={password}
+                    setState={setPassword}
+                    required={true}
+                />
+                <TopTextInput
+                    placeholder='Password again'
+                    type='password'
+                    topText='Your password again'
+                    state={passwordAgain}
+                    setState={setPasswordAgain}
+                    required={true}
+                />
+            </div>
             <Link
                 data={{ 
                     email,
