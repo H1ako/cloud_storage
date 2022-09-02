@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Subscription;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -19,7 +20,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update user in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -29,11 +30,23 @@ class UserController extends Controller
     {
         $user = $request->user();
 
+        // Log::info($request->post());
+
         $validatedData = $request->validate([
-            'email' => 'email',
-            'password' => 'min:8|max:40',
-            'passwordAgain' => 'same:password|required_if:password'
+            'email' => 'email|required',
+            'password' => 'min:8|max:40|same:passwordAgain|nullable',
+            'passwordAgain' => 'same:password|nullable',
+            'picture' => 'image'
         ]);
+
+        Log::info($validatedData);
+
+        $user->email = $validatedData['email'];
+        if ($validatedData['password']) $user->setPassword($validatedData['password']);
+        if ($validatedData['picture']) {
+            $user->setPicture($validatedData['picture']);
+        }
+        $user->save();
 
         return redirect()->back();
     }

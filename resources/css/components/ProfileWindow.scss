@@ -82,6 +82,8 @@
                     aspect-ratio: 1;
                     border-radius: 50%;
                     border: 2px solid var(--colorText);
+                    object-fit: cover;
+                    object-position: center;
                 }
 
                 .user-info__main {
@@ -143,6 +145,7 @@
 
                 .most-popular-files__files-list {
                     @include fileCardList;
+
                     justify-content: center;
                 }
             }
@@ -153,10 +156,6 @@
 
             .content__picture {
                 width: 40%;
-                aspect-ratio: 1;
-                border-radius: 50%;
-                border: 2px solid var(--colorText);
-                background-color: var(--colorMain);
             }
 
             .content__input {

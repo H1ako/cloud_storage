@@ -13,30 +13,33 @@ export default function LoginPage() {
     
     return (
         <AuthPageLayout>
-            <TopTextInput
-                placeholder='Email'
-                type='email'
-                topText='Your email'
-                state={email}
-                setState={setEmail}
-            />
-            <TopTextInput
-                placeholder='Password'
-                type='password'
-                topText='Your password'
-                state={password}
-                setState={setPassword}
-            />
-            <Link
-                data={{ 
-                    email,
-                    password
-                }}
-                href='/login'
-                method='post'
-                as='button'
-                type='button'
-            >Log In</Link>
+            <form className="auth-form">
+                <TopTextInput
+                    placeholder='Email'
+                    type='email'
+                    topText='Your email'
+                    state={email}
+                    setState={setEmail}
+                />
+                <TopTextInput
+                    placeholder='Password'
+                    type='password'
+                    topText='Your password'
+                    state={password}
+                    setState={setPassword}
+                />
+                <Link className='auth-form__link' href='/sign-up'>Dont have account yet? Sign Up</Link>
+                <Link
+                    data={{ 
+                        email,
+                        password
+                    }}
+                    href='/login'
+                    method='post'
+                    as='button'
+                    type='button'
+                >Log In</Link>
+            </form>
         </AuthPageLayout>
     )
 }

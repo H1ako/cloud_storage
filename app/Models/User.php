@@ -8,9 +8,8 @@ use App\Services\SizeService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -23,7 +22,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
         'password',
         'picture'
@@ -87,6 +85,24 @@ class User extends Authenticatable
     public function setPassword($password): void {
         $this->password = Hash::make($password);
     }
+
+    public function setPicture($file): void {
+        /** @var Illuminate\Filesystem\FilesystemAdapter */
+        $fileSystem = Storage::disk('public');
+        $fileType = $file->getClientOriginalExtension();
+        $fileName = time().$this->id.'.'.$fileType;
+        $filePath = "usersPictures/";
+        $fullPath = $filePath.$fileName;
+
+        $fileSystem->putFileAs(
+            $filePath,
+            $file,
+            $fileName
+        );
+        
+        $this->picture = '/storage/'.$fullPath;
+    }
+    
 
     public function files() {
         return $this->hasMany(File::class);

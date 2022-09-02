@@ -12,6 +12,7 @@ import FileCard from './FileCard';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
+import UploadPicture from './UploadPicture';
 
 
 interface Props {
@@ -33,6 +34,7 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
     const [ userEmail, setUserEmail ] = React.useState<string>('')
     const [ newPassword, setNewPassowrd ] = React.useState<string>('')
     const [ newPasswordAgain, setNewPasswordAgain ] = React.useState<string>('')
+    const [ currentPictureFile, setCurrentPictureFile ] = React.useState<File | null>(null)
     const windowRef = React.useRef<HTMLDivElement>(null)
 
 
@@ -81,7 +83,7 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                     { profilePage === 'main' &&
                         <div className="profile-window__content content-main">
                             <div className="content__user-info">
-                                <img className="user-info__picture" />
+                                <img className="user-info__picture" src={auth.user?.picture ?? ''} />
                                 <div className="user-info__main">
                                     <h2 className="main__email">{auth.user?.email}</h2>
                                     <div className="main__info-blocks">
@@ -124,7 +126,11 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                     }
                     { profilePage === 'settings' &&
                         <div className="profile-window__content content-settings">
-                            <img src={auth.user?.picture ?? ''} alt="" className="content__picture" />
+                            <UploadPicture
+                                pictureUrl={auth.user?.picture ?? ''}
+                                setCurrentPictureFile={setCurrentPictureFile}
+                                className='content__picture'
+                            />
                             <TopTextInput
                                 type='email'
                                 className='content__input'
@@ -150,14 +156,16 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                                 />
                             </div>
                             <Link
-                                method='put'
+                                method='post'
                                 href='/api/user'
                                 as='button'
                                 type='button'
                                 data={{ 
                                     email: userEmail,
                                     password: newPassword,
-                                    passwordAgain: newPasswordAgain
+                                    passwordAgain: newPasswordAgain,
+                                    picture: currentPictureFile,
+                                    _method: 'PUT'
                                 }}
                                 className='content__save-btn'
                                 preserveScroll={true}

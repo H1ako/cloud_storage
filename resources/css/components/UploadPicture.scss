@@ -1,0 +1,24 @@
+.upload-picture {
+    position: relative;
+
+    &__label {
+        display: block;
+        position: relative;
+        width: 100%;
+        border-radius: 50%;
+
+        img {
+            display: block;
+            border-radius: 50%;
+            border: 2px solid var(--colorText);
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    &__input {
+        display: none;
+    }
+}
