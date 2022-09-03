@@ -6,7 +6,6 @@ use App\Models\File;
 use App\Services\FileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class FilesController extends Controller
@@ -43,7 +42,9 @@ class FilesController extends Controller
             );
 
             $fullPath = $filePath.$fileName;
-            $fileOrder = $user->files()->orderBy('order', 'DESC')->first()->order + 1;
+            $fileOrder = 0;
+            $lastOrderFile = $user->files()->orderBy('order', 'DESC')->first();
+            if ($lastOrderFile) $fileOrder = $lastOrderFile->order + 1;
 
             $newFile = new File([
                 'name' => $originalFileName,
