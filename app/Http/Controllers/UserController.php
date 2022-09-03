@@ -39,8 +39,6 @@ class UserController extends Controller
             'picture' => 'image'
         ]);
 
-        Log::info($validatedData);
-
         $user->email = $validatedData['email'];
         if ($validatedData['password']) $user->setPassword($validatedData['password']);
         if ($validatedData['picture']) {

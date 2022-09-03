@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -39,7 +40,7 @@ class User extends Authenticatable
 
     protected $with = ['files', 'subscription'];
 
-    protected $appends = ['spaceData', 'totalSharedFiles', 'totalDeletedFiles', 'totalFiles'];
+    protected $appends = ['spaceData', 'totalSharedFiles', 'totalDeletedFiles', 'totalFiles', 'displayPicture'];
 
     /**
      * The attributes that should be cast.
@@ -63,6 +64,12 @@ class User extends Authenticatable
     public function getTotalFilesAttribute() {
         $totalAmount = $this->files()->count();
         return $totalAmount;
+    }
+
+    public function getDisplayPictureAttribute() {
+        $displayPicture = $this->picture !== NULL ? "/storage/{$this->picture}" : null;
+
+        return $displayPicture;
     }
 
     public function getSpaceDataAttribute() {
@@ -89,6 +96,11 @@ class User extends Authenticatable
     public function setPicture($file): void {
         /** @var Illuminate\Filesystem\FilesystemAdapter */
         $fileSystem = Storage::disk('public');
+
+        if ($this->picture !== NULL && $fileSystem->exists($this->picture)) {
+            $fileSystem->delete($this->picture);
+        }
+        
         $fileType = $file->getClientOriginalExtension();
         $fileName = time().$this->id.'.'.$fileType;
         $filePath = "usersPictures/";
@@ -99,8 +111,9 @@ class User extends Authenticatable
             $file,
             $fileName
         );
+        $this->picture = $fullPath;
         
-        $this->picture = '/storage/'.$fullPath;
+        $this->save();
     }
     
 

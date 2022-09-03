@@ -127,7 +127,7 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                     { profilePage === 'settings' &&
                         <div className="profile-window__content content-settings">
                             <UploadPicture
-                                pictureUrl={auth.user?.picture ?? ''}
+                                pictureUrl={auth.user?.displayPicture ?? ''}
                                 setCurrentPictureFile={setCurrentPictureFile}
                                 className='content__picture'
                             />

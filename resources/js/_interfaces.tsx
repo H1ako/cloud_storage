@@ -19,7 +19,8 @@ interface ISharedProps {
 interface IUser {
     id: IdType,
     email: string,
-    picture?: string | null,
+    picture: string | null,
+    displayPicture: string | null,
     subscription: ISubscription,
     subscription_name: string,
     files?: null | File[],

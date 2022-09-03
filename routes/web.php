@@ -13,14 +13,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function() {
     /** @var \App\Models\User $user **/
     $user = Auth::user();
-    // $f = $user->files;
-    // $n = 0;
-    // foreach($f as $fi) {
-    //     $fi->update([
-    //         'order' => $n
-    //     ]);
-    //     $n++;
-    // }
     $files = $user->files()->where('isDeleted', false)->orderBy('order')->get();
 
     return inertia('HomePage', [

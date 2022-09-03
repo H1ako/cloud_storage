@@ -13,7 +13,7 @@ export default function Profile() {
     return (
         <div className='profile'>
             <div className="profile__top">
-                <img src={user?.picture ?? ''} alt="" className="top__picture" onClick={() => setIsProfileOpened(true)} />
+                <img src={user?.displayPicture ?? ''} alt="" className="top__picture" onClick={() => setIsProfileOpened(true)} />
             </div>
             { isProfileOpened &&
                 <ProfileWindow closeWindow={() => setIsProfileOpened(false)} />
