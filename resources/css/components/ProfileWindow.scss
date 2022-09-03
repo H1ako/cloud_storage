@@ -156,6 +156,10 @@
 
             .content__picture {
                 width: 40%;
+
+                img {
+                    background-color: var(--colorMain);
+                }
             }
 
             .content__input {
