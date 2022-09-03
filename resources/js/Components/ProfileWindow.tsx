@@ -83,7 +83,7 @@ export const ProfileWindow = ({ closeWindow }: Props) => {
                     { profilePage === 'main' &&
                         <div className="profile-window__content content-main">
                             <div className="content__user-info">
-                                <img className="user-info__picture" src={auth.user?.picture ?? ''} />
+                                <img className="user-info__picture" src={auth.user?.displayPicture ?? ''} />
                                 <div className="user-info__main">
                                     <h2 className="main__email">{auth.user?.email}</h2>
                                     <div className="main__info-blocks">
