@@ -17,6 +17,41 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public static $withoutAppends = false;
+    public static $withoutRelation = false;
+
+    public function scopeWithoutAppends($query)
+    {
+        self::$withoutAppends = true;
+
+        return $query;
+    }
+
+    public function scopeWithoutRelation($query)
+    {
+        self::$withoutRelation = true;
+
+        return $query;
+    }
+
+    protected function getArrayableAppends()
+    {
+        if (self::$withoutAppends){
+            return [];
+        }
+
+        return parent::getArrayableAppends();
+    }
+
+    protected function getArrayableRelations()
+    {
+        if (self::$withoutRelation){
+            return [];
+        }
+
+        return parent::getArrayableRelations();
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -73,6 +108,7 @@ class User extends Authenticatable
     }
 
     public function getSpaceDataAttribute() {
+        Log::info($this->id);
         $sizeService = new SizeService;
         $maxSpace = $this->subscription()->first()->maxSpace;
         $usedSpaces = $this->files()->pluck('size')->toArray();

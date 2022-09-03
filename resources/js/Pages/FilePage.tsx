@@ -48,7 +48,7 @@ export default function FilePage({auth, file}: Props) {
             <div className="file-info">
                 <FileBgByType file={file} className='file-info__bg' />
                 <h1 className="file-info__name">{file.name}</h1>
-                <h3 className="file-info__size">{file.size}</h3>
+                <h3 className="file-info__size">{file.displaySize}</h3>
             </div>
             <div className="main-btns">
                 <button className="main-btns__btn share-btn" onClick={() => setIsShareLinkWindowOpened(true)}>Share</button>

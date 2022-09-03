@@ -30,7 +30,7 @@ export default function Search() {
             }
         })
         .then(response => setSearchResults(response.data))
-    }, [searchQuery])
+    }, [searchQuery, isOnlyUserFiles])
 
 
     return (

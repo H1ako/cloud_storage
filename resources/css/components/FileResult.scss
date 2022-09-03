@@ -4,7 +4,6 @@
     position: relative;
     background: $colorBg;
     padding: .75rem 1.5rem;
-
     
     a {
         text-decoration: none;
@@ -12,6 +11,7 @@
         display: flex;
         color: var(--colorBlack);
         align-items: center;
+        flex-wrap: wrap;
         gap: 1rem;
     }
 
@@ -47,11 +47,18 @@
     }
 
     &__info {
+        display: block;
         flex-grow: 1;
 
         .info__name,
         .info__size {
             font-weight: 400;
+        }
+    }
+    
+    &__user-info {
+        .user-info__email {
+            font-weight: 300;
         }
     }
 }
