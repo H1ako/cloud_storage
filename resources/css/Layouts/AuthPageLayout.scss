@@ -23,7 +23,7 @@
             &__picture {
                 width: min(100%, 15rem);
                 img {
-                    background: blue;
+                    background: var(--colorMain);
                 }
             }
 
