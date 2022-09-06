@@ -18,6 +18,7 @@ services:
       - ./:/app/
     networks:
       - app
+    container_name: app
 
   db:
     image: mysql:8.0.28
@@ -29,6 +30,7 @@ services:
       - SYS_NICE
     networks:
       - app
+    container_name: dataBase
 
 networks:
   app:
