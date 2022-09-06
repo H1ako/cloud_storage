@@ -5,11 +5,6 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    # environment:
-    #   DB_HOST: 127.0.0.1
-    #   DB_DATABASE: cloud_storage
-    #   DB_USERNAME: root
-    #   DB_PASSWORD: root
     ports:
       - 8000:8000
     depends_on:
@@ -22,10 +17,6 @@ services:
 
   db:
     image: mysql:8.0.28
-    # environment:
-    #   MYSQL_DATABASE: cloud_storage
-    #   MYSQL_PASSWORD: root
-    #   MYSQL_ROOT_PASSWORD: root
     cap_add:
       - SYS_NICE
     networks:
